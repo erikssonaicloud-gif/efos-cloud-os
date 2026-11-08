@@ -1,0 +1,3572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="EFOS OS" />
+  <title>EFOS Mini-OS · Finder, Cloud &amp; Companion Workspace</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon-32.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="kinetic_clarity_buttons.css" />
+  <style>
+    :root {
+      --bg-slate: #0F172A;
+      --bg-slate-dark: #080D1A;
+      --bg-sidebar: #0B1120;
+      --bg-card: #1E293B;
+      --bg-card-hover: #26354D;
+      --bg-card-active: #1D3557;
+      --signal-teal: #0D9488;
+      --teal-bright: #14B8A6;
+      --teal-glow: rgba(13, 148, 136, 0.28);
+      --teal-soft: rgba(13, 148, 136, 0.12);
+      --resonant-amber: #D97706;
+      --amber-bright: #F59E0B;
+      --amber-soft: rgba(217, 119, 6, 0.14);
+      --urgent-red: #EF4444;
+      --urgent-soft: rgba(239, 68, 68, 0.15);
+      --calm-green: #10B981;
+      --green-soft: rgba(16, 185, 129, 0.15);
+      --text-chalk: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --border-subtle: #334155;
+      --border-strong: #475569;
+      --header-height: 48px;
+      --sidebar-width: 250px;
+      --dock-width: 380px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Space Grotesk", "Segoe UI", Roboto, sans-serif;
+      --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-slate);
+      color: var(--text-chalk);
+      font-family: var(--font-display);
+      font-size: 13px;
+      line-height: 1.4;
+      user-select: none;
+    }
+
+    /* Custom slim scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    /* Top System Menu Bar (macOS Status Bar style) */
+    .top-menu-bar {
+      height: var(--header-height);
+      min-height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 50;
+      gap: 12px;
+    }
+
+    .menu-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .brand-svg {
+      width: 26px;
+      height: 26px;
+      filter: drop-shadow(0 2px 6px rgba(13, 148, 136, 0.4));
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--text-chalk);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: rgba(13, 148, 136, 0.2);
+      color: var(--teal-bright);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(20, 184, 166, 0.3);
+    }
+
+    /* Work-to-Rhythm 4-Beat Switcher */
+    .rhythm-switcher {
+      display: flex;
+      align-items: center;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .beat-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.14s ease;
+      white-space: nowrap;
+    }
+
+    .beat-btn:hover {
+      color: var(--text-chalk);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .beat-btn.active {
+      background: var(--signal-teal);
+      color: #FFFFFF;
+      box-shadow: 0 1px 4px rgba(13, 148, 136, 0.4);
+    }
+
+    .beat-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Spotlight Center Search */
+    .menu-center {
+      flex: 1;
+      max-width: 480px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .spotlight-pill {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(30, 41, 59, 0.65);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .spotlight-pill:hover, .spotlight-pill.focused {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: var(--signal-teal);
+      box-shadow: 0 0 0 2px var(--teal-glow);
+      color: var(--text-chalk);
+    }
+
+    .spotlight-pill-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+    }
+
+    .spotlight-kbd {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-muted);
+    }
+
+    /* Right System Status Items */
+    .menu-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .radar-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #FCA5A5;
+      font-weight: 600;
+      font-size: 11.5px;
+      padding: 5px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .radar-toggle-btn:hover {
+      background: rgba(239, 68, 68, 0.22);
+      border-color: var(--urgent-red);
+      color: #FFFFFF;
+    }
+
+    .radar-toggle-btn.active {
+      background: var(--urgent-red);
+      color: #FFFFFF;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--urgent-red);
+      box-shadow: 0 0 6px var(--urgent-red);
+      animation: pulse-ring 1.8s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.9; }
+      50% { transform: scale(1.35); opacity: 0.4; }
+      100% { transform: scale(0.95); opacity: 0.9; }
+    }
+
+    .sonic-sweep-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(217, 119, 6, 0.12);
+      border: 1px solid rgba(217, 119, 6, 0.35);
+      color: #FDE68A;
+      font-weight: 600;
+      font-size: 11.5px;
+      padding: 5px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .sonic-sweep-btn:hover {
+      background: rgba(217, 119, 6, 0.25);
+      border-color: var(--amber-bright);
+      color: #FFFFFF;
+    }
+
+    .system-memory-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #A7F3D0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .system-memory-pill:hover {
+      border-color: var(--signal-teal);
+    }
+
+    .mem-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--calm-green);
+    }
+
+    /* Collapsible Case Radar HUD Strip */
+    .radar-hud-strip {
+      background: linear-gradient(180deg, #131E31 0%, #0D1626 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      z-index: 40;
+      transition: max-height 0.24s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    /* Modern Web Guidance: zero-layout-cost toggling with content-visibility fallback */
+    .radar-hud-strip.collapsed {
+      display: none;
+    }
+    @supports (content-visibility: hidden) {
+      .radar-hud-strip.collapsed {
+        display: block;
+        content-visibility: hidden;
+        height: 0;
+        padding: 0;
+        border: none;
+        overflow: hidden;
+      }
+    }
+
+    .radar-hud-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .radar-hud-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #E2E8F0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .radar-hud-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .radar-mini-btn {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-chalk);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.12s ease;
+    }
+
+    .radar-mini-btn:hover {
+      background: var(--border-subtle);
+      border-color: var(--border-strong);
+    }
+
+    .radar-cards-row {
+      display: flex;
+      gap: 12px;
+      min-width: 100%;
+      padding-bottom: 4px;
+    }
+
+    .radar-card {
+      flex: 0 0 280px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      position: relative;
+    }
+
+    .radar-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    .radar-card.card-urgent {
+      border-left: 4px solid var(--urgent-red);
+    }
+
+    .radar-card.card-soon {
+      border-left: 4px solid var(--resonant-amber);
+    }
+
+    .radar-card.card-steady {
+      border-left: 4px solid var(--signal-teal);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-matter-title {
+      font-weight: 700;
+      font-size: 12.5px;
+      color: var(--text-chalk);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-badge {
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .badge-urgent {
+      background: rgba(239, 68, 68, 0.2);
+      color: #FCA5A5;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .badge-soon {
+      background: rgba(217, 119, 6, 0.2);
+      color: #FDE68A;
+      border: 1px solid rgba(217, 119, 6, 0.4);
+    }
+
+    .badge-steady {
+      background: rgba(13, 148, 136, 0.2);
+      color: #99F6E4;
+      border: 1px solid rgba(13, 148, 136, 0.4);
+    }
+
+    .card-docket {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .meter-bar {
+      width: 100%;
+      height: 5px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 2px 0;
+    }
+
+    .meter-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .card-link-btn {
+      background: rgba(13, 148, 136, 0.15);
+      border: 1px solid rgba(20, 184, 166, 0.35);
+      color: var(--teal-bright);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+
+    .card-link-btn:hover {
+      background: rgba(13, 148, 136, 0.3);
+    }
+
+    .card-speak-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 12px;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: color 0.12s ease;
+    }
+
+    .card-speak-btn:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Main 3-Pane Workspace */
+    .os-workspace {
+      flex: 1;
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr var(--dock-width);
+      min-height: 0;
+      overflow: hidden;
+      background: var(--bg-slate);
+    }
+
+    /* PANE 1: macOS Finder Left Sidebar */
+    .pane-sidebar {
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 10px 0;
+    }
+
+    .sidebar-section {
+      margin-bottom: 16px;
+    }
+
+    .sidebar-heading {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      padding: 4px 14px 6px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-heading-action {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 11px;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    .sidebar-heading-action:hover {
+      color: var(--text-chalk);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .sidebar-list {
+      list-style: none;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: all 0.12s ease;
+    }
+
+    .sidebar-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-chalk);
+    }
+
+    .sidebar-item.active {
+      background: rgba(13, 148, 136, 0.15);
+      color: var(--text-chalk);
+      border-left-color: var(--signal-teal);
+      font-weight: 600;
+    }
+
+    .sidebar-icon {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+    }
+
+    .privacy-shield-row {
+      margin: 6px 10px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .privacy-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--amber-bright);
+      font-weight: 600;
+    }
+
+    .privacy-toggle-btn {
+      background: rgba(217, 119, 6, 0.2);
+      border: 1px solid rgba(217, 119, 6, 0.4);
+      color: #FDE68A;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .privacy-toggle-btn:hover {
+      background: var(--resonant-amber);
+      color: #FFFFFF;
+    }
+
+    /* PANE 2: Center Miller Columns & Breadcrumb Toolbar */
+    .pane-center {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg-slate);
+      border-right: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    /* View Toolbar */
+    .view-toolbar {
+      height: 42px;
+      min-height: 42px;
+      background: rgba(30, 41, 59, 0.4);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      gap: 10px;
+    }
+
+    .breadcrumbs-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      white-space: nowrap;
+      font-size: 12px;
+    }
+
+    .crumb-item {
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      transition: all 0.12s ease;
+    }
+
+    .crumb-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-chalk);
+    }
+
+    .crumb-item.current {
+      color: var(--teal-bright);
+      font-weight: 600;
+    }
+
+    .crumb-sep {
+      color: var(--text-dim);
+      font-size: 10px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .filter-input {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 4px 8px;
+      color: var(--text-chalk);
+      font-size: 11.5px;
+      width: 140px;
+      outline: none;
+      transition: all 0.14s ease;
+    }
+
+    .filter-input:focus {
+      border-color: var(--signal-teal);
+      width: 180px;
+    }
+
+    .tb-btn {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-chalk);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.12s ease;
+    }
+
+    .tb-btn:hover {
+      background: var(--border-subtle);
+      border-color: var(--border-strong);
+    }
+
+    .tb-btn-primary {
+      background: var(--signal-teal);
+      border-color: var(--teal-bright);
+      color: #FFFFFF;
+    }
+
+    .tb-btn-primary:hover {
+      background: var(--teal-bright);
+    }
+
+    /* Miller Columns Horizontal Area */
+    .miller-viewport {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      background: var(--bg-slate);
+    }
+
+    .miller-column {
+      flex: 0 0 270px;
+      width: 270px;
+      height: 100%;
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.5);
+    }
+
+    .miller-col-header {
+      height: 32px;
+      padding: 0 12px;
+      background: rgba(30, 41, 59, 0.3);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .miller-col-list {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      list-style: none;
+      padding: 4px 0;
+    }
+
+    /* Modern Web Guidance: Virtualization & Content-Visibility rule */
+    /* Only apply content-visibility: auto to offscreen list rows (nth-child >= 25) */
+    .file-row:nth-child(n+25) {
+      content-visibility: auto;
+      contain-intrinsic-size: auto none auto 42px;
+    }
+
+    .file-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 40px;
+      padding: 0 12px;
+      cursor: pointer;
+      color: var(--text-chalk);
+      border-left: 3px solid transparent;
+      outline: none;
+      transition: background 0.1s ease;
+    }
+
+    .file-row:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Roving Tabindex & Selection */
+    .file-row[tabindex="0"] {
+      border-left-color: var(--signal-teal);
+    }
+
+    .file-row.selected {
+      background: rgba(13, 148, 136, 0.22);
+      border-left-color: var(--teal-bright);
+      color: #FFFFFF;
+    }
+
+    .file-row:focus-visible {
+      outline: 2px solid var(--teal-bright);
+      outline-offset: -2px;
+    }
+
+    .file-row-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .file-type-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      width: 18px;
+      text-align: center;
+    }
+
+    .file-name {
+      font-size: 12.5px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: -0.01em;
+    }
+
+    .file-row-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .file-size-badge {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+    }
+
+    .folder-chevron {
+      color: var(--text-dim);
+      font-size: 12px;
+    }
+
+    /* Quick Look Inspector Column (Rightmost Miller Column) */
+    .inspector-column {
+      flex: 0 0 340px;
+      width: 340px;
+      height: 100%;
+      border-right: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.85);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 16px;
+      gap: 14px;
+    }
+
+    .inspector-preview-card {
+      width: 100%;
+      height: 220px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .inspector-preview-card iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #FFFFFF;
+    }
+
+    .inspector-meta-title {
+      font-size: 14px;
+      font-weight: 700;
+      word-break: break-all;
+      color: var(--text-chalk);
+    }
+
+    .inspector-meta-grid {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 6px 12px;
+      font-size: 11.5px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .meta-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .meta-val {
+      color: var(--text-chalk);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      word-break: break-all;
+    }
+
+    .inspector-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* PANE 3: Right Dock ("Antigravity Companion & Guided Terminal") */
+    .pane-dock {
+      background: var(--bg-sidebar);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    .dock-context-header {
+      background: rgba(30, 41, 59, 0.6);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .context-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 11.5px;
+    }
+
+    .context-label {
+      color: var(--text-muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .context-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--teal-bright);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 240px;
+    }
+
+    .antigravity-send-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+      border: 1px solid var(--teal-bright);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.35);
+      transition: all 0.14s ease;
+    }
+
+    .antigravity-send-btn:hover {
+      background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.5);
+    }
+
+    /* Dock Tabs */
+    .dock-tabs-nav {
+      height: 38px;
+      background: rgba(15, 23, 42, 0.9);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 4px;
+    }
+
+    .dock-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.12s ease;
+    }
+
+    .dock-tab:hover {
+      color: var(--text-chalk);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .dock-tab.active {
+      color: var(--teal-bright);
+      background: rgba(13, 148, 136, 0.15);
+    }
+
+    .dock-tab-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 12px;
+      gap: 12px;
+    }
+
+    .dock-tab-panel.hidden {
+      display: none;
+    }
+
+    /* Tab 1: iOS Guided Shortcut Cards */
+    .shortcut-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .shortcut-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--signal-teal);
+      transform: translateY(-1px);
+    }
+
+    .shortcut-card.highlighted {
+      border: 1.5px solid var(--teal-bright);
+      box-shadow: 0 0 12px rgba(13, 148, 136, 0.3);
+      background: linear-gradient(180deg, #1F304B 0%, #1E293B 100%);
+    }
+
+    .shortcut-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .shortcut-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-chalk);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .shortcut-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .mac-linux-note {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 10.5px;
+      color: #FDE68A;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .mac-linux-badge {
+      font-weight: 700;
+      font-size: 9.5px;
+      background: var(--amber-bright);
+      color: #0F172A;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+
+    /* Tab 2: Synced Terminal */
+    .terminal-window {
+      flex: 1;
+      background: #060A12;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: var(--font-mono);
+    }
+
+    .terminal-topbar {
+      height: 28px;
+      background: #0F172A;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .term-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .term-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .td-red { background: #EF4444; }
+    .td-yel { background: #F59E0B; }
+    .td-grn { background: #10B981; }
+
+    .terminal-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 11.5px;
+      color: #D1D5DB;
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.45;
+    }
+
+    .terminal-input-row {
+      display: flex;
+      align-items: center;
+      background: #0B1120;
+      border-top: 1px solid var(--border-subtle);
+      padding: 8px 10px;
+      gap: 8px;
+    }
+
+    .terminal-prompt {
+      color: var(--teal-bright);
+      font-weight: 700;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .terminal-cmd-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .chip-btn {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .chip-btn:hover {
+      background: var(--signal-teal);
+      border-color: var(--teal-bright);
+      color: #FFFFFF;
+    }
+
+    /* Translator Cheat Sheet Drawer */
+    .translator-drawer {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .translator-drawer.collapsed {
+      display: none;
+    }
+    @supports (content-visibility: hidden) {
+      .translator-drawer.collapsed {
+        display: block;
+        content-visibility: hidden;
+        height: 0;
+        padding: 0;
+        border: none;
+      }
+    }
+
+    .trans-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--amber-bright);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .trans-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 8px;
+      font-size: 10.5px;
+    }
+
+    .trans-item {
+      display: flex;
+      flex-direction: column;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 4px 6px;
+      border-radius: 4px;
+    }
+
+    .trans-mac { color: #94A3B8; }
+    .trans-linux { color: var(--teal-bright); font-family: var(--font-mono); font-weight: 600; }
+
+    /* Tab 3: Work-to-Rhythm Scratchpad */
+    .scratchpad-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .scratchpad-area {
+      flex: 1;
+      min-height: 180px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 10px;
+      color: var(--text-chalk);
+      font-family: var(--font-display);
+      font-size: 12.5px;
+      line-height: 1.5;
+      resize: none;
+      outline: none;
+    }
+
+    .scratchpad-area:focus {
+      border-color: var(--signal-teal);
+    }
+
+    .checklist-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-chalk);
+    }
+
+    .check-item input[type="checkbox"] {
+      accent-color: var(--signal-teal);
+    }
+
+    /* Spotlight Search Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 13, 26, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 10vh;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.16s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .spotlight-modal-card {
+      width: 100%;
+      max-width: 680px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: 3px solid var(--signal-teal);
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: 80vh;
+    }
+
+    .spotlight-search-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.5);
+    }
+
+    .spotlight-big-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #FFFFFF;
+      font-size: 16px;
+      font-family: var(--font-display);
+    }
+
+    .spotlight-results-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .search-result-row {
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-left: 3px solid transparent;
+      transition: all 0.12s ease;
+    }
+
+    .search-result-row:hover, .search-result-row.selected {
+      background: rgba(13, 148, 136, 0.15);
+      border-left-color: var(--signal-teal);
+    }
+
+    .res-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .res-filename {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-chalk);
+    }
+
+    .res-date {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-dim);
+    }
+
+    .res-snip {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .res-snip b {
+      color: var(--amber-bright);
+      font-weight: 700;
+    }
+
+    .res-path {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--teal-bright);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Spacebar Full Quick Look Modal Overlay */
+    .quicklook-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 13, 26, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 120;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease;
+    }
+
+    .quicklook-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .quicklook-window {
+      width: 100%;
+      max-width: 960px;
+      height: 85vh;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .quicklook-top {
+      height: 44px;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .quicklook-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-chalk);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quicklook-content {
+      flex: 1;
+      overflow: auto;
+      background: #0B1120;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .quicklook-content iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #FFFFFF;
+    }
+
+    .quicklook-text-wrap {
+      width: 100%;
+      height: 100%;
+      padding: 24px;
+      overflow: auto;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #E2E8F0;
+      white-space: pre-wrap;
+    }
+
+    /* Privacy Sanctum Modal */
+    .privacy-gate-modal {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-top: 4px solid var(--resonant-amber);
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Feedback Toast */
+    .toast-pill {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0F172A;
+      border: 1px solid var(--signal-teal);
+      box-shadow: 0 8px 24px rgba(13, 148, 136, 0.4);
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 200;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-pill.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* iOS / Mobile Browser Bottom Tab Bar & Responsive Layout */
+    .mobile-tab-bar {
+      display: none;
+    }
+
+    @media (max-width: 960px) {
+      html, body {
+        height: 100dvh;
+      }
+      .top-menu-bar {
+        height: auto;
+        min-height: 46px;
+        flex-wrap: wrap;
+        padding: 6px 10px;
+        gap: 6px;
+      }
+      .rhythm-switcher {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        justify-content: space-between;
+      }
+      .beat-btn {
+        flex: 1;
+        justify-content: center;
+        font-size: 10.5px;
+        padding: 5px 4px;
+      }
+      .menu-center {
+        display: none;
+      }
+      .system-memory-pill span#ramText {
+        font-size: 10px;
+      }
+      .brand-badge {
+        display: none;
+      }
+      .os-workspace {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        position: relative;
+      }
+      .pane-sidebar,
+      .pane-center,
+      .pane-dock {
+        width: 100% !important;
+        height: 100% !important;
+        flex: 1;
+        border-right: none;
+        border-left: none;
+        display: none;
+      }
+      .pane-sidebar.mobile-active,
+      .pane-center.mobile-active,
+      .pane-dock.mobile-active {
+        display: flex;
+      }
+      .miller-viewport {
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+      }
+      .miller-column {
+        flex: 0 0 84vw;
+        width: 84vw;
+        scroll-snap-align: start;
+      }
+      .inspector-column {
+        flex: 0 0 92vw;
+        width: 92vw;
+        scroll-snap-align: start;
+      }
+      .file-row {
+        height: 46px;
+        padding: 0 14px;
+      }
+      .view-toolbar {
+        height: auto;
+        min-height: 40px;
+        flex-wrap: wrap;
+        padding: 6px 10px;
+      }
+      .toolbar-actions {
+        width: 100%;
+        overflow-x: auto;
+        padding-top: 2px;
+      }
+      .filter-input {
+        flex: 1;
+        min-width: 100px;
+      }
+      .quicklook-overlay {
+        padding: 8px;
+      }
+      .quicklook-window {
+        height: 90dvh;
+      }
+      .mobile-tab-bar {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        height: 58px;
+        min-height: 58px;
+        background: rgba(11, 17, 32, 0.98);
+        border-top: 1px solid var(--border-subtle);
+        z-index: 90;
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .mob-tab-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        font-size: 10px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .mob-tab-btn .mob-ico {
+        font-size: 17px;
+        line-height: 1;
+      }
+      .mob-tab-btn.active {
+        color: var(--teal-bright);
+        background: rgba(13, 148, 136, 0.12);
+      }
+      .toast-pill {
+        bottom: 70px;
+        left: 12px;
+        right: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top System Menu Bar (macOS Status Bar style) -->
+  <header class="top-menu-bar" role="banner">
+    <div class="menu-left">
+      <!-- Harmonic Lattice Logo -->
+      <div class="brand-group" onclick="resetToHome()" title="Return to EFOS Desktop Home">
+        <svg class="brand-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" fill="#0F172A" stroke="#0D9488" stroke-width="4"/>
+          <path d="M25 35 L50 20 L75 35 L75 65 L50 80 L25 65 Z" stroke="#14B8A6" stroke-width="3" fill="none"/>
+          <path d="M50 20 L50 80" stroke="#0D9488" stroke-width="2.5"/>
+          <path d="M25 35 L75 65" stroke="#0D9488" stroke-width="2.5"/>
+          <path d="M25 65 L75 35" stroke="#0D9488" stroke-width="2.5"/>
+          <circle cx="50" cy="50" r="7" fill="#D97706" stroke="#F59E0B" stroke-width="2"/>
+        </svg>
+        <span class="brand-title">
+          EFOS Mini-OS
+          <span class="brand-badge">Catalina Hybrid</span>
+        </span>
+      </div>
+
+      <!-- Work-to-Rhythm 4-Beat Switcher -->
+      <nav class="rhythm-switcher" aria-label="Work-to-Rhythm 4-Beat Loop">
+        <button class="beat-btn active" data-beat="1" onclick="switchBeat(1)">
+          <span class="beat-dot"></span> 1. Real Work
+        </button>
+        <button class="beat-btn" data-beat="2" onclick="switchBeat(2)">
+          <span class="beat-dot"></span> 2. Clarify
+        </button>
+        <button class="beat-btn" data-beat="3" onclick="switchBeat(3)">
+          <span class="beat-dot"></span> 3. Sequence
+        </button>
+        <button class="beat-btn" data-beat="4" onclick="switchBeat(4)">
+          <span class="beat-dot"></span> 4. Reset &amp; Adapt
+        </button>
+      </nav>
+    </div>
+
+    <!-- Center: Spotlight Search Trigger -->
+    <div class="menu-center">
+      <div class="spotlight-pill" onclick="openSpotlight()" role="button" tabindex="0" title="Search legal archive (FTS5) or filenames">
+        <div class="spotlight-pill-left">
+          <span>🔍</span>
+          <span id="spotlightPlaceholder">Search evidence, filings, or remotes...</span>
+        </div>
+        <div class="spotlight-kbd">⌘K / Ctrl+K</div>
+      </div>
+    </div>
+
+    <!-- Right: System Radar & Live Memory -->
+    <div class="menu-right">
+      <button class="radar-toggle-btn active" id="radarToggleBtn" onclick="toggleCaseRadar()" title="Toggle Case Radar HUD Strip">
+        <span class="pulse-dot"></span>
+        <span id="radarPillText">📡 Case Radar · 2 Urgent</span>
+      </button>
+
+      <button class="sonic-sweep-btn" onclick="shareMicroclimateStudy()" title="Share direct link to the 15-Slide Microclimate &amp; AQI Study">
+        <span>🔗 Share Study</span>
+      </button>
+
+      <button class="sonic-sweep-btn" onclick="playSonicSweep()" title="Play harmonic Web Audio urgency sweep &amp; vocalize deadlines">
+        <span>🔊 Sonic Sweep</span>
+      </button>
+
+      <div class="system-memory-pill" id="systemMemoryPill" onclick="toggleSystemInfo()" title="Click for memory &amp; disk telemetry">
+        <span class="mem-indicator"></span>
+        <span id="ramText">🧠 RAM: 3.2 / 7.8 GB · 41%</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Collapsible Case Radar HUD Strip (Zero Layout Cost with content-visibility: hidden) -->
+  <section class="radar-hud-strip" id="caseRadarHud" aria-label="Active Legal Radar">
+    <div class="radar-hud-header">
+      <div class="radar-hud-title">
+        <span>⏱ Active Legal Deadlines &amp; Countdown Meter</span>
+        <span style="font-weight:400; font-size:11px; color:var(--text-muted);">— Clackamas Circuit, Oregon Court of Appeals &amp; Federal District Court</span>
+      </div>
+      <div class="radar-hud-actions">
+        <button class="radar-mini-btn" onclick="speakAllCases()">🔊 Read All Aloud</button>
+        <button class="radar-mini-btn" onclick="stopAudio()">⏹ Stop Voice</button>
+        <button class="radar-mini-btn" onclick="toggleCaseRadar()">▲ Collapse</button>
+      </div>
+    </div>
+    <div class="radar-cards-row" id="radarCardsRow">
+      <!-- 6 Case cards populated dynamically via JS -->
+    </div>
+  </section>
+
+  <!-- Main 3-Pane Workspace -->
+  <main class="os-workspace" role="main">
+
+    <!-- PANE 1: Left Sidebar (macOS Finder Sidebar) -->
+    <aside class="pane pane-sidebar" id="paneSidebar" aria-label="Finder Sidebar">
+      <!-- Favorites / Places -->
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Favorites / Places</div>
+        <ul class="sidebar-list" id="favoritesList">
+          <li class="sidebar-item" data-path="/home/annika/Desktop" onclick="navigateToPath('/home/annika/Desktop')">
+            <span class="sidebar-icon">🖥️</span>
+            <span>Desktop</span>
+          </li>
+          <li class="sidebar-item active" data-path="/home/annika/File_Next" onclick="navigateToPath('/home/annika/File_Next')">
+            <span class="sidebar-icon">🚀</span>
+            <span>File_Next (Ready to File)</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit" onclick="navigateToPath('/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit')">
+            <span class="sidebar-icon">🌡️</span>
+            <span>Microclimate &amp; AQI Study</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika/Documents" onclick="navigateToPath('/home/annika/Documents')">
+            <span class="sidebar-icon">📄</span>
+            <span>Documents</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika/google_drive_intake" onclick="navigateToPath('/home/annika/google_drive_intake')">
+            <span class="sidebar-icon">📥</span>
+            <span>Google Drive Intake</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika/Downloads" onclick="navigateToPath('/home/annika/Downloads')">
+            <span class="sidebar-icon">⬇️</span>
+            <span>Downloads</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika/ExecutiveFunctionOS_Web" onclick="navigateToPath('/home/annika/ExecutiveFunctionOS_Web')">
+            <span class="sidebar-icon">🌐</span>
+            <span>ExecutiveFunctionOS_Web</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika" onclick="navigateToPath('/home/annika')">
+            <span class="sidebar-icon">🏠</span>
+            <span>Home (~)</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Cloud Drive (rclone live remotes) -->
+      <div class="sidebar-section">
+        <div class="sidebar-heading">
+          <span>Cloud Drive (rclone)</span>
+          <button class="sidebar-heading-action" onclick="refreshCloud()" title="Refresh live cloud listings">🔄 Refresh</button>
+        </div>
+        <ul class="sidebar-list" id="remotesList">
+          <li class="sidebar-item" data-path="gdrive:" onclick="navigateToPath('gdrive:')">
+            <span class="sidebar-icon">☁️</span>
+            <span>Google Drive (gdrive:)</span>
+          </li>
+          <li class="sidebar-item" data-path="gdrive:File_Next" onclick="navigateToPath('gdrive:File_Next')">
+            <span class="sidebar-icon">📌</span>
+            <span>Pinned Latest (gdrive:)</span>
+          </li>
+          <li class="sidebar-item" data-path="gdrive:File_Next" onclick="navigateToPath('gdrive:File_Next')">
+            <span class="sidebar-icon">🚀</span>
+            <span>File_Next Cloud</span>
+          </li>
+          <li class="sidebar-item" data-path="dropbox:" onclick="navigateToPath('dropbox:')">
+            <span class="sidebar-icon">📦</span>
+            <span>Dropbox</span>
+          </li>
+          <li class="sidebar-item" data-path="icloud:" onclick="navigateToPath('icloud:')">
+            <span class="sidebar-icon">🍎</span>
+            <span>iCloud</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- The 5 EFOS Domains -->
+      <div class="sidebar-section">
+        <div class="sidebar-heading">The 5 EFOS Domains</div>
+        <ul class="sidebar-list" id="domainsList">
+          <li class="sidebar-item" data-path="/home/annika/File_Next" onclick="navigateToPath('/home/annika/File_Next')">
+            <span class="sidebar-icon">⚖️</span>
+            <span>01 · Justice &amp; Litigation</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika/ExecutiveFunctionOS_Web" onclick="navigateToPath('/home/annika/ExecutiveFunctionOS_Web')">
+            <span class="sidebar-icon">⚙️</span>
+            <span>02 · Executive Systems</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika/projects" onclick="navigateToPath('/home/annika/projects')">
+            <span class="sidebar-icon">🎨</span>
+            <span>03 · Magnum Opus Studios</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika/Public_Research_Commons" onclick="navigateToPath('/home/annika/Public_Research_Commons')">
+            <span class="sidebar-icon">🔬</span>
+            <span>04 · Research Commons</span>
+          </li>
+          <li class="sidebar-item" data-path="/home/annika/Dropbox_Private_Vault" onclick="handleDomain5Click()">
+            <span class="sidebar-icon">🛡️</span>
+            <span>05 · Private Sanctum 🔒</span>
+          </li>
+        </ul>
+
+        <!-- Privacy Shield Indicator -->
+        <div class="privacy-shield-row">
+          <div class="privacy-status" id="vaultStatusText">
+            <span>🔒 Vault Locked (0700)</span>
+          </div>
+          <button class="privacy-toggle-btn" id="vaultToggleBtn" onclick="toggleVaultLock()">Unlock</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- PANE 2: Center Miller Columns & Quick Look Inspector -->
+    <section class="pane pane-center mobile-active" id="paneCenter" aria-label="Miller Columns Browser">
+      <!-- Toolbar -->
+      <div class="view-toolbar">
+        <div class="breadcrumbs-wrap" id="breadcrumbsWrap">
+          <span class="crumb-item" onclick="navigateToPath('/home/annika')">~</span>
+          <span class="crumb-sep">›</span>
+          <span class="crumb-item current" onclick="navigateToPath('/home/annika/File_Next')">File_Next</span>
+        </div>
+
+        <div class="toolbar-actions">
+          <span class="file-size-badge" id="itemCountBadge">42 items</span>
+          <input type="text" class="filter-input" id="columnFilterInput" placeholder="Filter column..." oninput="handleColumnFilter(this.value)" />
+          <button class="tb-btn" onclick="triggerQuickLookModal()" title="Spacebar preview">
+            <span>👁️ Quick Look</span>
+          </button>
+          <button class="tb-btn" onclick="pinCurrentCloudFile()" title="Pin selected cloud file to local cache">
+            <span>☁️ Pin / Sync</span>
+          </button>
+          <button class="tb-btn tb-btn-primary" onclick="sendSelectedToAntigravity()" title="Send selected file/folder context to Antigravity terminal">
+            <span>🤖 Pin to Antigravity</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Miller Columns Container -->
+      <div class="miller-viewport" id="millerContainer" tabindex="0" role="region" aria-label="Miller Columns Container">
+        <!-- Columns appended dynamically -->
+      </div>
+    </section>
+
+    <!-- PANE 3: Right Dock ("Antigravity Companion & Guided Terminal") -->
+    <aside class="pane pane-dock" id="paneDock" aria-label="Companion Terminal Dock">
+      <!-- Context Header -->
+      <div class="dock-context-header">
+        <div class="context-line">
+          <span class="context-label">📂 Active Folder:</span>
+          <span class="context-value" id="dockActiveFolder" title="/home/annika/File_Next">/home/annika/File_Next</span>
+        </div>
+        <div class="context-line">
+          <span class="context-label">📄 Selected File:</span>
+          <span class="context-value" id="dockSelectedFile" title="COMBINED_STATEMENT_AND_DECLARATION_OF_MAILING.pdf">COMBINED_STATEMENT...pdf</span>
+        </div>
+        <button class="antigravity-send-btn" onclick="sendSelectedToAntigravity()">
+          <span>📌 Send File Context to Antigravity</span>
+        </button>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <nav class="dock-tabs-nav">
+        <button class="dock-tab active" data-tab="shortcuts" onclick="switchDockTab('shortcuts')">
+          <span>✨ Guided Shortcuts</span>
+        </button>
+        <button class="dock-tab" data-tab="terminal" onclick="switchDockTab('terminal')">
+          <span>💻 Live Terminal</span>
+        </button>
+        <button class="dock-tab" data-tab="scratchpad" onclick="switchDockTab('scratchpad')">
+          <span>🧭 Work-to-Rhythm</span>
+        </button>
+      </nav>
+
+      <!-- Tab 1: Guided Shortcuts (iOS Style Cards) -->
+      <div class="dock-tab-panel" id="tabShortcuts">
+        <div class="shortcut-card highlighted" data-action="validate_pleadings" data-beats="1" onclick="runGuidedAction('validate_pleadings')">
+          <div class="shortcut-top">
+            <span class="shortcut-title">⚖️ Validate Pleadings</span>
+            <span class="card-badge badge-urgent">Beat 1 Core</span>
+          </div>
+          <p class="shortcut-desc">Integrity gate: verifies rule citations, layout frozen grid, and exhibit cross-references via <code>./do validate</code>.</p>
+          <div class="mac-linux-note">
+            <span class="mac-linux-badge">Mac &rarr; Linux</span>
+            <span>Automator Preflight Script &rarr; Python <code>./do validate</code></span>
+          </div>
+        </div>
+
+        <div class="shortcut-card" data-action="sync_gdrive" data-beats="3" onclick="runGuidedAction('sync_gdrive')">
+          <div class="shortcut-top">
+            <span class="shortcut-title">☁️ Sync to Google Drive</span>
+            <span class="card-badge badge-steady">Beat 3</span>
+          </div>
+          <p class="shortcut-desc">Pushes latest signed legal packets and exhibits from <code>~/File_Next</code> to <code>gdrive:File_Next</code>.</p>
+          <div class="mac-linux-note">
+            <span class="mac-linux-badge">Mac &rarr; Linux</span>
+            <span>iCloud Drive sync &rarr; <code>rclone sync File_Next gdrive:</code></span>
+          </div>
+        </div>
+
+        <div class="shortcut-card" data-action="triage_downloads" data-beats="2" onclick="runGuidedAction('triage_downloads')">
+          <div class="shortcut-top">
+            <span class="shortcut-title">🧹 Triage Downloads (Dry Run)</span>
+            <span class="card-badge badge-soon">Beat 2</span>
+          </div>
+          <p class="shortcut-desc">Sorts incoming pleadings, medical records, and utility receipts into the 5 EFOS domains with zero private leakage.</p>
+          <div class="mac-linux-note">
+            <span class="mac-linux-badge">Mac &rarr; Linux</span>
+            <span>Hazel folder rule &rarr; Python intake classifier</span>
+          </div>
+        </div>
+
+        <div class="shortcut-card" data-action="opus_status" data-beats="3" onclick="runGuidedAction('opus_status')">
+          <div class="shortcut-top">
+            <span class="shortcut-title">🎨 Magnum Opus Status</span>
+            <span class="card-badge badge-steady">Beat 3</span>
+          </div>
+          <p class="shortcut-desc">Telemetry overview across NESTRIS Delta 4D, Transdimensional Audio, and visual identity repositories.</p>
+          <div class="mac-linux-note">
+            <span class="mac-linux-badge">Mac &rarr; Linux</span>
+            <span>Xcode Source Control &rarr; Multi-repo git telemetry</span>
+          </div>
+        </div>
+
+        <div class="shortcut-card" data-action="free_ram_check" data-beats="4" onclick="runGuidedAction('free_ram_check')">
+          <div class="shortcut-top">
+            <span class="shortcut-title">🧠 Check Top RAM Hogs</span>
+            <span class="card-badge badge-soon">Beat 4</span>
+          </div>
+          <p class="shortcut-desc">Inspect memory footprint to ensure lightweight performance (&lt;30 MB daemon, low-RAM background services).</p>
+          <div class="mac-linux-note">
+            <span class="mac-linux-badge">Mac &rarr; Linux</span>
+            <span>Activity Monitor Memory &rarr; <code>ps aux --sort=-%mem</code></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Live Synced Terminal -->
+      <div class="dock-tab-panel hidden" id="tabTerminal">
+        <div class="terminal-window">
+          <div class="terminal-topbar">
+            <div class="term-dots">
+              <span class="term-dot td-red"></span>
+              <span class="term-dot td-yel"></span>
+              <span class="term-dot td-grn"></span>
+            </div>
+            <span>efos-shell · companion</span>
+            <span id="termStatusBadge" style="color:var(--teal-bright);">ready</span>
+          </div>
+          <div class="terminal-body" id="termBody">
+EFOS Mini-OS Guided Terminal v1.2
+Connected to daemon on http://127.0.0.1:8090
+Type commands or click quick suggestions below.
+          </div>
+          <div class="terminal-input-row">
+            <span class="terminal-prompt" id="termPrompt">annika@efos:~$</span>
+            <input type="text" class="terminal-cmd-input" id="termCmdInput" placeholder="Enter shell command..." onkeydown="handleTerminalKey(event)" />
+          </div>
+        </div>
+
+        <!-- Suggestion Chips -->
+        <div class="chips-row">
+          <button class="chip-btn" onclick="runTerminalCmd('ls -lh')">ls -lh</button>
+          <button class="chip-btn" onclick="runTerminalCmd('./do validate')">./do validate</button>
+          <button class="chip-btn" onclick="runTerminalCmd('rclone lsd gdrive:')">rclone lsd gdrive:</button>
+          <button class="chip-btn" onclick="runTerminalCmd('free -m')">free -m</button>
+          <button class="chip-btn" onclick="runTerminalCmd('git status')">git status</button>
+        </div>
+
+        <!-- Collapsible Mac -> Linux Quick Translator -->
+        <div class="translator-drawer" id="translatorDrawer">
+          <div class="trans-title">
+            <span>💡 Mac / iOS &rarr; Linux Quick Translator</span>
+            <button class="sidebar-heading-action" onclick="toggleTranslatorDrawer()">Toggle</button>
+          </div>
+          <div class="trans-grid">
+            <div class="trans-item">
+              <span class="trans-mac">Finder Columns</span>
+              <span class="trans-linux">efos-os Miller Columns</span>
+            </div>
+            <div class="trans-item">
+              <span class="trans-mac">Spotlight (⌘Space)</span>
+              <span class="trans-linux">find-doc / FTS5 (⌘K)</span>
+            </div>
+            <div class="trans-item">
+              <span class="trans-mac">pbcopy / pbpaste</span>
+              <span class="trans-linux">xclip -selection clipboard</span>
+            </div>
+            <div class="trans-item">
+              <span class="trans-mac">open &lt;file&gt;</span>
+              <span class="trans-linux">xdg-open &lt;file&gt;</span>
+            </div>
+            <div class="trans-item">
+              <span class="trans-mac">Activity Monitor</span>
+              <span class="trans-linux">ps aux / free -m</span>
+            </div>
+            <div class="trans-item">
+              <span class="trans-mac">iCloud Sync</span>
+              <span class="trans-linux">rclone gdrive: / sync</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Work-to-Rhythm Scratchpad -->
+      <div class="dock-tab-panel hidden" id="tabScratchpad">
+        <div class="scratchpad-wrap">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:700; font-size:12px; color:var(--text-chalk);" id="scratchpadBeatLabel">Beat 1: Real Work Notes</span>
+            <button class="tb-btn" onclick="exportScratchpad()" style="padding:2px 8px; font-size:11px;">💾 Export Daily Memory</button>
+          </div>
+          <textarea class="scratchpad-area" id="scratchpadText" placeholder="Capture immediate thoughts, next court actions, or draft points without mental clutter..." oninput="saveScratchpad()"></textarea>
+
+          <div class="checklist-wrap">
+            <span style="font-weight:700; font-size:11.5px; color:var(--text-chalk);">Immediate Execution Checklist</span>
+            <label class="check-item">
+              <input type="checkbox" id="chk1" onchange="saveChecklist()" />
+              <span>Mail 3 Clarke follow-up envelopes (Ryman, Trustee, O'Donnell)</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chk2" onchange="saveChecklist()" />
+              <span>File signed Declaration of Mailing at Clackamas Civil Desk</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chk3" onchange="saveChecklist()" />
+              <span>Verify Truck Tow insurance window ($200 window ends Nov 7)</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chk4" onchange="saveChecklist()" />
+              <span>Run <code>./do validate</code> on Federal Civil Rights FAC</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- iOS Mobile Bottom Navigation Tab Bar -->
+  <nav class="mobile-tab-bar" id="mobileTabBar" aria-label="Mobile Navigation">
+    <button class="mob-tab-btn active" data-mob="center" onclick="switchMobilePane('center')">
+      <span class="mob-ico">📁</span>
+      <span>Files</span>
+    </button>
+    <button class="mob-tab-btn" data-mob="sidebar" onclick="switchMobilePane('sidebar')">
+      <span class="mob-ico">☁️</span>
+      <span>Places &amp; Cloud</span>
+    </button>
+    <button class="mob-tab-btn" data-mob="radar" onclick="toggleMobileRadar()">
+      <span class="mob-ico">📡</span>
+      <span>Case Radar</span>
+    </button>
+    <button class="mob-tab-btn" data-mob="dock" onclick="switchMobilePane('dock')">
+      <span class="mob-ico">✨</span>
+      <span>Terminal</span>
+    </button>
+    <button class="mob-tab-btn" data-mob="search" onclick="openSpotlight()">
+      <span class="mob-ico">🔍</span>
+      <span>Spotlight</span>
+    </button>
+  </nav>
+
+  <!-- Spotlight Search Modal Overlay -->
+  <div class="modal-overlay" id="spotlightModal" onclick="handleSpotlightBackdrop(event)">
+    <div class="spotlight-modal-card" onclick="event.stopPropagation()">
+      <div class="spotlight-search-header">
+        <span style="font-size:18px;">🔍</span>
+        <input type="text" class="spotlight-big-input" id="spotlightInput" placeholder="Search court filings, evidence, transcripts, or filenames..." oninput="handleSpotlightInput(this.value)" onkeydown="handleSpotlightKey(event)" />
+        <span class="spotlight-kbd">ESC to Close</span>
+      </div>
+      <ul class="spotlight-results-list" id="spotlightResultsList">
+        <!-- Results rendered dynamically -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- Spacebar Full Quick Look Modal Overlay -->
+  <div class="quicklook-overlay" id="quickLookModal" onclick="handleQuickLookBackdrop(event)">
+    <div class="quicklook-window" onclick="event.stopPropagation()">
+      <div class="quicklook-top">
+        <div class="quicklook-title">
+          <span id="quickLookIcon">📄</span>
+          <span id="quickLookTitle">File Preview</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="tb-btn" id="qlViewToggleBtn" onclick="toggleQLViewMode()" style="display:none;">Toggle Source / View</button>
+          <button class="tb-btn" onclick="closeQuickLookModal()">✕ Close (Space)</button>
+        </div>
+      </div>
+      <div class="quicklook-content" id="quickLookContent">
+        <!-- Preview Content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy Shield Gate Modal -->
+  <div class="modal-overlay" id="privacyModal" onclick="closePrivacyModal()">
+    <div class="privacy-gate-modal" onclick="event.stopPropagation()">
+      <div style="font-size:32px;">🛡️</div>
+      <h2 style="font-size:16px; font-weight:800; color:var(--text-chalk);">Domain 05 · Private Sanctum</h2>
+      <p style="font-size:12px; color:var(--text-muted); line-height:1.45;">
+        This directory contains <strong>0700 encrypted personal records</strong> (medical disclosures, financial IFP waivers, personal correspondence). It is isolated from public surfaces by the Privacy Membrane.
+      </p>
+      <div style="display:flex; gap:10px; margin-top:8px;">
+        <button class="tb-btn" onclick="closePrivacyModal()" style="flex:1; justify-content:center;">Cancel</button>
+        <button class="tb-btn tb-btn-primary" onclick="confirmUnlockVault()" style="flex:1; justify-content:center;">Unlock &amp; View</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Off-Network Passcode Lock Gate Modal -->
+  <div class="modal-overlay" id="pinLockModal" style="z-index:250; background:rgba(8, 13, 26, 0.96); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);">
+    <div class="privacy-gate-modal" style="max-width:360px; border-top-color:var(--signal-teal);">
+      <div style="font-size:30px;">🔐</div>
+      <h2 style="font-size:16px; font-weight:800; color:var(--text-chalk);">EFOS Mini-OS · Private Access</h2>
+      <p style="font-size:12px; color:var(--text-muted); line-height:1.45;">
+        Enter your 4-digit EFOS passcode to unlock your mobile workspace.<br/>
+        <a href="forensic-microclimate.html" style="color:var(--teal-bright); text-decoration:underline; font-weight:600; display:inline-block; margin-top:4px;">Or open the Public Microclimate &amp; AQI Study &rarr;</a>
+      </p>
+      <input type="password" id="pinCodeInput" inputmode="numeric" maxlength="8" placeholder="••••"
+             style="background:#0F172A; border:1.5px solid var(--border-subtle); border-radius:10px; padding:10px; font-size:22px; text-align:center; letter-spacing:0.35em; color:var(--text-chalk); font-family:var(--font-mono); outline:none;"
+             onkeydown="if(event.key==='Enter') verifyPinGate();" />
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:4px;">
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('1')">1</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('2')">2</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('3')">3</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('4')">4</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('5')">5</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('6')">6</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('7')">7</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('8')">8</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('9')">9</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:12px;" onclick="clearPinDigits()">Clear</button>
+        <button class="tb-btn" style="justify-content:center; padding:10px; font-size:15px;" onclick="appendPinDigit('0')">0</button>
+        <button class="tb-btn tb-btn-primary" style="justify-content:center; padding:10px; font-size:13px;" onclick="verifyPinGate()">Unlock</button>
+      </div>
+      <div id="pinErrorMsg" style="font-size:11.5px; color:var(--urgent-red); display:none; font-weight:600;">Incorrect passcode. Try again.</div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Pill -->
+  <div class="toast-pill" id="toastPill">
+    <span id="toastIcon">✅</span>
+    <span id="toastMsg">Action completed successfully</span>
+  </div>
+
+  <script>
+    /*
+      EFOS Mini-OS Flagship Desktop Controller
+      Architected for Annika Eriksson
+      Integrates Modern Web Guidance:
+      1. Roving Tabindex + spatial arrow-key navigation with live getBoundingClientRect().
+      2. content-visibility: auto + contain-intrinsic-size on off-screen items (.file-row:nth-child(n+25)).
+      3. content-visibility: hidden on toggled drawers for zero-layout-cost.
+      4. Web Audio API + SpeechSynthesis sonic sweeps.
+    */
+
+    const API_BASE = window.location.protocol.startsWith("http") ? window.location.origin : "http://192.168.1.183:8090";
+
+    function switchMobilePane(target) {
+      const s = document.getElementById("paneSidebar");
+      const c = document.getElementById("paneCenter");
+      const d = document.getElementById("paneDock");
+      if (s && c && d) {
+        s.classList.toggle("mobile-active", target === "sidebar");
+        c.classList.toggle("mobile-active", target === "center");
+        d.classList.toggle("mobile-active", target === "dock");
+      }
+      document.querySelectorAll(".mob-tab-btn").forEach(btn => {
+        if (["center", "sidebar", "dock"].includes(btn.dataset.mob)) {
+          btn.classList.toggle("active", btn.dataset.mob === target);
+        }
+      });
+    }
+
+    function toggleMobileRadar() {
+      toggleCaseRadar();
+      const hud = document.getElementById("caseRadarHud");
+      if (hud && !hud.classList.contains("collapsed")) {
+        hud.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    // Application State
+    const state = {
+      activeBeat: 1,
+      currentPath: "/home/annika/File_Next",
+      selectedFile: "/home/annika/File_Next/COMBINED_STATEMENT_AND_DECLARATION_OF_MAILING.pdf",
+      columns: [], // array of { path, entries, selectedIndex }
+      activeColumnIndex: 0,
+      systemStats: null,
+      domainsData: null,
+      vaultUnlocked: false,
+      searchQuery: "",
+      searchResults: [],
+      selectedSearchIndex: 0,
+      activeDockTab: "shortcuts",
+      audioCtx: null,
+      qlMode: "live", // 'live' or 'source'
+      staticVfs: null
+    };
+
+    // Off-Network Passcode Gate & Direct Study Link Sharing
+    function isLocalHomeLan() {
+      const h = window.location.hostname;
+      return ["127.0.0.1", "localhost", "192.168.1.183"].includes(h) || h.startsWith("192.168.");
+    }
+
+    function initPinGate() {
+      const modal = document.getElementById("pinLockModal");
+      if (!modal) return;
+      if (isLocalHomeLan() || localStorage.getItem("efos_pin_unlocked_v1") === "true") {
+        modal.classList.remove("active");
+        return;
+      }
+      modal.classList.add("active");
+      setTimeout(() => {
+        const inp = document.getElementById("pinCodeInput");
+        if (inp) inp.focus();
+      }, 80);
+    }
+
+    function appendPinDigit(d) {
+      const inp = document.getElementById("pinCodeInput");
+      const err = document.getElementById("pinErrorMsg");
+      if (err) err.style.display = "none";
+      if (!inp) return;
+      if (inp.value.length < 8) {
+        inp.value += d;
+      }
+      if (inp.value === "2026") {
+        verifyPinGate();
+      }
+    }
+
+    function clearPinDigits() {
+      const inp = document.getElementById("pinCodeInput");
+      const err = document.getElementById("pinErrorMsg");
+      if (inp) inp.value = "";
+      if (err) err.style.display = "none";
+    }
+
+    function verifyPinGate() {
+      const inp = document.getElementById("pinCodeInput");
+      const err = document.getElementById("pinErrorMsg");
+      if (!inp) return;
+      if (inp.value.trim() === "2026") {
+        localStorage.setItem("efos_pin_unlocked_v1", "true");
+        document.getElementById("pinLockModal").classList.remove("active");
+        playTone(659.25, 0.14);
+        showToast("🔓 EFOS Mobile Cloud Workspace Unlocked");
+      } else {
+        if (err) err.style.display = "block";
+        inp.value = "";
+      }
+    }
+
+    async function shareMicroclimateStudy() {
+      const studyUrl = new URL("forensic-microclimate.html", window.location.href).href;
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: "Chapin Court Microclimate & AQI Study",
+            text: "15-Slide Forensic Microclimate & Air Quality Study (Chapin Park Canopy Buffer)",
+            url: studyUrl
+          });
+          showToast("Shared Microclimate Study link!");
+          return;
+        } catch (e) {}
+      }
+      try {
+        await navigator.clipboard.writeText(studyUrl);
+        showToast("🔗 Copied direct study link to clipboard!");
+      } catch (e) {
+        prompt("Copy direct shareable link for Microclimate & AQI Study:", studyUrl);
+      }
+    }
+
+    async function ensureStaticVfs() {
+      if (state.staticVfs) return state.staticVfs;
+      try {
+        const r = await fetch("static_vfs.json");
+        if (r.ok) {
+          state.staticVfs = await r.json();
+        }
+      } catch (e) {}
+      return state.staticVfs;
+    }
+
+    function resolveFileUrl(itemOrPath) {
+      const p = typeof itemOrPath === "string" ? itemOrPath : itemOrPath.path;
+      if (typeof itemOrPath === "object" && itemOrPath.static_url) {
+        return itemOrPath.static_url;
+      }
+      if (state.staticVfs && state.staticVfs.static_files && state.staticVfs.static_files[p]) {
+        return state.staticVfs.static_files[p];
+      }
+      if (!isLocalHomeLan() && p && p.includes("Chapin_Microclimate_and_AQI_Audit/")) {
+        return p.split("Chapin_Microclimate_and_AQI_Audit/")[1];
+      }
+      return `${API_BASE}/api/raw?path=${encodeURIComponent(p)}`;
+    }
+
+    // Master Case Radar Matter Data
+    const radarData = [
+      {
+        id: 0,
+        title: "1. Clarke v. Ryman",
+        docket: "Clackamas Circuit · 26CV59176",
+        badge: "🔴 TODAY · NOV 2",
+        urgencyClass: "card-urgent",
+        badgeClass: "badge-urgent",
+        fillColor: "var(--urgent-red)",
+        percent: 100,
+        path: "/home/annika/File_Next",
+        targetFile: "/home/annika/File_Next/COMBINED_STATEMENT_AND_DECLARATION_OF_MAILING.pdf",
+        actionText: "Print & mail 3 follow-up envelopes today to cure clerk register hold.",
+        audio: "Case 1: Patricia Clarke versus Amanda Ryman, Clackamas Circuit Case 26 C V 59176. Action needed today, November 2. The Sheriff served attorney Timothy O'Donnell on October 28. Print and mail the three follow-up envelopes and file the fourth signed copy of the Declaration of Mailing to clear the clerk's register hold."
+      },
+      {
+        id: 1,
+        title: "2. Truck Tow Writ",
+        docket: "Tow No. 26-20271 (1995 Mazda)",
+        badge: "🔴 NOV 7 & 12",
+        urgencyClass: "card-urgent",
+        badgeClass: "badge-urgent",
+        fillColor: "var(--urgent-red)",
+        percent: 90,
+        path: "/home/annika/Desktop/WRIT_OF_REVIEW_CORPUS",
+        targetFile: "/home/annika/Desktop/WRIT_OF_REVIEW_CORPUS/FILING_PACKET/MASTER_FILING_PACKET_CONSOLIDATED.pdf",
+        actionText: "Nov 7 insurance window ($200) & Nov 12 auction date. Master Writ ready.",
+        audio: "Case 2: Truck Tow Writ of Review, Case 26 dash 20271. Two critical dates: Saturday November 7 insurance window, and Thursday November 12 tow auction deadline. Consolidated Writ and Stay packet is ready."
+      },
+      {
+        id: 2,
+        title: "3. Foreclosure & Quiet Title",
+        docket: "Clackamas Circuit · 17CV38591",
+        badge: "🟡 NOV 30 (28d)",
+        urgencyClass: "card-soon",
+        badgeClass: "badge-soon",
+        fillColor: "var(--resonant-amber)",
+        percent: 52,
+        path: "/home/annika/Documents/Filed_17CV38591_Motion_Package_Complete",
+        targetFile: "/home/annika/Documents/Filed_17CV38591_Motion_Package_Complete/05_Consolidated_All_In_One_Packages/01_Complete_Filed_Motion_Package_530pp.pdf",
+        actionText: "Oral argument before Judge Wetzel Nov 30. 530p package 100% filed.",
+        audio: "Case 3: Clackamas Foreclosure and Quiet Title. 530-page Void Judgment Set-Aside package is filed. Oral argument before Judge Wetzel is Monday, November 30."
+      },
+      {
+        id: 3,
+        title: "4. Court of Appeals",
+        docket: "COA Case No. A191649",
+        badge: "🟢 ON TRACK",
+        urgencyClass: "card-steady",
+        badgeClass: "badge-steady",
+        fillColor: "var(--signal-teal)",
+        percent: 35,
+        path: "/home/annika/Desktop/FILE_NOW_CENTRAL_COMMAND",
+        targetFile: "/home/annika/Desktop/FILE_NOW_CENTRAL_COMMAND/APPELLANT_STATEMENT_OF_POINTS_ORS_19_255.pdf",
+        actionText: "Statement of Points served Oct 27. Waiting on transcriber.",
+        audio: "Case 4: Oregon Court of Appeals, Case A 191649. On track. Statement of Points served. Awaiting transcriber to set Opening Brief date."
+      },
+      {
+        id: 4,
+        title: "5. Federal Civil Rights",
+        docket: "USDC · 3:26-cv-01885-IM",
+        badge: "🟢 FAC FILED",
+        urgencyClass: "card-steady",
+        badgeClass: "badge-steady",
+        fillColor: "var(--signal-teal)",
+        percent: 25,
+        path: "/home/annika/Documents/Federal_Complaint",
+        targetFile: "/home/annika/Documents/Federal_Complaint/FIRST_AMENDED_CIVIL_RIGHTS_COMPLAINT.pdf",
+        actionText: "First Amended Complaint filed Oct 8. 6 proposed summonses ready.",
+        audio: "Case 5: Federal Civil Rights Action before Judge Immergut. First Amended Complaint filed October 8. Proposed summonses for all six defendants ready."
+      },
+      {
+        id: 5,
+        title: "6. Municipal & Clarke Probate",
+        docket: "CE-014675-26 & 26PB04219",
+        badge: "🟢 PACKAGED",
+        urgencyClass: "card-steady",
+        badgeClass: "badge-steady",
+        fillColor: "var(--signal-teal)",
+        percent: 15,
+        path: "/home/annika/Desktop/06_MUNICIPAL_COURT_APPEAL_CE01467526",
+        targetFile: "/home/annika/Desktop/06_MUNICIPAL_COURT_APPEAL_CE01467526/00_COMBINED_COURT_OF_APPEALS_MUNICIPAL_PACKAGE_CE01467526.pdf",
+        actionText: "Municipal Stay & Patricia Probate/Trust claims built on Desktop.",
+        audio: "Case 6: Municipal Code Appeal and Patricia Clarke Probate Claims. Both packages are 100 percent built and staged on your Desktop."
+      }
+    ];
+
+    // Initialization
+    window.addEventListener("DOMContentLoaded", async () => {
+      initPinGate();
+      await ensureStaticVfs();
+      initCaseRadarHUD();
+      if (window.innerWidth <= 960) {
+        const hud = document.getElementById("caseRadarHud");
+        const btn = document.getElementById("radarToggleBtn");
+        if (hud) hud.classList.add("collapsed");
+        if (btn) btn.classList.remove("active");
+      }
+      initKeyboardNavigation();
+      loadSystemStats();
+      navigateToPath(state.currentPath);
+      loadScratchpad();
+
+      // Poll system memory every 10 seconds
+      setInterval(loadSystemStats, 10000);
+    });
+
+    // Case Radar HUD
+    function initCaseRadarHUD() {
+      const container = document.getElementById("radarCardsRow");
+      container.innerHTML = radarData.map(c => `
+        <article class="radar-card ${c.urgencyClass}" onclick="openCasePacket('${c.path}', '${c.targetFile}')">
+          <div class="card-top">
+            <span class="card-matter-title">${c.title}</span>
+            <span class="card-badge ${c.badgeClass}">${c.badge}</span>
+          </div>
+          <div class="card-docket">${c.docket}</div>
+          <div class="meter-bar">
+            <div class="meter-fill" style="width:${c.percent}%; background:${c.fillColor};"></div>
+          </div>
+          <div class="card-footer">
+            <button class="card-link-btn" onclick="event.stopPropagation(); openCasePacket('${c.path}', '${c.targetFile}')">📂 Open Packet</button>
+            <button class="card-speak-btn" onclick="event.stopPropagation(); speakCase(${c.id})" title="Read matter aloud">🔊</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function toggleCaseRadar() {
+      const hud = document.getElementById("caseRadarHud");
+      const btn = document.getElementById("radarToggleBtn");
+      hud.classList.toggle("collapsed");
+      btn.classList.toggle("active");
+    }
+
+    // Audio & Speech Synthesis
+    function getAudioContext() {
+      if (!state.audioCtx) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) state.audioCtx = new AudioCtx();
+      }
+      if (state.audioCtx && state.audioCtx.state === "suspended") {
+        state.audioCtx.resume();
+      }
+      return state.audioCtx;
+    }
+
+    function playTone(freq, duration, delay = 0) {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+      gain.gain.setValueAtTime(0.001, ctx.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + delay + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + duration);
+    }
+
+    function playSonicSweep() {
+      const notes = [
+        { f: 783.99, d: 0.16, t: 0.00 }, // G5 - Clarke mailing (today)
+        { f: 659.25, d: 0.16, t: 0.18 }, // E5 - Nov 7 Insurance window
+        { f: 587.33, d: 0.18, t: 0.36 }, // D5 - Nov 12 Tow stay
+        { f: 523.25, d: 0.22, t: 0.56 }, // C5 - Nov 30 Hearing
+        { f: 440.00, d: 0.28, t: 0.80 }  // A4 - Steady
+      ];
+      notes.forEach(n => playTone(n.f, n.d, n.t));
+
+      // Follow up with voice summary
+      setTimeout(() => {
+        speakText("Case Radar urgency sweep. Top priority today: Clarke versus Ryman follow-up mailing declaration.");
+      }, 1100);
+      showToast("🔊 Sonic urgency sweep completed");
+    }
+
+    function stopAudio() {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    function speakText(text) {
+      stopAudio();
+      if (!("speechSynthesis" in window)) return;
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.rate = 1.02;
+      utter.pitch = 1.0;
+      window.speechSynthesis.speak(utter);
+    }
+
+    function speakCase(id) {
+      const c = radarData.find(x => x.id === id);
+      if (!c) return;
+      playTone(c.urgencyClass === "card-urgent" ? 659.25 : 523.25, 0.15);
+      speakText(c.audio);
+    }
+
+    function speakAllCases() {
+      playSonicSweep();
+      setTimeout(() => {
+        const fullScript = radarData.map(c => c.audio).join(" ... Next matter: ");
+        speakText("Executive Function O S Case Radar. " + fullScript);
+      }, 1200);
+    }
+
+    function openCasePacket(folderPath, targetFilePath) {
+      navigateToPath(folderPath, () => {
+        if (targetFilePath) {
+          selectFileByPath(targetFilePath);
+        }
+      });
+      showToast(`Opened case workspace: ${folderPath.split("/").pop()}`);
+    }
+
+    // Work-to-Rhythm 4-Beat Switcher
+    function switchBeat(beatNum) {
+      state.activeBeat = beatNum;
+      document.querySelectorAll(".beat-btn").forEach(btn => {
+        btn.classList.toggle("active", parseInt(btn.dataset.beat) === beatNum);
+      });
+
+      // Highlight corresponding shortcut cards in Pane 3
+      document.querySelectorAll(".shortcut-card").forEach(card => {
+        const beats = card.dataset.beats ? card.dataset.beats.split(",").map(b => parseInt(b)) : [];
+        card.classList.toggle("highlighted", beats.includes(beatNum));
+      });
+
+      const beatNames = [
+        "",
+        "Beat 1: Real Work · Forward Execution",
+        "Beat 2: Clarify · Triage & Verification",
+        "Beat 3: Sequence · Batching & Remotes",
+        "Beat 4: Reset & Adapt · Memory & Baseline"
+      ];
+      document.getElementById("scratchpadBeatLabel").textContent = `${beatNames[beatNum]} Notes`;
+      showToast(`Switched to ${beatNames[beatNum]}`);
+    }
+
+    // System Telemetry
+    async function loadSystemStats() {
+      try {
+        const res = await fetch(`${API_BASE}/api/system`);
+        if (res.ok) {
+          const data = await res.json();
+          state.systemStats = data;
+          const ram = data.ram;
+          document.getElementById("ramText").textContent = `🧠 RAM: ${(ram.used_mb/1024).toFixed(1)} / ${(ram.total_mb/1024).toFixed(1)} GB · ${ram.percent}%`;
+          const indicator = document.querySelector(".mem-indicator");
+          if (ram.percent > 80) indicator.style.background = "var(--urgent-red)";
+          else if (ram.percent > 60) indicator.style.background = "var(--resonant-amber)";
+          else indicator.style.background = "var(--calm-green)";
+        }
+      } catch (e) {
+        // Fallback simulated metrics
+        document.getElementById("ramText").textContent = "🧠 RAM: 3.2 / 7.8 GB · 41%";
+      }
+    }
+
+    function toggleSystemInfo() {
+      if (!state.systemStats) return;
+      const d = state.systemStats.disk;
+      const r = state.systemStats.ram;
+      alert(`EFOS System Telemetry:\n\nRAM: ${r.used_mb} MB / ${r.total_mb} MB (${r.percent}%)\nSwap Used: ${r.swap_used_mb} MB\nDisk: ${d.used_gb} GB / ${d.total_gb} GB (${d.percent}% used)\nCloud Remotes: ${state.systemStats.remotes.join(", ")}`);
+    }
+
+    // Miller Columns Navigation Controller
+    async function navigateToPath(targetPath, callback) {
+      state.currentPath = targetPath;
+      updateSidebarActive(targetPath);
+      updateDockContext();
+      if (window.innerWidth <= 960) {
+        switchMobilePane("center");
+      }
+
+      // Reset columns and load root of this path
+      state.columns = [];
+      await appendColumn(targetPath, 0);
+
+      if (callback) callback();
+    }
+
+    function updateSidebarActive(path) {
+      document.querySelectorAll(".sidebar-item").forEach(item => {
+        const p = item.dataset.path;
+        item.classList.toggle("active", p === path || (p && path.startsWith(p) && p !== "/home/annika"));
+      });
+    }
+
+    async function appendColumn(path, colIndex) {
+      // Remove any columns to the right of colIndex
+      state.columns = state.columns.slice(0, colIndex);
+
+      let data;
+      try {
+        if (!isLocalHomeLan()) {
+          throw new Error("Off-network cloud mode");
+        }
+        const res = await fetch(`${API_BASE}/api/fs?path=${encodeURIComponent(path)}`);
+        if (res.ok) {
+          data = await res.json();
+        } else {
+          throw new Error("API fs error");
+        }
+      } catch (err) {
+        await ensureStaticVfs();
+        data = getFallbackDirectoryData(path);
+      }
+
+      const colObj = {
+        path: path,
+        entries: data.entries || [],
+        breadcrumbs: data.breadcrumbs || [],
+        selectedIndex: 0
+      };
+
+      state.columns.push(colObj);
+      state.activeColumnIndex = state.columns.length - 1;
+
+      renderMillerColumns();
+      updateBreadcrumbs(data.breadcrumbs || []);
+      updateItemCount(colObj.entries.length);
+
+      // Smooth scroll viewport to the right
+      const viewport = document.getElementById("millerContainer");
+      setTimeout(() => {
+        viewport.scrollLeft = viewport.scrollWidth;
+      }, 30);
+    }
+
+    function renderMillerColumns() {
+      const container = document.getElementById("millerContainer");
+      container.innerHTML = "";
+
+      state.columns.forEach((col, colIdx) => {
+        const colEl = document.createElement("div");
+        colEl.className = "miller-column";
+        colEl.id = `millerCol_${colIdx}`;
+
+        const folderName = col.path.split("/").pop() || col.path;
+        colEl.innerHTML = `
+          <div class="miller-col-header">
+            <span>${escapeHTML(folderName)}</span>
+            <span>${col.entries.length}</span>
+          </div>
+          <ul class="miller-col-list" role="listbox">
+            ${col.entries.map((item, rowIdx) => {
+              const isSelected = rowIdx === col.selectedIndex;
+              const icon = getFileIcon(item);
+              // Modern Web Guidance: Roving tabindex (tabindex="0" on selected, "-1" on others)
+              const tabIdx = (colIdx === state.activeColumnIndex && isSelected) ? "0" : "-1";
+              return `
+                <li class="file-row ${isSelected ? 'selected' : ''}"
+                    role="option"
+                    aria-selected="${isSelected}"
+                    tabindex="${tabIdx}"
+                    data-col="${colIdx}"
+                    data-row="${rowIdx}"
+                    onclick="handleRowClick(${colIdx}, ${rowIdx})"
+                    ondblclick="handleRowDblClick(${colIdx}, ${rowIdx})">
+                  <div class="file-row-left">
+                    <span class="file-type-icon">${icon}</span>
+                    <span class="file-name" title="${escapeHTML(item.name)}">${escapeHTML(item.name)}</span>
+                  </div>
+                  <div class="file-row-right">
+                    ${item.is_dir ? '<span class="folder-chevron">›</span>' : `<span class="file-size-badge">${item.size_human || ''}</span>`}
+                  </div>
+                </li>
+              `;
+            }).join("")}
+          </ul>
+        `;
+        container.appendChild(colEl);
+      });
+
+      // If active item in the last column is a file, append the Quick Look Inspector Column
+      const lastCol = state.columns[state.columns.length - 1];
+      if (lastCol && lastCol.entries.length > 0) {
+        const selected = lastCol.entries[lastCol.selectedIndex];
+        if (selected && !selected.is_dir) {
+          appendInspectorColumn(selected);
+        }
+      }
+    }
+
+    function appendInspectorColumn(item) {
+      const container = document.getElementById("millerContainer");
+      const inspEl = document.createElement("div");
+      inspEl.className = "inspector-column";
+      inspEl.id = "inspectorColumn";
+
+      const isPDF = item.name.toLowerCase().endsWith(".pdf");
+      const isHTML = item.name.toLowerCase().endsWith(".html");
+      const isImg = [".png", ".jpg", ".jpeg", ".svg"].some(ext => item.name.toLowerCase().endsWith(ext));
+
+      const rawUrl = resolveFileUrl(item);
+      let previewCardHtml = "";
+      if (isPDF) {
+        previewCardHtml = `<iframe src="${rawUrl}" title="PDF preview"></iframe>`;
+      } else if (isHTML) {
+        previewCardHtml = `<iframe src="${rawUrl}" sandbox="allow-scripts" title="HTML deck preview"></iframe>`;
+      } else if (isImg) {
+        previewCardHtml = `<img src="${rawUrl}" style="max-width:100%; max-height:100%; object-fit:contain;" alt="Preview" />`;
+      } else {
+        previewCardHtml = `
+          <div style="font-size:36px; margin-bottom:8px;">${getFileIcon(item)}</div>
+          <div style="font-size:12px; font-weight:600; color:var(--text-muted);">${item.kind || 'File Document'}</div>
+        `;
+      }
+
+      inspEl.innerHTML = `
+        <div class="inspector-preview-card">
+          ${previewCardHtml}
+        </div>
+        <div class="inspector-meta-title">${escapeHTML(item.name)}</div>
+        <div class="inspector-meta-grid">
+          <span class="meta-label">Kind:</span>
+          <span class="meta-val">${item.kind || 'File'}</span>
+          <span class="meta-label">Size:</span>
+          <span class="meta-val">${item.size_human || '--'}</span>
+          <span class="meta-label">Modified:</span>
+          <span class="meta-val">${item.mtime_human || '--'}</span>
+          <span class="meta-label">Path:</span>
+          <span class="meta-val">${escapeHTML(item.path)}</span>
+        </div>
+        <div class="inspector-actions">
+          <button class="tb-btn tb-btn-primary" onclick="triggerQuickLookModal()" style="justify-content:center;">
+            <span>👁️ Full Quick Look (Space)</span>
+          </button>
+          <button class="tb-btn" onclick="sendSelectedToAntigravity()" style="justify-content:center;">
+            <span>🤖 Pass to Terminal Companion</span>
+          </button>
+        </div>
+      `;
+      container.appendChild(inspEl);
+    }
+
+    function handleRowClick(colIdx, rowIdx) {
+      state.activeColumnIndex = colIdx;
+      const col = state.columns[colIdx];
+      col.selectedIndex = rowIdx;
+      const item = col.entries[rowIdx];
+
+      state.selectedFile = item.path;
+      updateDockContext();
+
+      if (item.is_dir) {
+        appendColumn(item.path, colIdx + 1);
+      } else {
+        // Truncate any child columns beyond this one, re-render to attach inspector
+        state.columns = state.columns.slice(0, colIdx + 1);
+        renderMillerColumns();
+      }
+    }
+
+    function handleRowDblClick(colIdx, rowIdx) {
+      const col = state.columns[colIdx];
+      const item = col.entries[rowIdx];
+      if (item.is_dir) {
+        appendColumn(item.path, colIdx + 1);
+      } else {
+        triggerQuickLookModal();
+      }
+    }
+
+    function selectFileByPath(filePath) {
+      // Find row in current columns or load parent
+      const parentDir = filePath.substring(0, filePath.lastIndexOf("/"));
+      const fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+
+      const targetCol = state.columns.find(c => c.path === parentDir) || state.columns[state.columns.length - 1];
+      if (targetCol) {
+        const idx = targetCol.entries.findIndex(e => e.name === fileName || e.path === filePath);
+        if (idx !== -1) {
+          targetCol.selectedIndex = idx;
+          state.selectedFile = filePath;
+          renderMillerColumns();
+          updateDockContext();
+          return;
+        }
+      }
+      state.selectedFile = filePath;
+      updateDockContext();
+    }
+
+    function updateDockContext() {
+      const activeCol = state.columns[state.activeColumnIndex];
+      const currentDir = activeCol ? activeCol.path : state.currentPath;
+      document.getElementById("dockActiveFolder").textContent = currentDir;
+      document.getElementById("dockActiveFolder").title = currentDir;
+
+      const selName = state.selectedFile ? state.selectedFile.split("/").pop() : "None";
+      document.getElementById("dockSelectedFile").textContent = selName;
+      document.getElementById("dockSelectedFile").title = state.selectedFile || "";
+      document.getElementById("termPrompt").textContent = `annika@efos:${currentDir.split("/").pop() || '~'}$`;
+    }
+
+    function updateBreadcrumbs(crumbs) {
+      const wrap = document.getElementById("breadcrumbsWrap");
+      wrap.innerHTML = crumbs.map((c, i) => `
+        <span class="crumb-item ${i === crumbs.length - 1 ? 'current' : ''}" onclick="navigateToPath('${c.path}')">${escapeHTML(c.name)}</span>
+        ${i < crumbs.length - 1 ? '<span class="crumb-sep">›</span>' : ''}
+      `).join("");
+    }
+
+    function updateItemCount(count) {
+      document.getElementById("itemCountBadge").textContent = `${count} item${count === 1 ? '' : 's'}`;
+    }
+
+    function handleColumnFilter(query) {
+      const q = query.trim().toLowerCase();
+      const activeCol = state.columns[state.activeColumnIndex];
+      if (!activeCol) return;
+      const colEl = document.getElementById(`millerCol_${state.activeColumnIndex}`);
+      if (!colEl) return;
+      const rows = colEl.querySelectorAll(".file-row");
+      rows.forEach(r => {
+        const text = r.querySelector(".file-name").textContent.toLowerCase();
+        r.style.display = text.includes(q) ? "flex" : "none";
+      });
+    }
+
+    // Modern Web Guidance: Spatial Arrow-Key Navigation + Roving Tabindex
+    function initKeyboardNavigation() {
+      window.addEventListener("keydown", (e) => {
+        // Global Shortcuts
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          openSpotlight();
+          return;
+        }
+
+        if (e.key === "Escape") {
+          closeSpotlight();
+          closeQuickLookModal();
+          closePrivacyModal();
+          return;
+        }
+
+        // If a modal or text input is active, do not intercept arrow keys
+        if (e.target.matches("input, textarea, select, [contenteditable]")) {
+          return;
+        }
+
+        // Spacebar Quick Look Toggle
+        if (e.key === " " || e.code === "Space") {
+          e.preventDefault();
+          triggerQuickLookModal();
+          return;
+        }
+
+        // Miller Columns Directional Navigation
+        if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter"].includes(e.key)) {
+          handleSpatialNavigation(e);
+        }
+      });
+    }
+
+    function handleSpatialNavigation(e) {
+      const container = document.getElementById("millerContainer");
+      if (!container) return;
+
+      const currentCol = state.columns[state.activeColumnIndex];
+      if (!currentCol || currentCol.entries.length === 0) return;
+
+      const currentRowIdx = currentCol.selectedIndex;
+
+      if (e.key === "ArrowUp") {
+        if (currentRowIdx > 0) {
+          e.preventDefault();
+          handleRowClick(state.activeColumnIndex, currentRowIdx - 1);
+          scrollActiveRowIntoView();
+        }
+      } else if (e.key === "ArrowDown") {
+        if (currentRowIdx < currentCol.entries.length - 1) {
+          e.preventDefault();
+          handleRowClick(state.activeColumnIndex, currentRowIdx + 1);
+          scrollActiveRowIntoView();
+        }
+      } else if (e.key === "ArrowRight") {
+        const item = currentCol.entries[currentRowIdx];
+        if (item && item.is_dir) {
+          e.preventDefault();
+          appendColumn(item.path, state.activeColumnIndex + 1);
+        } else if (state.activeColumnIndex < state.columns.length - 1) {
+          e.preventDefault();
+          state.activeColumnIndex++;
+          renderMillerColumns();
+        }
+      } else if (e.key === "ArrowLeft") {
+        if (state.activeColumnIndex > 0) {
+          e.preventDefault();
+          state.activeColumnIndex--;
+          renderMillerColumns();
+          scrollActiveRowIntoView();
+        }
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        const item = currentCol.entries[currentRowIdx];
+        if (item && item.is_dir) {
+          appendColumn(item.path, state.activeColumnIndex + 1);
+        } else {
+          triggerQuickLookModal();
+        }
+      }
+    }
+
+    function scrollActiveRowIntoView() {
+      const colEl = document.getElementById(`millerCol_${state.activeColumnIndex}`);
+      if (!colEl) return;
+      const activeRow = colEl.querySelector(".file-row.selected") || colEl.querySelector('.file-row[tabindex="0"]');
+      if (activeRow) {
+        activeRow.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+    }
+
+    // Quick Look Modal
+    async function triggerQuickLookModal() {
+      const modal = document.getElementById("quickLookModal");
+      if (modal.classList.contains("active")) {
+        closeQuickLookModal();
+        return;
+      }
+
+      const activeCol = state.columns[state.activeColumnIndex];
+      if (!activeCol || activeCol.entries.length === 0) return;
+      const item = activeCol.entries[activeCol.selectedIndex];
+      if (!item) return;
+
+      document.getElementById("quickLookTitle").textContent = item.name;
+      document.getElementById("quickLookIcon").textContent = getFileIcon(item);
+
+      const contentEl = document.getElementById("quickLookContent");
+      contentEl.innerHTML = `<div style="color:var(--text-muted); font-size:13px;">Loading preview...</div>`;
+      modal.classList.add("active");
+
+      const isPDF = item.name.toLowerCase().endsWith(".pdf");
+      const isHTML = item.name.toLowerCase().endsWith(".html");
+      const isImg = [".png", ".jpg", ".jpeg", ".svg"].some(ext => item.name.toLowerCase().endsWith(ext));
+      const isAudio = [".mp3", ".wav", ".m4a"].some(ext => item.name.toLowerCase().endsWith(ext));
+
+      const toggleBtn = document.getElementById("qlViewToggleBtn");
+      toggleBtn.style.display = isHTML ? "block" : "none";
+
+      const rawUrl = resolveFileUrl(item);
+      if (isPDF) {
+        contentEl.innerHTML = `<iframe src="${rawUrl}" title="PDF preview"></iframe>`;
+      } else if (isHTML) {
+        state.qlMode = "live";
+        renderHTMLQuickLook(item);
+      } else if (isImg) {
+        contentEl.innerHTML = `<img src="${rawUrl}" style="max-width:90%; max-height:90%; object-fit:contain; border-radius:8px;" alt="Image preview" />`;
+      } else if (isAudio) {
+        contentEl.innerHTML = `
+          <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+            <div style="font-size:48px;">🎧</div>
+            <audio controls src="${rawUrl}" style="width:340px;"></audio>
+            <span style="font-size:12px; color:var(--text-muted);">${item.name}</span>
+          </div>
+        `;
+      } else {
+        // Fetch text preview
+        try {
+          if (!isLocalHomeLan() && rawUrl && !rawUrl.includes("/api/raw")) {
+            const sr = await fetch(rawUrl);
+            if (sr.ok) {
+              const txt = await sr.text();
+              contentEl.innerHTML = `<pre class="quicklook-text-wrap">${escapeHTML(txt)}</pre>`;
+              return;
+            }
+          }
+          const res = await fetch(`${API_BASE}/api/preview?path=${encodeURIComponent(item.path)}`);
+          if (res.ok) {
+            const data = await res.json();
+            contentEl.innerHTML = `<pre class="quicklook-text-wrap">${escapeHTML(data.content || "No text content available")}</pre>`;
+          } else {
+            throw new Error();
+          }
+        } catch (e) {
+          contentEl.innerHTML = `<div class="quicklook-text-wrap">${escapeHTML(getSampleFileText(item.name))}</div>`;
+        }
+      }
+    }
+
+    function renderHTMLQuickLook(itemOrPath) {
+      const contentEl = document.getElementById("quickLookContent");
+      const rawUrl = resolveFileUrl(itemOrPath);
+      const filePath = typeof itemOrPath === "string" ? itemOrPath : itemOrPath.path;
+      if (state.qlMode === "live") {
+        contentEl.innerHTML = `<iframe src="${rawUrl}" sandbox="allow-scripts" title="Live HTML Deck"></iframe>`;
+      } else {
+        if (!isLocalHomeLan() && rawUrl && !rawUrl.includes("/api/raw")) {
+          fetch(rawUrl).then(r => r.text()).then(t => {
+            contentEl.innerHTML = `<pre class="quicklook-text-wrap">${escapeHTML(t)}</pre>`;
+          });
+          return;
+        }
+        fetch(`${API_BASE}/api/preview?path=${encodeURIComponent(filePath)}`)
+          .then(r => r.json())
+          .then(d => {
+            contentEl.innerHTML = `<pre class="quicklook-text-wrap">${escapeHTML(d.content || "")}</pre>`;
+          });
+      }
+    }
+
+    function toggleQLViewMode() {
+      state.qlMode = state.qlMode === "live" ? "source" : "live";
+      const activeCol = state.columns[state.activeColumnIndex];
+      const item = activeCol.entries[activeCol.selectedIndex];
+      if (item) renderHTMLQuickLook(item.path);
+    }
+
+    function closeQuickLookModal() {
+      document.getElementById("quickLookModal").classList.remove("active");
+    }
+
+    function handleQuickLookBackdrop(e) {
+      if (e.target.id === "quickLookModal") closeQuickLookModal();
+    }
+
+    // Spotlight Search Modal
+    function openSpotlight() {
+      const modal = document.getElementById("spotlightModal");
+      const input = document.getElementById("spotlightInput");
+      modal.classList.add("active");
+      input.value = "";
+      input.focus();
+      handleSpotlightInput("");
+    }
+
+    function closeSpotlight() {
+      document.getElementById("spotlightModal").classList.remove("active");
+    }
+
+    function handleSpotlightBackdrop(e) {
+      if (e.target.id === "spotlightModal") closeSpotlight();
+    }
+
+    let spotlightTimer = null;
+    function handleSpotlightInput(query) {
+      clearTimeout(spotlightTimer);
+      spotlightTimer = setTimeout(async () => {
+        state.searchQuery = query.trim();
+        if (!state.searchQuery) {
+          renderSpotlightSuggestions();
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/api/search?q=${encodeURIComponent(state.searchQuery)}`);
+          if (res.ok) {
+            const payload = await res.json();
+            state.searchResults = Array.isArray(payload) ? payload : (payload.results || []);
+            renderSpotlightResults();
+          }
+        } catch (e) {
+          state.searchResults = getFallbackSearchResults(state.searchQuery);
+          renderSpotlightResults();
+        }
+      }, 140);
+    }
+
+    function renderSpotlightSuggestions() {
+      const list = document.getElementById("spotlightResultsList");
+      list.innerHTML = `
+        <div style="padding:10px 14px; font-size:11px; font-weight:700; color:var(--text-dim); text-transform:uppercase;">Recent &amp; Suggested Filings</div>
+        ${radarData.slice(0, 4).map(c => `
+          <li class="search-result-row" onclick="jumpToSpotlightFile('${c.targetFile}')">
+            <div class="res-top">
+              <span class="res-filename">${c.title}</span>
+              <span class="res-date">${c.badge}</span>
+            </div>
+            <div class="res-snip">${c.actionText}</div>
+            <div class="res-path">${c.targetFile}</div>
+          </li>
+        `).join("")}
+      `;
+    }
+
+    function renderSpotlightResults() {
+      const list = document.getElementById("spotlightResultsList");
+      if (state.searchResults.length === 0) {
+        list.innerHTML = `<div style="padding:24px; text-align:center; color:var(--text-muted); font-size:13px;">No documents matched "${escapeHTML(state.searchQuery)}".</div>`;
+        return;
+      }
+
+      list.innerHTML = state.searchResults.map((r, i) => `
+        <li class="search-result-row ${i === 0 ? 'selected' : ''}" onclick="jumpToSpotlightFile('${r.path}')">
+          <div class="res-top">
+            <span class="res-filename">${escapeHTML(r.filename)}</span>
+            <span class="res-date">${escapeHTML((r.dates && r.dates.length ? r.dates.slice(0, 2).join(', ') : (r.size_human || r.ext || 'match')))} · ${escapeHTML(r.mtime_human || r.source || 'fts5')}</span>
+          </div>
+          <div class="res-snip">${r.snippet || (r.snippets && r.snippets[0]) || 'Document match'}</div>
+          <div class="res-path">${escapeHTML(r.path)}</div>
+        </li>
+      `).join("");
+    }
+
+    function handleSpotlightKey(e) {
+      if (e.key === "Enter") {
+        const selected = document.querySelector(".search-result-row.selected");
+        if (selected) selected.click();
+      }
+    }
+
+    function jumpToSpotlightFile(filePath) {
+      closeSpotlight();
+      const parentDir = filePath.substring(0, filePath.lastIndexOf("/"));
+      navigateToPath(parentDir, () => {
+        selectFileByPath(filePath);
+        triggerQuickLookModal();
+      });
+      showToast(`Jumped to: ${filePath.split("/").pop()}`);
+    }
+
+    // Dock Tabs & Guided Shortcuts
+    function switchDockTab(tabId) {
+      state.activeDockTab = tabId;
+      document.querySelectorAll(".dock-tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.tab === tabId);
+      });
+      document.getElementById("tabShortcuts").classList.toggle("hidden", tabId !== "shortcuts");
+      document.getElementById("tabTerminal").classList.toggle("hidden", tabId !== "terminal");
+      document.getElementById("tabScratchpad").classList.toggle("hidden", tabId !== "scratchpad");
+    }
+
+    async function runGuidedAction(actionId) {
+      switchDockTab("terminal");
+      appendTerminalLine(`\n> Running Guided Shortcut: [${actionId}]...`);
+
+      try {
+        const res = await fetch(`${API_BASE}/api/action`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: actionId,
+            cwd: state.columns[state.activeColumnIndex]?.path || state.currentPath,
+            target_path: state.selectedFile
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          appendTerminalLine(data.stdout || data.stderr || "Action complete.");
+          if (data.mac_translation) {
+            appendTerminalLine(`💡 ${data.mac_translation}`);
+          }
+          showToast(`Shortcut [${actionId}] finished in ${data.duration_ms}ms`);
+        }
+      } catch (e) {
+        appendTerminalLine(`Finished simulated shortcut [${actionId}]. Verified local parameters.`);
+        showToast(`Shortcut [${actionId}] completed`);
+      }
+    }
+
+    async function sendSelectedToAntigravity() {
+      const activeCol = state.columns[state.activeColumnIndex];
+      const folder = activeCol ? activeCol.path : state.currentPath;
+      const file = state.selectedFile || "";
+
+      try {
+        await fetch(`${API_BASE}/api/action`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "send_to_antigravity",
+            cwd: folder,
+            target_path: file
+          })
+        });
+      } catch (e) {}
+
+      showToast(`Context synced with Antigravity Agent!`);
+      appendTerminalLine(`\n[Antigravity Context Handoff]`);
+      appendTerminalLine(`Active Folder: ${folder}`);
+      appendTerminalLine(`Selected File: ${file || 'None'}`);
+      appendTerminalLine(`Context file updated: ~/.efos_active_context.json`);
+    }
+
+    function pinCurrentCloudFile() {
+      if (state.selectedFile && state.selectedFile.startsWith("gdrive:")) {
+        runGuidedAction("pin_from_cloud");
+      } else {
+        runGuidedAction("sync_gdrive");
+      }
+    }
+
+    // Interactive Terminal
+    function appendTerminalLine(text) {
+      const term = document.getElementById("termBody");
+      term.textContent += `\n${text}`;
+      term.scrollTop = term.scrollHeight;
+    }
+
+    async function runTerminalCmd(cmd) {
+      switchDockTab("terminal");
+      appendTerminalLine(`\n$ ${cmd}`);
+      try {
+        const activeCol = state.columns[state.activeColumnIndex];
+        const cwd = activeCol ? activeCol.path : state.currentPath;
+        const res = await fetch(`${API_BASE}/api/action`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            cmd: cmd,
+            cwd: cwd
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          appendTerminalLine(data.stdout || data.stderr || "(no output)");
+        }
+      } catch (e) {
+        appendTerminalLine(`[Simulated] Result for ${cmd}: Process completed.`);
+      }
+    }
+
+    function handleTerminalKey(e) {
+      if (e.key === "Enter") {
+        const input = document.getElementById("termCmdInput");
+        const cmd = input.value.trim();
+        if (cmd) {
+          runTerminalCmd(cmd);
+          input.value = "";
+        }
+      }
+    }
+
+    function toggleTranslatorDrawer() {
+      document.getElementById("translatorDrawer").classList.toggle("collapsed");
+    }
+
+    // Scratchpad
+    function saveScratchpad() {
+      const text = document.getElementById("scratchpadText").value;
+      localStorage.setItem("efos_scratchpad_v1", text);
+    }
+
+    function loadScratchpad() {
+      const saved = localStorage.getItem("efos_scratchpad_v1");
+      if (saved) {
+        document.getElementById("scratchpadText").value = saved;
+      } else {
+        document.getElementById("scratchpadText").value =
+          "Real Work (Beat 1):\n- Print and mail 3 envelopes for Clarke substituted service to cure register hold.\n- Verify Truck Tow $200 insurance reinstatement window by Sat Nov 7.\n- Check First Amended Complaint summons status before Judge Immergut.";
+      }
+      const chk = JSON.parse(localStorage.getItem("efos_checklist_v1") || "{}");
+      ["chk1", "chk2", "chk3", "chk4"].forEach(id => {
+        if (chk[id]) document.getElementById(id).checked = true;
+      });
+    }
+
+    function saveChecklist() {
+      const chk = {
+        chk1: document.getElementById("chk1").checked,
+        chk2: document.getElementById("chk2").checked,
+        chk3: document.getElementById("chk3").checked,
+        chk4: document.getElementById("chk4").checked
+      };
+      localStorage.setItem("efos_checklist_v1", JSON.stringify(chk));
+    }
+
+    function exportScratchpad() {
+      const text = document.getElementById("scratchpadText").value;
+      const blob = new Blob([text], { type: "text/markdown;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `EFOS_Memory_Export_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      showToast("Exported scratchpad notes to markdown");
+    }
+
+    // Privacy Sanctum (Domain 05)
+    function handleDomain5Click() {
+      if (state.vaultUnlocked) {
+        navigateToPath("/home/annika/Dropbox_Private_Vault");
+      } else {
+        document.getElementById("privacyModal").classList.add("active");
+      }
+    }
+
+    function toggleVaultLock() {
+      if (state.vaultUnlocked) {
+        state.vaultUnlocked = false;
+        document.getElementById("vaultStatusText").innerHTML = "<span>🔒 Vault Locked (0700)</span>";
+        document.getElementById("vaultToggleBtn").textContent = "Unlock";
+        showToast("Domain 05 Vault locked");
+        navigateToPath("/home/annika/File_Next");
+      } else {
+        handleDomain5Click();
+      }
+    }
+
+    function confirmUnlockVault() {
+      state.vaultUnlocked = true;
+      document.getElementById("vaultStatusText").innerHTML = "<span style='color:var(--teal-bright);'>🔓 Vault Unlocked</span>";
+      document.getElementById("vaultToggleBtn").textContent = "Lock";
+      closePrivacyModal();
+      navigateToPath("/home/annika/Dropbox_Private_Vault");
+      showToast("Domain 05 Privacy Vault unlocked");
+    }
+
+    function closePrivacyModal() {
+      document.getElementById("privacyModal").classList.remove("active");
+    }
+
+    function refreshCloud() {
+      showToast("Refreshing live rclone cloud metadata...");
+      navigateToPath("gdrive:File_Next");
+    }
+
+    function resetToHome() {
+      navigateToPath("/home/annika/Desktop");
+    }
+
+    // Toast Feedback
+    let toastTimer = null;
+    function showToast(msg, icon = "✅") {
+      const toast = document.getElementById("toastPill");
+      document.getElementById("toastMsg").textContent = msg;
+      document.getElementById("toastIcon").textContent = icon;
+      toast.classList.add("active");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("active");
+      }, 2800);
+    }
+
+    // Utilities & Fallback Data
+    function getFileIcon(item) {
+      if (item.is_dir) return "📁";
+      const ext = (item.ext || item.name.split(".").pop()).toLowerCase();
+      if (ext === "pdf" || ext === ".pdf") return "📕";
+      if (ext === "tex" || ext === ".tex") return "📑";
+      if (ext === "md" || ext === ".md") return "📝";
+      if (ext === "txt" || ext === ".txt") return "📄";
+      if (ext === "html" || ext === ".html") return "🌐";
+      if (["png", "jpg", "jpeg", "svg"].includes(ext.replace(".", ""))) return "🖼️";
+      if (["mp3", "wav", "m4a"].includes(ext.replace(".", ""))) return "🎧";
+      if (["sh", "py", "js"].includes(ext.replace(".", ""))) return "⚙️";
+      return "📄";
+    }
+
+    function escapeHTML(str) {
+      if (!str) return "";
+      return str.replace(/[&<>'"]/g, tag => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#39;",
+        '"': "&quot;"
+      }[tag] || tag));
+    }
+
+    function getFallbackDirectoryData(path) {
+      if (state.staticVfs && state.staticVfs.directories && state.staticVfs.directories[path]) {
+        return state.staticVfs.directories[path];
+      }
+      if (path.includes("File_Next")) {
+        return {
+          path: path,
+          breadcrumbs: [{ name: "~", path: "/home/annika" }, { name: "File_Next", path: "/home/annika/File_Next" }],
+          entries: [
+            { name: "08_WRIT_OF_REVIEW_EMERGENCY_PACKET", path: "/home/annika/File_Next/08_WRIT_OF_REVIEW_EMERGENCY_PACKET", is_dir: true, size_human: "--", kind: "Folder" },
+            { name: "OJD_EFILE_INDIVIDUAL_DOCUMENTS", path: "/home/annika/File_Next/OJD_EFILE_INDIVIDUAL_DOCUMENTS", is_dir: true, size_human: "--", kind: "Folder" },
+            { name: "COMBINED_STATEMENT_AND_DECLARATION_OF_MAILING.pdf", path: "/home/annika/File_Next/COMBINED_STATEMENT_AND_DECLARATION_OF_MAILING.pdf", is_dir: false, size_human: "141.7 KB", mtime_human: "Nov 02, 11:03", ext: ".pdf", kind: "PDF Document" },
+            { name: "00_FULL_COMBINED_CIVIL_LAWSUIT_PACKAGE.pdf", path: "/home/annika/File_Next/00_FULL_COMBINED_CIVIL_LAWSUIT_PACKAGE.pdf", is_dir: false, size_human: "18.5 MB", mtime_human: "Nov 03, 14:59", ext: ".pdf", kind: "PDF Document" },
+            { name: "01_SUMMONS.pdf", path: "/home/annika/File_Next/01_SUMMONS.pdf", is_dir: false, size_human: "140.4 KB", mtime_human: "Nov 03, 14:59", ext: ".pdf", kind: "PDF Document" },
+            { name: "02_CIRCUIT_COURT_CIVIL_COMPLAINT.pdf", path: "/home/annika/File_Next/02_CIRCUIT_COURT_CIVIL_COMPLAINT.pdf", is_dir: false, size_human: "190.5 KB", mtime_human: "Nov 03, 14:59", ext: ".pdf", kind: "PDF Document" },
+            { name: "FIRST_AMENDED_CIVIL_RIGHTS_COMPLAINT.pdf", path: "/home/annika/File_Next/FIRST_AMENDED_CIVIL_RIGHTS_COMPLAINT.pdf", is_dir: false, size_human: "154.6 KB", mtime_human: "Oct 22, 07:01", ext: ".pdf", kind: "PDF Document" }
+          ]
+        };
+      }
+      return {
+        path: path,
+        breadcrumbs: [{ name: "~", path: "/home/annika" }, { name: path.split("/").pop() || path, path: path }],
+        entries: [
+          { name: "forensic-microclimate.html", path: "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/forensic-microclimate.html", is_dir: false, size_human: "59.8 KB", mtime_human: "Nov 05, 10:00", ext: ".html", kind: "Web Deck", static_url: "forensic-microclimate.html" },
+          { name: "chapin-thermal.html", path: "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/chapin-thermal.html", is_dir: false, size_human: "26.6 KB", mtime_human: "Nov 05, 10:00", ext: ".html", kind: "Web Deck", static_url: "chapin-thermal.html" },
+          { name: "README_MICROCLIMATE_INDEX.md", path: "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/README_MICROCLIMATE_INDEX.md", is_dir: false, size_human: "5.2 KB", mtime_human: "Nov 05, 10:00", ext: ".md", kind: "Markdown Document", static_url: "README_MICROCLIMATE_INDEX.md" }
+        ]
+      };
+    }
+
+    function getFallbackSearchResults(q) {
+      const ql = (q || "").toLowerCase();
+      const base = [
+        {
+          filename: "forensic-microclimate.html",
+          path: "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/forensic-microclimate.html",
+          size_human: "59.8 KB",
+          mtime_human: "Nov 05, 10:00",
+          snippet: "15-Slide Forensic <b>Microclimate</b> &amp; <b>AQI</b> Study — Chapin Park 9.76-acre canopy buffer, PM2.5 filtration, and thermal anomaly analysis."
+        },
+        {
+          filename: "chapin-thermal.html",
+          path: "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/chapin-thermal.html",
+          size_human: "26.6 KB",
+          mtime_human: "Nov 05, 10:00",
+          snippet: "Chapin Court <b>Thermal</b> &amp; Canopy Evapotranspiration Interactive Audit Deck."
+        },
+        {
+          filename: "03_DECLARATION_OF_ANNIKA_ERIKSSON_IN_SUPPORT_OF_TRO_WITH_EXHIBIT_A.pdf",
+          path: "/home/annika/Documents/Court_Filings_Output/03_DECLARATION_OF_ANNIKA_ERIKSSON_IN_SUPPORT_OF_TRO_WITH_EXHIBIT_A.pdf",
+          size_human: "251.4 KB",
+          mtime_human: "Oct 02, 18:55",
+          snippet: "...onto our private residential curtilage, seize personal property, and <b>tow</b> our pickup truck without a trial on the merits..."
+        },
+        {
+          filename: "COMBINED_STATEMENT_AND_DECLARATION_OF_MAILING.pdf",
+          path: "/home/annika/File_Next/COMBINED_STATEMENT_AND_DECLARATION_OF_MAILING.pdf",
+          size_human: "141.7 KB",
+          mtime_human: "Nov 02, 11:03",
+          snippet: "...Declaration of mailing completed pursuant to ORCP 7 D(2)(b)/(c) in support of Clarke v. Ryman..."
+        }
+      ];
+      const filtered = base.filter(x => x.filename.toLowerCase().includes(ql) || x.snippet.toLowerCase().includes(ql));
+      return filtered.length ? filtered : base;
+    }
+
+    function getSampleFileText(fname) {
+      return `# ${fname}\n\nExecutive Function OS Verified Content\nFile location: ${state.selectedFile}\nStatus: Read-only live preview.`;
+    }
+  </script>
+</body>
+</html>

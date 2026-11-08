@@ -1,0 +1,32 @@
+Reviewed. This is a tightly constructed FRE 702 / Daubert-oriented forensic technical report focused on 12054 Chapin Court.
+Core Strengths
+•  Clear research question isolating localized anthropogenic heating from regional background warming.
+•  Elevation-matched controls (Rivercrest ~462 ft, Hillendale ~443 ft vs. subject ~475 ft) within the same municipal boundary and airshed — this is one of the strongest methodological choices for surviving Daubert challenges on lapse-rate or marine-air confounds.
+•  12 cloud-free Landsat Level-2 LST scenes (1994–2024) with explicit scene IDs, paired to ERA5-Land ambient timestamps. The table of overpasses is clean and usable.
+•  Difference-in-differences framing with the interaction term for heatwave days (≥90 °F ambient) is the right econometric structure for this claim.
+•  Four-epoch timeline (platting → maturation → 2009–2018 removal wave → post-clearance) maps cleanly onto the permit history and the thermal data.
+•  Explicit linkage of the 167 Title 12 corridor permits to canopy loss and the measured thermal acceleration (0.907 °F/°F vs. 0.772 °F/°F controls).
+Key quantitative claims as presented:
+•  Normal summer excess: +10.99 °F
+•  Heatwave excess: +12.86 °F (p < 0.01)
+•  Peak absolute excess: +17.31 °F (2006)
+•  Record radiant surface temperature: 122.59 °F (9 July 2024)
+•  Current NDVI contrast: 0.115 (Chapin) vs. 0.527 (Rivercrest)
+Areas That Would Benefit from Tightening or Supplemental Evidence
+1.  Sample size / statistical power Twelve observations is workable for a descriptive forensic narrative and simple slope comparison, but a formal DiD with only a handful of heatwave days will draw scrutiny on degrees of freedom and robustness. Consider adding more Landsat or ASTER scenes if available, or showing bootstrap/robustness checks.
+2.  NDVI source and date The 0.115 / 0.527 figures are powerful. State the exact sensor, acquisition date(s), and processing (e.g., Landsat Collection 2, Sentinel-2, or NAIP-derived) so the numbers are independently replicable.
+3.  Permit-to-canopy causal chain The 167-permit aggregate is already strong. A short appendix mapping which of those permits fell inside the Chapin Court / Tower Vista / immediate corridor (with parcel or street addresses) would make the “proximate cause” claim even tighter.
+4.  Indoor / health pathway The report correctly flags radiant surface temperatures >120 °F as a pathway to indoor heat stress. Adding any available indoor temperature logs, HVAC failure dates, or medical vulnerability documentation from the same heat events would close the habitability loop.
+5.  Replacement policy documentation The claim of “zero shade replacement” or only dwarf ornamentals is central. Direct quotes or images from the actual Title 12 notices, mitigation conditions, or public-works correspondence would be high-value exhibits.
+Overall Assessment
+This is already a high-quality, litigation-oriented piece of work. The combination of calibrated federal radiometry, matched local controls, continuous DiD modeling, and the municipal permit record creates a coherent causal chain: Title 12 enforcement → canopy elimination → measurable thermal amplification that widens under heatwave conditions.
+It pairs well with the broader abstract you shared earlier (ADA transition-plan gaps, selective enforcement, and the Disability Pride / water-shutoff juxtaposition).
+What would you like next?
+Possible directions:
+•  Critique / stress-test specific statistical claims
+•  Help draft a short methods appendix or data dictionary
+•  Cross-check particular Landsat scene IDs or ERA5 pairings
+•  Suggest how to integrate this report with the ADA / retaliation chronology
+•  Format a one-page executive summary or exhibit list for filing
+•  Public-records request language for the remaining permit details or any canopy-related staff reports
+Just tell me the priority.

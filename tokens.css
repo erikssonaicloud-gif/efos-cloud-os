@@ -1,0 +1,512 @@
+/**
+ * EFOS Master Design Tokens: Warm Paper & Looking-Glass Architecture
+ * Master CSS Variables for Executive Function OS
+ *
+ * Principle: Utility over ornament. Signals are clear, scannable, and actionable.
+ * Dual-Mode Architecture:
+ * - Default / Light: Warm Paper & Ink (Daylight reading and onboarding)
+ * - Dark / Looking-Glass: Deep Slate, Vellum, Cheshire Teal, White Rabbit Gold
+ */
+
+@import url("./kinetic_clarity_buttons.css");
+@import url("./navigation.css");
+
+:root {
+  /* ==========================================================================
+     1. Daylight Paper & Ink Mode (Default)
+     ========================================================================== */
+  --color-canvas: #F6F1E7;
+  --color-canvas-alt: #EFE8DA;
+  --color-board-slate: #E5DCCE;
+  --color-surface: #FFFDF8;
+  --color-surface-card: #FFFDF8;
+  --color-surface-card-dark: #141D30;
+  --color-surface-subtle: #EFE8DA;
+  --color-surface-subtle-dark: #1B2540;
+  --color-line: #DDD3C0;
+
+  --color-ink: #1F2A27;                /* 13.15:1 AAA on #F6F1E7 */
+  --color-muted: #55625D;              /* 5.67:1 AA on #F6F1E7 */
+  --color-vellum: #1F2A27;             /* Semantic mapping for daylight reading */
+
+  /* Semantic Component Colors for Daylight */
+  --color-brass-hairline: #997A2E;     /* Deepened brass for readable hairline on paper */
+  --color-brass-hairline-dark: #B08D3C;
+  --color-cheshire-teal: #1F5F58;      /* Deep spruce teal for daytime high contrast */
+  --color-white-rabbit-gold: #92400E;  /* Deep amber (6.30:1 AA on paper) */
+  --color-red-queen: #BE123C;          /* Deep rose / threshold */
+
+  /* Focus indicator */
+  --sc-btn-focus: #0D9488;             /* Signal teal focus ring */
+  --sc-btn-focus-offset: 3px;
+
+  --color-accent-action: #2F5D50;      /* Spruce green (6.66:1 AA on paper) */
+  --color-accent-ink: #FFFFFF;
+  --color-warm-accent: #C47A45;        /* Terracotta amber (3.00:1 decoration) */
+  --color-warm-soft: #F3DCC6;
+  --color-threshold-error: #DC2626;
+
+  /* Backwards-Compatible System Aliases */
+  --color-primary-base: var(--color-canvas);
+  --color-neutral-canvas: var(--color-canvas);
+  --color-bg-canvas: var(--color-canvas);
+  --color-bg-canvas-dark: #0F172A;
+
+  --bg: var(--color-canvas);
+  --bg-alt: var(--color-canvas-alt);
+  --surface: var(--color-surface);
+  --ink: var(--color-ink);
+  --muted: var(--color-muted);
+  --line: var(--color-line);
+  --accent: var(--color-accent-action);
+  --accent-ink: var(--color-accent-ink);
+  --warm: var(--color-warm-accent);
+  --warm-soft: var(--color-warm-soft);
+
+  /* Borders & Double Hairlines */
+  --color-border-hairline: var(--color-brass-hairline);
+  --color-border-hairline-dark: #B08D3C;
+  --color-border-grid: rgba(153, 122, 46, 0.25);
+  --color-border-grid-dark: rgba(176, 141, 60, 0.25);
+  --color-crosshair: var(--color-cheshire-teal);
+
+  /* Typography Colors */
+  --color-text-primary: var(--color-ink);
+  --color-text-primary-dark: #F5EFE0;
+  --color-text-secondary: #475569;
+  --color-text-secondary-dark: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-text-muted-dark: #64748B;
+
+  /* Interactive States */
+  --color-state-default-border: var(--color-brass-hairline);
+  --color-state-hover-bg: rgba(31, 95, 88, 0.08);
+  --color-state-hover-border: var(--color-cheshire-teal);
+  --color-state-active-bg: var(--color-cheshire-teal);
+  --color-state-active-text: #FFFFFF;
+  --color-state-disabled-bg: rgba(229, 220, 206, 0.6);
+  --color-state-disabled-border: #CBD5E1;
+  --color-state-disabled-text: #94A3B8;
+  --color-state-alert-border: var(--color-red-queen);
+  --color-state-alert-bg: rgba(190, 18, 60, 0.08);
+  --color-state-alert-text: var(--color-red-queen);
+
+  /* Juridical Profile (JudgeSmoke / PALADIN A2J) */
+  --color-juridical-paper: #F3EADC;
+  --color-juridical-ink: #1C1710;
+  --color-juridical-stamp: #1F5F58;
+  --color-juridical-terracotta: #C45C3E;
+  --color-juridical-rule: rgba(153, 122, 46, 0.3);
+  --color-juridical-rule-strong: rgba(153, 122, 46, 0.6);
+
+  /* Typography Stacks */
+  --font-serif: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --font-display: var(--font-serif);
+  --font-body: var(--font-sans);
+  --font-technical: var(--font-mono);
+  --font-editorial: var(--font-serif);
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Letter Spacing */
+  --tracking-tight: -0.015em;
+  --tracking-technical: 0.05em;
+  --tracking-wide: 0.08em;
+
+  /* Grid & Dimensions */
+  --grid-columns: 12;
+  --grid-rows: 11;
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+}
+
+/* ==========================================================================
+   2. Looking-Glass Dark Mode
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-canvas: #0F172A;
+    --color-canvas-alt: #161C1A;
+    --color-board-slate: #1B2540;
+    --color-surface: #141D30;
+    --color-surface-card: #141D30;
+    --color-surface-subtle: #1B2540;
+    --color-line: #33403C;
+
+    --color-ink: #ECE7DC;
+    --color-vellum: #F5EFE0;
+    --color-muted: #A6B1AB;
+
+    --color-cheshire-teal: #2DD4BF;
+    --color-white-rabbit-gold: #F59E0B;
+    --color-red-queen: #FDA4AF;
+    --color-brass-hairline: #B08D3C;
+
+    --color-accent-action: #2DD4BF;
+    --color-accent-ink: #0F172A;
+    --color-warm-accent: #F59E0B;
+    --color-warm-soft: #3A2D22;
+    --color-threshold-error: #FDA4AF;
+
+    --color-border-hairline: var(--color-brass-hairline);
+    --color-border-grid: rgba(176, 141, 60, 0.25);
+    --sc-btn-focus: #2DD4BF;             /* Cyan/Teal focus ring in dark mode */
+    --color-text-primary: var(--color-vellum);
+    --color-text-secondary: #CBD5E1;
+    --color-text-muted: #94A3B8;
+
+    --color-state-default-border: var(--color-brass-hairline);
+    --color-state-hover-bg: rgba(45, 212, 191, 0.12);
+    --color-state-hover-border: var(--color-cheshire-teal);
+    --color-state-active-bg: var(--color-cheshire-teal);
+    --color-state-active-text: #0F172A;
+    --color-state-disabled-bg: rgba(27, 37, 64, 0.6);
+    --color-state-disabled-border: #334155;
+    --color-state-disabled-text: #64748B;
+    --color-state-alert-border: var(--color-red-queen);
+    --color-state-alert-bg: rgba(253, 164, 175, 0.1);
+    --color-state-alert-text: var(--color-red-queen);
+
+    --bg: #0F172A;
+    --bg-alt: #141D30;
+    --surface: #141D30;
+    --ink: #ECE7DC;
+    --muted: #A6B1AB;
+    --line: #33403C;
+    --accent: #2DD4BF;
+    --accent-ink: #0F172A;
+    --warm: #F59E0B;
+    --warm-soft: #3A2D22;
+  }
+}
+
+[data-theme="dark"] {
+  --color-canvas: #0F172A;
+  --color-canvas-alt: #161C1A;
+  --color-board-slate: #1B2540;
+  --color-surface: #141D30;
+  --color-surface-card: #141D30;
+  --color-surface-subtle: #1B2540;
+  --color-line: #33403C;
+
+  --color-ink: #ECE7DC;
+  --color-vellum: #F5EFE0;
+  --color-muted: #A6B1AB;
+
+  --color-cheshire-teal: #2DD4BF;
+  --color-white-rabbit-gold: #F59E0B;
+  --color-red-queen: #FDA4AF;
+  --color-brass-hairline: #B08D3C;
+
+  --color-accent-action: #2DD4BF;
+  --color-accent-ink: #0F172A;
+  --color-warm-accent: #F59E0B;
+  --color-warm-soft: #3A2D22;
+  --color-threshold-error: #FDA4AF;
+
+  --color-border-hairline: var(--color-brass-hairline);
+  --color-border-grid: rgba(176, 141, 60, 0.25);
+  --sc-btn-focus: #2DD4BF;             /* Cyan/Teal focus ring in dark mode */
+  --color-text-primary: var(--color-vellum);
+  --color-text-secondary: #CBD5E1;
+  --color-text-muted: #94A3B8;
+
+  --color-state-default-border: var(--color-brass-hairline);
+  --color-state-hover-bg: rgba(45, 212, 191, 0.12);
+  --color-state-hover-border: var(--color-cheshire-teal);
+  --color-state-active-bg: var(--color-cheshire-teal);
+  --color-state-active-text: #0F172A;
+  --color-state-disabled-bg: rgba(27, 37, 64, 0.6);
+  --color-state-disabled-border: #334155;
+  --color-state-disabled-text: #64748B;
+  --color-state-alert-border: var(--color-red-queen);
+  --color-state-alert-bg: rgba(253, 164, 175, 0.1);
+  --color-state-alert-text: var(--color-red-queen);
+
+  --bg: #0F172A;
+  --bg-alt: #141D30;
+  --surface: #141D30;
+  --ink: #ECE7DC;
+  --muted: #A6B1AB;
+  --line: #33403C;
+  --accent: #2DD4BF;
+  --accent-ink: #0F172A;
+  --warm: #F59E0B;
+  --warm-soft: #3A2D22;
+}
+
+/* ==========================================================================
+   3. Typography Rules & Section Labels
+   ========================================================================== */
+
+h1, h2, h3, h4, .chapter-title, .section-heading {
+  font-family: var(--font-display);
+  color: var(--color-vellum);
+  font-weight: 600;
+}
+
+/* Small-caps on section labels */
+.section-label,
+.chapter-numeral,
+.sc-section-label,
+.panel-header-title {
+  font-family: var(--font-display);
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+}
+
+/* Body prose */
+body, p, .body-text {
+  font-family: var(--font-body);
+  color: var(--color-vellum);
+}
+
+/* Old-style figures in deltas and stats */
+.sc-nums-oldstyle,
+.telemetry-delta,
+.telemetry-stat,
+table.telemetry-table td.stat-cell,
+table.sc-table td.stat-cell {
+  font-variant-numeric: oldstyle-nums;
+  font-feature-settings: "onum" 1;
+}
+
+/* Mathematical variables in italic */
+var,
+.math-var,
+i.var,
+em.var {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   4. Surfaces, Borders & Patterns
+   ========================================================================== */
+
+/* Cards & Tables: Double hairline border in Brass replacing single border */
+.sc-card,
+.sc-card-dark,
+.panel-card,
+.specimen-lattice-card,
+.inspector-card,
+.swatches-section,
+.swatch-card {
+  background-color: var(--color-surface-card);
+  border: 3px double var(--color-brass-hairline);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.sc-table-container,
+table.sc-table,
+table.telemetry-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 3px double var(--color-brass-hairline);
+  background-color: var(--color-surface-card);
+}
+
+/* 2-3% subtle checker pattern behind stat grids only, never behind running text */
+.stat-grid-checker {
+  background-color: var(--color-canvas);
+  background-image:
+    linear-gradient(45deg, rgba(245, 239, 224, 0.025) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(245, 239, 224, 0.025) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(245, 239, 224, 0.025) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(245, 239, 224, 0.025) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+}
+
+/* ==========================================================================
+   5. Buttons & Interactive States
+   ========================================================================== */
+
+.sc-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-technical);
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.2;
+  border: 1px solid var(--color-brass-hairline);
+  background: transparent;
+  color: var(--color-vellum);
+  transform: scale(1);
+  transition: transform 150ms ease, background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+/* Motion: Hover and focus ±2% scale, 150ms ease */
+.sc-btn:hover {
+  transform: scale(1.02);
+}
+
+.sc-btn:focus-visible {
+  transform: scale(1.02);
+  outline: 2px solid var(--sc-btn-focus, #0D9488);
+  outline-offset: var(--sc-btn-focus-offset, 3px);
+}
+
+.sc-btn:active {
+  transform: scale(0.98);
+}
+
+/* Carroll line subtitle in italic */
+.sc-btn .btn-carroll-tag,
+.btn-carroll-tag {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.68rem;
+  font-weight: 400;
+  opacity: 0.88;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* Button Variants */
+.sc-btn-primary,
+.sc-gradient-teal {
+  background: rgba(45, 212, 191, 0.14);
+  border: 1px solid var(--color-cheshire-teal);
+  color: var(--color-cheshire-teal);
+}
+.sc-btn-primary:hover,
+.sc-gradient-teal:hover {
+  background: var(--color-cheshire-teal);
+  color: #0F172A;
+}
+.sc-btn-primary:hover .btn-carroll-tag,
+.sc-gradient-teal:hover .btn-carroll-tag {
+  color: #0F172A;
+  opacity: 0.95;
+}
+
+.sc-btn-focal,
+.sc-3d-amber {
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid var(--color-white-rabbit-gold);
+  color: var(--color-white-rabbit-gold);
+}
+.sc-btn-focal:hover,
+.sc-3d-amber:hover {
+  background: var(--color-white-rabbit-gold);
+  color: #0F172A;
+}
+
+.sc-btn-alert,
+.sc-btn-red-queen {
+  background: rgba(253, 164, 175, 0.12);
+  border: 1px solid var(--color-red-queen);
+  color: var(--color-red-queen);
+}
+.sc-btn-alert:hover,
+.sc-btn-red-queen:hover {
+  background: var(--color-red-queen);
+  color: #0F172A;
+}
+
+.sc-btn-disabled,
+.sc-btn[disabled] {
+  background: rgba(27, 37, 64, 0.6) !important;
+  border: 1px solid #334155 !important;
+  color: #64748B !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* ==========================================================================
+   6. Motion Constraints & Accessibility
+   ========================================================================== */
+
+/* All motion disabled under prefers-reduced-motion: reduce */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* No animation inside reading areas or data tables */
+.reading-area,
+.reading-area *,
+table.telemetry-table,
+table.telemetry-table *,
+table.sc-table,
+table.sc-table *,
+.panel-desc,
+.panel-desc * {
+  animation: none !important;
+}
+
+/* Badges */
+.sc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-technical);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-technical);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-xs);
+  text-transform: uppercase;
+}
+
+.sc-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.sc-badge-active {
+  background-color: rgba(45, 212, 191, 0.12);
+  color: var(--color-cheshire-teal);
+  border: 1px solid rgba(45, 212, 191, 0.35);
+}
+.sc-badge-active .sc-badge-dot {
+  background-color: var(--color-cheshire-teal);
+}
+
+/* Caution / Alert badge using Red Queen */
+.sc-badge-caution,
+.sc-badge-alert {
+  background-color: rgba(253, 164, 175, 0.12);
+  color: var(--color-red-queen);
+  border: 1px solid rgba(253, 164, 175, 0.35);
+}
+.sc-badge-caution .sc-badge-dot,
+.sc-badge-alert .sc-badge-dot {
+  background-color: var(--color-red-queen);
+}
+
+/* Focal badge using White Rabbit Gold (single focal node) */
+.sc-badge-focal {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: var(--color-white-rabbit-gold);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+.sc-badge-focal .sc-badge-dot {
+  background-color: var(--color-white-rabbit-gold);
+}

@@ -1,0 +1,34 @@
+# 06 — Microclimate & AQI Forensics (12054 Chapin Court, Oregon City)
+## Updated: November 1, 2026 (Incorporating Cycles 1, 2, & 3 Audits + Nov 1 AQI 91 Observation)
+
+This directory houses the complete evidentiary package, satellite raster audits, weather provenance and `3×3` spatial-buffer sensitivity checks, litigation readiness reviews, contemporaneous air-quality observations, and interactive HTML presentation decks for the **12054 Chapin Court / Oregon City Microclimate & Canopy Loss Investigation (1994–2026)**.
+
+## Directory Structure & Key Files
+
+### 1. Interactive Presentation Decks (Local HTML — Updated with Cycle 3 Findings)
+* [`forensic-microclimate.html`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/forensic-microclimate.html) — Self-contained 17-slide interactive evidentiary report & voice-narrated deck (updated Nov 1, 2026 with Cycle 2 STAC raster verification, Cycle 3 weather provenance & `3×3` buffer sensitivity, and the Nov 1, 2026 AQI 91 observation + CAMS model comparison).
+* [`chapin-thermal.html`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/chapin-thermal.html) — Identical mirror of `forensic-microclimate.html`.
+* Also located in the web repository at [`/home/annika/ExecutiveFunctionOS_Web/forensic-microclimate.html`](file:///home/annika/ExecutiveFunctionOS_Web/forensic-microclimate.html) and [`/home/annika/ExecutiveFunctionOS_Web/chapin-thermal.html`](file:///home/annika/ExecutiveFunctionOS_Web/chapin-thermal.html).
+
+### 2. Cycle 3 Weather Provenance, `3×3` Buffer Sensitivity, & AQI Audit (`cycle3/`)
+* [`cycle3/CYCLE3_REPORT.md`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/cycle3/CYCLE3_REPORT.md) (also in [`litigation_review/04_cycle3_weather_buffer_aqi_report_2026-11-02.md`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/litigation_review/04_cycle3_weather_buffer_aqi_report_2026-11-02.md)) — Full Cycle 3 technical report covering:
+  * **Gate 1B Weather Provenance:** Reconciles the published `Ambient` column against Open-Meteo `best_match` local-day maximum (`MAE = 0.058°F`, all 12 dates within `0.1°F`) vs. exact-overpass (`18:14–18:56 UTC`) ERA5-Land 2m air temperature (`9.44°F` lower on average).
+  * **Gate 2 Spatial Buffer (`3×3` / `90m × 90m`):** Confirms all **324/324** pixels pass QA (`bits 0–5 = 0`, `QA_RADSAT = 0`) and thermal excess remains positive on 12/12 dates across center-pixel (`+10.99°F` / `+12.86°F`), `3×3` mean (`+10.48°F` / `+12.08°F`), and `3×3` median (`+10.98°F` / `+12.71°F`) extractions.
+  * **Gate 4 AQI & Stagnation Model Comparison:** Compares the Nov 1, 2026 (`08:45 PST / 16:45 UTC`) screenshot (`US AQI 91`) with coarse (`~0.4°`) CAMS global forecast data (`US AQI 79`, `PM2.5 = 23.15 µg/m³`, `BLH = 151.25 m`, `10m wind = 0.865 m/s`, `+15.75 AQI` above the 5-city valley median).
+* [`cycle3/unverified_candidate_2004-08-11.csv`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/cycle3/unverified_candidate_2004-08-11.csv) — Logged unverified candidate row (`2004-08-11`) held excluded from the verified 12-scene baseline.
+
+### 3. Cycle 2 Independent Satellite Raster Audit (`microclimate_audit/`)
+Unpacked from `microclimate_raster_audit_cycle2_2026-10-28.zip` (retrieved `2026-10-28T00:18:09Z` via Microsoft Planetary Computer STAC API `landsat-c2-l2`):
+* [`microclimate_audit/README.md`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/microclimate_audit/README.md) — Executive audit notes & Gate 1A reproduction summary.
+* [`microclimate_audit/chronological_audit.csv`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/microclimate_audit/chronological_audit.csv) & [`chronological_audit.xlsx`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/microclimate_audit/chronological_audit.xlsx) — Full-precision comparison of published vs. point-sampled Landsat Collection 2 Level-2 LST across all 12 dates (`1994–2024`).
+* [`microclimate_audit/scene_validation.csv`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/microclimate_audit/scene_validation.csv) — Authoritative USGS product IDs, Tier status (`T1` for 11 scenes; `T2` for `2010-08-20`), and exact UTC overpass timestamps (`18:14:07Z`–`18:56:17Z`).
+* [`microclimate_audit/raster_samples_long.csv`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/microclimate_audit/raster_samples_long.csv) & [`microclimate_audit/reproduce.py`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/microclimate_audit/reproduce.py).
+
+### 4. Contemporaneous Air Quality (AQI) Observations (`aqi_observations/`)
+* [`aqi_observations/2026-11-01_0845_Oregon_City_Elevated_AQI_91_Pocket.png`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/aqi_observations/2026-11-01_0845_Oregon_City_Elevated_AQI_91_Pocket.png) — Attributed to November 1, 2026 at `08:45 PST`, displaying `My Location, US AQI 91` (Moderate; USG begins at `101`) over Oregon City.
+
+### 5. Litigation Readiness Review & Working Drafts (`litigation_review/`)
+* [`litigation_review/04_cycle3_weather_buffer_aqi_report_2026-11-02.md`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/litigation_review/04_cycle3_weather_buffer_aqi_report_2026-11-02.md) — **Cycle 3 Weather, `3×3` Buffer, & AQI Technical Report**.
+* [`litigation_review/03_cycle2_raster_audit_and_aqi_supplement_2026-11-01.md`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/litigation_review/03_cycle2_raster_audit_and_aqi_supplement_2026-11-01.md) — **Cycles 2 & 3 Combined Technical Synthesis**.
+* [`litigation_review/01_litigation_readiness_review.md`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/litigation_review/01_litigation_readiness_review.md) — Cycle 1 FRE 702 / OEC 702 technical critique.
+* [`litigation_review/02_revised_report_working_draft.md`](file:///home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/06_Microclimate_and_AQI_Forensics/litigation_review/02_revised_report_working_draft.md) — Conservative evidentiary working draft.

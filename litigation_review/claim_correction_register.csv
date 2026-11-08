@@ -1,0 +1,21 @@
+claim_id,slides,priority,claim_or_issue,audit_status,required_revision,release_evidence
+C01,"1,2,15,16",P0,Verified/certified/admissible report,Not established,Remove certification and legal outcome guarantees; disclose evidence not supplied,"Expert qualifications, complete source chain, counsel review"
+C02,"4,8; narration",P0,Heatwave widening p < 0.01,Not reproduced,Use 1.875°F difference; exploratory Welch p≈0.265,"Original model, data, code, standard errors and hypothesis"
+C03,5,P0,Differential slope p < 0.01,Not reproduced,"Slope 0.13569, CI [-0.04562,0.31699], p≈0.126",Validated independent observations and appropriate inference
+C04,5,P0,R² 0.88 / 0.91,Not reproduced,Replace with approximately 0.710 / 0.763 for displayed series,Original precision/source series
+C05,9,P0,Removal-policy DiD,Misidentified model,Relabel heat-regime interaction; no treatment effect identified,"Verified treatment timing/intensity, controls, pretrends"
+C06,"4,7,10,14",P0,Peak divergence corresponds to 2009–2018,Contradicted by sample maximum in 2006,Discuss adverse timing evidence and flat pre/post contrast,Complete comparable temporal series
+C07,"1,3,10,13; narration",P0,NDVI equals percent canopy and shade loss,Invalid interpretation,Use dimensionless NDVI only; remove percentages,Dated source imagery and validated canopy classification
+C08,"8,14",P0,100% solar irradiance becomes sensible heat,Physically incorrect,Use qualified surface-energy-balance explanation,Suitable physical model and inputs
+C09,"10,13; narration",P0,LST proves indoor injury/habitability,Unsupported extrapolation,"Separate surface, air, indoor and human exposure","Calibrated logs, building/HVAC and medical assessment"
+C10,"12,14",P0,167 permits prove removals and compulsion,Unverified,"Distinguish permits, completed removals, directives and alternatives","Geocoded deduplicated ledger, notices, completion records"
+C11,"2,6,15",P1,Independent 30 m thermal resolution,Misleading,Distinguish native 120/60/100 m from resampled grid,Sensor-specific metadata and footprint map
+C12,"2,6,16",P1,All scene IDs and cloud-free values verified,Unverified,Obtain full product IDs and local QA/geometry,"Raw products, MTL, QA, retrieval code"
+C13,"2,16",P1,ERA5-Land station/exact timing,Mischaracterized and unverified,Call gridded reanalysis; document variable/model/time pairing,Saved API responses and satellite UTC times
+C14,"3,15",P1,Only canopy differs; ±16 ft matching,Unsupported/inconsistent,Subject-control differences 13/32 ft; evaluate confounders,Consistent DEM and historical balance table
+C15,"1,7,10,15",P1,Unbroken 1994–2026 30-year record,Misleading,12 selected 1994–2024 observations; review in 2026,Complete eligible scene inventory
+C16,"4,13; narration",P1,Historic record/routinely above 120°F,Unsupported generalization,Sample maximum; one listed date above 120°F,Broader validated series
+C17,13,P1,"July 25, 2021 row represents June heat dome",Event attribution not established,Use actual acquisition date and documented event,Event dates and actual event imagery/logs
+C18,"6,8",P2,All rounded arithmetic consistent,Small discrepancies,Reconcile original precision; normal ambient mean 80.44 not 80.8,Original precision data
+C19,All; hidden narration,P1,Narration is evidentially consistent,Not so,Correct narration alongside visible claims,Final slide-by-slide parity review
+C20,All methods,P1,Vegetation-change retrieval bias addressed,Not documented,Audit USGS emissivity/vegetation-change anomaly,"Product version, QA and sensitivity review"

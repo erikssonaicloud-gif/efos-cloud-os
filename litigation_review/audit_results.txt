@@ -1,0 +1,115 @@
+      ambient            chapin             control             excess        
+        count       mean  count        mean   count        mean  count    mean
+heat                                                                          
+False       7  80.442857      7   99.457143       7   88.472143      7  10.985
+True        5  96.860000      5  114.764000       5  101.904000      5  12.860
+chapin                             OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 chapin   R-squared:                       0.710
+Model:                            OLS   Adj. R-squared:                  0.681
+Method:                 Least Squares   F-statistic:                     24.47
+Date:                Mon, 19 Oct 2026   Prob (F-statistic):           0.000581
+Time:                        00:47:24   Log-Likelihood:                -36.638
+No. Observations:                  12   AIC:                             77.28
+Df Residuals:                      10   BIC:                             78.25
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         26.6605     16.087      1.657      0.128      -9.183      62.504
+ambient        0.9071      0.183      4.947      0.001       0.499       1.316
+==============================================================================
+Omnibus:                        0.270   Durbin-Watson:                   2.573
+Prob(Omnibus):                  0.874   Jarque-Bera (JB):                0.418
+Skew:                          -0.225   Prob(JB):                        0.811
+Kurtosis:                       2.204   Cond. No.                         871.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+control                             OLS Regression Results                            
+==============================================================================
+Dep. Variable:                control   R-squared:                       0.763
+Model:                            OLS   Adj. R-squared:                  0.739
+Method:                 Least Squares   F-statistic:                     32.20
+Date:                Mon, 19 Oct 2026   Prob (F-statistic):           0.000206
+Time:                        00:47:24   Log-Likelihood:                -33.048
+No. Observations:                  12   AIC:                             70.10
+Df Residuals:                      10   BIC:                             71.07
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         26.7374     11.927      2.242      0.049       0.162      53.313
+ambient        0.7714      0.136      5.674      0.000       0.468       1.074
+==============================================================================
+Omnibus:                        0.250   Durbin-Watson:                   1.868
+Prob(Omnibus):                  0.882   Jarque-Bera (JB):                0.414
+Skew:                          -0.090   Prob(JB):                        0.813
+Kurtosis:                       2.108   Cond. No.                         871.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+excess                             OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 excess   R-squared:                       0.218
+Model:                            OLS   Adj. R-squared:                  0.139
+Method:                 Least Squares   F-statistic:                     2.781
+Date:                Mon, 19 Oct 2026   Prob (F-statistic):              0.126
+Time:                        00:47:24   Log-Likelihood:                -26.889
+No. Observations:                  12   AIC:                             57.78
+Df Residuals:                      10   BIC:                             58.75
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.0769      7.139     -0.011      0.992     -15.983      15.829
+ambient        0.1357      0.081      1.667      0.126      -0.046       0.317
+==============================================================================
+Omnibus:                        0.701   Durbin-Watson:                   2.788
+Prob(Omnibus):                  0.705   Jarque-Bera (JB):                0.667
+Skew:                           0.352   Prob(JB):                        0.716
+Kurtosis:                       2.085   Cond. No.                         871.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+Two-sided Welch test of between-regime excess: TtestResult(statistic=np.float64(1.1963518228182588), pvalue=np.float64(0.2650547538262208), df=np.float64(8.186917492541975))
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    lst   R-squared:                       0.819
+Model:                            OLS   Adj. R-squared:                  0.795
+Method:                 Least Squares   F-statistic:                     35.02
+Date:                Mon, 19 Oct 2026   Prob (F-statistic):           4.35e-11
+Time:                        00:47:24   Log-Likelihood:                -104.13
+No. Observations:                  36   AIC:                             218.3
+Df Residuals:                      31   BIC:                             226.2
+Df Model:                           4                                         
+Covariance Type:            nonrobust                                         
+=========================================================================================
+                            coef    std err          t      P>|t|      [0.025      0.975]
+-----------------------------------------------------------------------------------------
+Intercept                37.3752      8.590      4.351      0.000      19.855      54.895
+C(site)[T.hillendale]    -8.6213      2.348     -3.671      0.001     -13.411      -3.832
+C(site)[T.rivercrest]   -12.7138      2.348     -5.414      0.000     -17.503      -7.924
+ambient                   0.7718      0.104      7.387      0.000       0.559       0.985
+interaction               2.6369      3.245      0.813      0.423      -3.980       9.254
+==============================================================================
+Omnibus:                        0.361   Durbin-Watson:                   2.572
+Prob(Omnibus):                  0.835   Jarque-Bera (JB):                0.502
+Skew:                          -0.196   Prob(JB):                        0.778
+Kurtosis:                       2.574   Cond. No.                         977.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+Era means: phase
+pre        12.814000
+removal     9.998750
+post       12.376667
+Name: excess, dtype: float64
+

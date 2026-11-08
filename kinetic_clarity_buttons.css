@@ -1,0 +1,1153 @@
+/**
+ * Kinetic Clarity Buttons v1.0.0
+ * Pure CSS Animated Button Library for the Canva AI Visual Identity System
+ * "Structural Clarity & Dynamic Resonance"
+ * 
+ * Palette: Deep Slate (#0F172A), Signal Teal (#0D9488), Resonant Amber (#D97706), Chalk White (#F8FAFC)
+ * Typography: Space Grotesk / JetBrains Mono
+ * Accessible, zero-dependency, GPU-accelerated transitions
+ *
+ * Copyright 2026 Precedent Systems / Annika Eriksson
+ * Released under MIT License
+ */
+
+:root {
+  /* Brand Typography */
+  --sc-btn-font: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --sc-btn-font-tech: 'JetBrains Mono', Fira Code, monospace;
+  --sc-btn-font-size: 0.9375rem;
+  --sc-btn-font-size-sm: 0.8125rem;
+  --sc-btn-font-size-lg: 1.0625rem;
+  --sc-btn-weight: 600;
+  --sc-btn-letter-spacing: 0.02em;
+
+  /* Brand Sizing & Spacing */
+  --sc-btn-pad-y: 0.75rem;
+  --sc-btn-pad-x: 1.5rem;
+  --sc-btn-pad-y-sm: 0.5rem;
+  --sc-btn-pad-x-sm: 1rem;
+  --sc-btn-pad-y-lg: 0.95rem;
+  --sc-btn-pad-x-lg: 2.25rem;
+  --sc-btn-radius: 4px;
+  --sc-btn-radius-pill: 9999px;
+  --sc-btn-radius-sharp: 0px;
+
+  /* Transitions */
+  --sc-btn-speed: 0.24s;
+  --sc-btn-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Focus Indicator */
+  --sc-btn-focus: #2DD4BF;
+  --sc-btn-focus-offset: 3px;
+
+  /* Looking-Glass Brand Palette Variables */
+  --sc-slate-dark: #0F172A;
+  --sc-slate-panel: #1B2540;
+  --sc-slate-border: #B08D3C;
+  --sc-slate-muted: #64748B;
+  --sc-teal-primary: #2DD4BF;
+  --sc-teal-light: #5EEAD4;
+  --sc-teal-glow: rgba(45, 212, 191, 0.45);
+  --sc-amber-primary: #F59E0B;
+  --sc-amber-light: #FBBF24;
+  --sc-amber-glow: rgba(245, 158, 11, 0.45);
+  --sc-red-queen: #FDA4AF;
+  --sc-red-glow: rgba(253, 164, 175, 0.45);
+  --sc-chalk-white: #F5EFE0;
+  --sc-vellum: #F5EFE0;
+  --sc-brass: #B08D3C;
+  --sc-glass-bg: rgba(245, 239, 224, 0.05);
+  --sc-glass-border: rgba(176, 141, 60, 0.35);
+
+  /* Legacy Aliases for Drop-In Kinetic Button Compatibility */
+  --kb-font-family: var(--sc-btn-font);
+  --kb-font-size: var(--sc-btn-font-size);
+  --kb-font-size-sm: var(--sc-btn-font-size-sm);
+  --kb-font-size-lg: var(--sc-btn-font-size-lg);
+  --kb-font-weight: var(--sc-btn-weight);
+  --kb-letter-spacing: var(--sc-btn-letter-spacing);
+  --kb-padding-y: var(--sc-btn-pad-y);
+  --kb-padding-x: var(--sc-btn-pad-x);
+  --kb-padding-y-sm: var(--sc-btn-pad-y-sm);
+  --kb-padding-x-sm: var(--sc-btn-pad-x-sm);
+  --kb-padding-y-lg: var(--sc-btn-pad-y-lg);
+  --kb-padding-x-lg: var(--sc-btn-pad-x-lg);
+  --kb-radius: var(--sc-btn-radius);
+  --kb-radius-pill: var(--sc-btn-radius-pill);
+  --kb-radius-sharp: var(--sc-btn-radius-sharp);
+  --kb-transition-speed: var(--sc-btn-speed);
+  --kb-transition-ease: var(--sc-btn-ease);
+  --kb-focus-ring: var(--sc-btn-focus);
+  --kb-focus-offset: var(--sc-btn-focus-offset);
+  --kb-neon-cyan-color: var(--sc-teal-light);
+  --kb-neon-cyan-glow: var(--sc-teal-glow);
+  --kb-neon-magenta-color: #f43f5e;
+  --kb-neon-magenta-glow: rgba(244, 63, 94, 0.55);
+  --kb-neon-amber-color: var(--sc-amber-light);
+  --kb-neon-amber-glow: var(--sc-amber-glow);
+  --kb-glass-bg: var(--sc-glass-bg);
+  --kb-glass-border: var(--sc-glass-border);
+  --kb-glass-blur: 16px;
+}
+
+/* ==========================================================================
+   BASE COMPONENT ARCHITECTURE
+   ========================================================================== */
+.sc-btn,
+.kb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--sc-btn-pad-y) var(--sc-btn-pad-x);
+  font-family: var(--sc-btn-font);
+  font-size: var(--sc-btn-font-size);
+  font-weight: var(--sc-btn-weight);
+  line-height: 1.25;
+  letter-spacing: var(--sc-btn-letter-spacing);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: var(--sc-btn-radius);
+  background-color: transparent;
+  color: var(--sc-chalk-white);
+  outline: none;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform var(--sc-btn-speed) var(--sc-btn-ease),
+    box-shadow var(--sc-btn-speed) var(--sc-btn-ease),
+    background var(--sc-btn-speed) var(--sc-btn-ease),
+    color var(--sc-btn-speed) var(--sc-btn-ease),
+    border-color var(--sc-btn-speed) var(--sc-btn-ease),
+    opacity var(--sc-btn-speed) var(--sc-btn-ease);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sc-btn:focus-visible,
+.kb-btn:focus-visible {
+  outline: 2px solid var(--sc-btn-focus);
+  outline-offset: var(--sc-btn-focus-offset);
+}
+
+.sc-btn:active,
+.kb-btn:active {
+  transform: scale(0.98);
+}
+
+.sc-btn:disabled,
+.sc-btn.is-disabled,
+.kb-btn:disabled,
+.kb-btn.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Icon Support */
+.sc-btn svg,
+.sc-btn .sc-icon,
+.kb-btn svg,
+.kb-btn .kb-icon {
+  width: 1.15em;
+  height: 1.15em;
+  fill: currentColor;
+  flex-shrink: 0;
+  transition: transform var(--sc-btn-speed) var(--sc-btn-ease);
+}
+
+.sc-btn:hover svg.sc-icon--right,
+.sc-btn:hover .sc-icon--right,
+.kb-btn:hover svg.kb-icon--right,
+.kb-btn:hover .kb-icon--right {
+  transform: translateX(3px);
+}
+
+.sc-btn:hover svg.sc-icon--left,
+.sc-btn:hover .sc-icon--left,
+.kb-btn:hover svg.kb-icon--left,
+.kb-btn:hover .kb-icon--left {
+  transform: translateX(-3px);
+}
+
+/* Sizing & Geometry Modifiers */
+.sc-btn--sm, .kb-btn--sm {
+  padding: var(--sc-btn-pad-y-sm) var(--sc-btn-pad-x-sm);
+  font-size: var(--sc-btn-font-size-sm);
+  border-radius: calc(var(--sc-btn-radius) * 0.75);
+}
+
+.sc-btn--lg, .kb-btn--lg {
+  padding: var(--sc-btn-pad-y-lg) var(--sc-btn-pad-x-lg);
+  font-size: var(--sc-btn-font-size-lg);
+  border-radius: calc(var(--sc-btn-radius) * 1.35);
+}
+
+.sc-btn--pill, .kb-btn--pill {
+  border-radius: var(--sc-btn-radius-pill) !important;
+}
+
+.sc-btn--sharp, .kb-btn--sharp {
+  border-radius: var(--sc-btn-radius-sharp) !important;
+}
+
+.sc-btn--block, .kb-btn--block {
+  display: flex;
+  width: 100%;
+}
+
+/* ==========================================================================
+   CATEGORY 1: DYNAMIC RESONANCE GRADIENTS
+   ========================================================================== */
+
+/* 1.1 Signal Teal Ocean */
+.sc-gradient-teal,
+.kb-gradient-ocean {
+  background: linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #14b8a6 100%);
+  background-size: 200% 200%;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 4px 16px -2px rgba(13, 148, 136, 0.45),
+    0 2px 6px rgba(15, 23, 42, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition:
+    background-position 0.5s ease,
+    transform var(--sc-btn-speed) var(--sc-btn-ease),
+    box-shadow var(--sc-btn-speed) var(--sc-btn-ease);
+}
+
+.sc-gradient-teal:hover,
+.kb-gradient-ocean:hover {
+  background-position: 100% 100%;
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 26px -2px rgba(20, 184, 166, 0.65),
+    0 4px 10px rgba(15, 23, 42, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.sc-gradient-teal:active,
+.kb-gradient-ocean:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 3px 10px rgba(13, 148, 136, 0.4);
+}
+
+/* 1.2 Resonant Amber Sunrise */
+.sc-gradient-amber,
+.kb-gradient-sunrise {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%);
+  background-size: 200% 200%;
+  color: #0f172a;
+  font-weight: 700;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 4px 16px -2px rgba(217, 119, 6, 0.45),
+    0 2px 6px rgba(15, 23, 42, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition:
+    background-position 0.5s ease,
+    transform var(--sc-btn-speed) var(--sc-btn-ease),
+    box-shadow var(--sc-btn-speed) var(--sc-btn-ease);
+}
+
+.sc-gradient-amber:hover,
+.kb-gradient-sunrise:hover {
+  background-position: 100% 100%;
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 26px -2px rgba(245, 158, 11, 0.65),
+    0 4px 10px rgba(15, 23, 42, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.sc-gradient-amber:active,
+.kb-gradient-sunrise:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 3px 10px rgba(217, 119, 6, 0.4);
+}
+
+/* 1.3 Harmonic Lattice Aurora (Teal to Slate-Indigo to Amber) */
+.sc-gradient-aurora,
+.kb-gradient-aurora {
+  background: linear-gradient(135deg, #0d9488 0%, #1e293b 50%, #d97706 100%);
+  background-size: 200% 200%;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 4px 16px -2px rgba(13, 148, 136, 0.35),
+    0 2px 6px rgba(15, 23, 42, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition:
+    background-position 0.6s ease,
+    transform var(--sc-btn-speed) var(--sc-btn-ease),
+    box-shadow var(--sc-btn-speed) var(--sc-btn-ease);
+}
+
+.sc-gradient-aurora:hover,
+.kb-gradient-aurora:hover {
+  background-position: 100% 100%;
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 26px -2px rgba(217, 119, 6, 0.45),
+    0 4px 10px rgba(15, 23, 42, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.sc-gradient-aurora:active,
+.kb-gradient-aurora:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 1.4 Deep Twilight Cosmic (Deep Slate to Signal Teal) */
+.sc-gradient-twilight,
+.kb-gradient-cosmic {
+  background: linear-gradient(135deg, #0f172a 0%, #134e4a 50%, #0d9488 100%);
+  background-size: 200% 200%;
+  color: #f8fafc;
+  border-color: rgba(13, 148, 136, 0.3);
+  box-shadow:
+    0 4px 18px -2px rgba(13, 148, 136, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition:
+    background-position 0.6s ease,
+    transform var(--sc-btn-speed) var(--sc-btn-ease),
+    box-shadow var(--sc-btn-speed) var(--sc-btn-ease);
+}
+
+.sc-gradient-twilight:hover,
+.kb-gradient-cosmic:hover {
+  background-position: 100% 100%;
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 28px -2px rgba(20, 184, 166, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.sc-gradient-twilight:active,
+.kb-gradient-cosmic:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ==========================================================================
+   CATEGORY 2: STRUCTURAL GLASSMORPHISM
+   ========================================================================== */
+
+/* 2.1 Chalk Frost Glass */
+.sc-glass-frost,
+.kb-glass-frost {
+  background: rgba(248, 250, 252, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #f8fafc;
+  border: 1px solid rgba(248, 250, 252, 0.22);
+  box-shadow:
+    0 8px 24px 0 rgba(15, 23, 42, 0.3),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.sc-glass-frost:hover,
+.kb-glass-frost:hover {
+  background: rgba(248, 250, 252, 0.16);
+  border-color: rgba(13, 148, 136, 0.5);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 32px 0 rgba(13, 148, 136, 0.2),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+.sc-glass-frost:active,
+.kb-glass-frost:active {
+  transform: translateY(0) scale(0.98);
+  background: rgba(248, 250, 252, 0.1);
+}
+
+/* 2.2 Deep Obsidian Slate Glass */
+.sc-glass-dark,
+.kb-glass-dark {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #f1f5f9;
+  border: 1px solid rgba(51, 65, 85, 0.6);
+  box-shadow:
+    0 8px 24px -4px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.sc-glass-dark:hover,
+.kb-glass-dark:hover {
+  background: rgba(30, 41, 59, 0.88);
+  border-color: rgba(13, 148, 136, 0.45);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 30px -4px rgba(0, 0, 0, 0.75),
+    0 0 15px rgba(13, 148, 136, 0.25),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.sc-glass-dark:active,
+.kb-glass-dark:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 2.3 Harmonic Prismatic Lattice Glass */
+.sc-glass-prism,
+.kb-glass-prism {
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.12), rgba(15, 23, 42, 0.4));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 8px 25px -4px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
+  position: relative;
+}
+
+.sc-glass-prism::before,
+.kb-glass-prism::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(13, 148, 136, 0.7),
+    rgba(217, 119, 6, 0.6),
+    rgba(20, 184, 166, 0.7),
+    rgba(245, 158, 11, 0.6)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity var(--sc-btn-speed) ease;
+}
+
+.sc-glass-prism:hover,
+.kb-glass-prism:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 35px -4px rgba(13, 148, 136, 0.35),
+    0 0 20px rgba(217, 119, 6, 0.25),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+.sc-glass-prism:hover::before,
+.kb-glass-prism:hover::before {
+  opacity: 1;
+}
+
+.sc-glass-prism:active,
+.kb-glass-prism:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ==========================================================================
+   CATEGORY 3: HARMONIC NEON GLOW
+   ========================================================================== */
+
+/* 3.1 Neon Signal Teal */
+.sc-neon-teal,
+.kb-neon-cyan {
+  background: rgba(13, 148, 136, 0.1);
+  color: #14b8a6;
+  border: 1.5px solid #0d9488;
+  text-shadow: 0 0 8px rgba(13, 148, 136, 0.6);
+  box-shadow:
+    0 0 15px rgba(13, 148, 136, 0.35),
+    inset 0 0 10px rgba(13, 148, 136, 0.18);
+}
+
+.sc-neon-teal:hover,
+.kb-neon-cyan:hover {
+  background: #0d9488;
+  color: #0f172a;
+  font-weight: 700;
+  text-shadow: none;
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 25px rgba(20, 184, 166, 0.85),
+    0 0 50px rgba(13, 148, 136, 0.45),
+    inset 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+.sc-neon-teal:active,
+.kb-neon-cyan:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 3.2 Neon Resonant Amber */
+.sc-neon-amber,
+.kb-neon-amber {
+  background: rgba(217, 119, 6, 0.1);
+  color: #f59e0b;
+  border: 1.5px solid #d97706;
+  text-shadow: 0 0 8px rgba(217, 119, 6, 0.6);
+  box-shadow:
+    0 0 15px rgba(217, 119, 6, 0.35),
+    inset 0 0 10px rgba(217, 119, 6, 0.18);
+}
+
+.sc-neon-amber:hover,
+.kb-neon-amber:hover {
+  background: #d97706;
+  color: #0f172a;
+  font-weight: 700;
+  text-shadow: none;
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 25px rgba(245, 158, 11, 0.85),
+    0 0 50px rgba(217, 119, 6, 0.45),
+    inset 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+.sc-neon-amber:active,
+.kb-neon-amber:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 3.3 Neon Chalk Pulse */
+.sc-neon-chalk,
+.kb-neon-magenta {
+  background: rgba(248, 250, 252, 0.08);
+  color: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  text-shadow: 0 0 8px rgba(248, 250, 252, 0.5);
+  box-shadow:
+    0 0 15px rgba(248, 250, 252, 0.25),
+    inset 0 0 10px rgba(248, 250, 252, 0.1);
+}
+
+.sc-neon-chalk:hover,
+.kb-neon-magenta:hover {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 700;
+  text-shadow: none;
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 25px rgba(248, 250, 252, 0.85),
+    0 0 45px rgba(13, 148, 136, 0.35),
+    inset 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+.sc-neon-chalk:active,
+.kb-neon-magenta:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ==========================================================================
+   CATEGORY 4: PRECISION NEUMORPHISM / INSET SLAB
+   ========================================================================== */
+
+/* 4.1 Soft Technical Inset (Light Canvas #F8FAFC) */
+.sc-neumorphic-soft,
+.kb-neumorphic-soft {
+  background: #e2e8f0;
+  color: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    5px 5px 12px rgba(148, 163, 184, 0.5),
+    -5px -5px 12px rgba(255, 255, 255, 0.9);
+}
+
+.sc-neumorphic-soft:hover,
+.kb-neumorphic-soft:hover {
+  color: #0d9488;
+  box-shadow:
+    3px 3px 8px rgba(148, 163, 184, 0.4),
+    -3px -3px 8px rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.sc-neumorphic-soft:active,
+.kb-neumorphic-soft:active {
+  transform: translateY(0);
+  box-shadow:
+    inset 4px 4px 8px rgba(148, 163, 184, 0.6),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.85);
+}
+
+/* 4.2 Dark Monolith Neumorphic (Deep Slate #0F172A) */
+.sc-neumorphic-dark,
+.kb-neumorphic-dark {
+  background: #1e293b;
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow:
+    6px 6px 15px #0a0f1d,
+    -6px -6px 15px #26344b;
+}
+
+.sc-neumorphic-dark:hover,
+.kb-neumorphic-dark:hover {
+  color: #f8fafc;
+  border-color: rgba(13, 148, 136, 0.3);
+  box-shadow:
+    8px 8px 18px #080c18,
+    -8px -8px 18px #2a3952;
+  transform: translateY(-1px);
+}
+
+.sc-neumorphic-dark:active,
+.kb-neumorphic-dark:active {
+  transform: translateY(0);
+  box-shadow:
+    inset 4px 4px 8px #0a0f1d,
+    inset -4px -4px 8px #26344b;
+}
+
+/* 4.3 Concave Signal Halo */
+.sc-neumorphic-concave,
+.kb-neumorphic-concave {
+  background: linear-gradient(145deg, #0f172a, #1e293b);
+  color: #14b8a6;
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  box-shadow:
+    6px 6px 16px #080d17,
+    -6px -6px 16px #223046,
+    inset 1px 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+.sc-neumorphic-concave:hover,
+.kb-neumorphic-concave:hover {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  color: #5eead4;
+  border-color: #0d9488;
+  box-shadow:
+    8px 8px 20px #080d17,
+    -8px -8px 20px #223046,
+    0 0 14px rgba(13, 148, 136, 0.35);
+  transform: translateY(-1px);
+}
+
+.sc-neumorphic-concave:active,
+.kb-neumorphic-concave:active {
+  transform: translateY(0);
+  box-shadow:
+    inset 5px 5px 10px #080d17,
+    inset -5px -5px 10px #223046;
+}
+
+/* ==========================================================================
+   CATEGORY 5: KINETIC MOTION & KEYFRAME PULSES
+   ========================================================================== */
+
+/* 5.1 Laser Shimmer Light Beam */
+.sc-kinetic-shimmer,
+.kb-kinetic-shimmer {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.sc-kinetic-shimmer::after,
+.kb-kinetic-shimmer::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    rgba(13, 148, 136, 0) 0%,
+    rgba(20, 184, 166, 0.4) 40%,
+    rgba(248, 250, 252, 0.8) 50%,
+    rgba(20, 184, 166, 0.4) 60%,
+    rgba(13, 148, 136, 0) 100%
+  );
+  transform: rotate(25deg);
+  animation: sc-shimmer-sweep 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes sc-shimmer-sweep {
+  0% {
+    left: -100%;
+  }
+  35%, 100% {
+    left: 180%;
+  }
+}
+
+.sc-kinetic-shimmer:hover,
+.kb-kinetic-shimmer:hover {
+  border-color: #0d9488;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(13, 148, 136, 0.3);
+}
+
+/* 5.2 Harmonic Lattice Pulse Ring */
+.sc-kinetic-pulse,
+.kb-kinetic-pulse {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+}
+
+.sc-kinetic-pulse::before,
+.kb-kinetic-pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: sc-pulse-ring 2.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes sc-pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  70% {
+    transform: scale(1.25, 1.55);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.25, 1.55);
+    opacity: 0;
+  }
+}
+
+.sc-kinetic-pulse:hover,
+.kb-kinetic-pulse:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(13, 148, 136, 0.7);
+}
+
+/* 5.3 Rotating Conic Border Orbit */
+.sc-kinetic-border,
+.kb-kinetic-border {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1;
+}
+
+.sc-kinetic-border::before,
+.kb-kinetic-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    #0d9488,
+    #d97706,
+    #0000 40%,
+    #0000 60%,
+    #0d9488
+  );
+  animation: sc-border-spin 3s linear infinite;
+  z-index: -2;
+}
+
+.sc-kinetic-border::after,
+.kb-kinetic-border::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(var(--sc-btn-radius) - 1px);
+  background: #0f172a;
+  z-index: -1;
+  transition: background var(--sc-btn-speed) ease;
+}
+
+@keyframes sc-border-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sc-kinetic-border:hover,
+.kb-kinetic-border:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(13, 148, 136, 0.4);
+}
+
+.sc-kinetic-border:hover::after,
+.kb-kinetic-border:hover::after {
+  background: #1e293b;
+}
+
+/* 5.4 Floating Harmonic Oscillation */
+.sc-kinetic-float,
+.kb-kinetic-float {
+  background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: sc-float-motion 3s ease-in-out infinite alternate;
+}
+
+@keyframes sc-float-motion {
+  0% {
+    transform: translateY(0px);
+    box-shadow: 0 5px 15px rgba(13, 148, 136, 0.35);
+  }
+  100% {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 28px rgba(13, 148, 136, 0.55);
+  }
+}
+
+.sc-kinetic-float:hover,
+.kb-kinetic-float:hover {
+  animation-play-state: paused;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 32px rgba(13, 148, 136, 0.7);
+}
+
+/* 5.5 Cybernetic Diagnostic Glitch */
+.sc-kinetic-glitch,
+.kb-kinetic-glitch {
+  background: #0f172a;
+  color: #14b8a6;
+  border: 1px solid #0d9488;
+  font-family: var(--sc-btn-font-tech);
+  position: relative;
+  text-shadow: 0 0 5px rgba(13, 148, 136, 0.4);
+}
+
+.sc-kinetic-glitch::before,
+.sc-kinetic-glitch::after,
+.kb-kinetic-glitch::before,
+.kb-kinetic-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sc-kinetic-glitch:hover,
+.kb-kinetic-glitch:hover {
+  background: #1e293b;
+  box-shadow: 0 0 15px rgba(13, 148, 136, 0.4);
+}
+
+.sc-kinetic-glitch:hover::before,
+.kb-kinetic-glitch:hover::before {
+  opacity: 1;
+  color: #d97706;
+  transform: translate(-2px, -1px);
+  animation: sc-glitch-anim-1 0.3s steps(2) infinite;
+  clip-path: polygon(0 20%, 100% 20%, 100% 45%, 0 45%);
+}
+
+.sc-kinetic-glitch:hover::after,
+.kb-kinetic-glitch:hover::after {
+  opacity: 1;
+  color: #5eead4;
+  transform: translate(2px, 1px);
+  animation: sc-glitch-anim-2 0.3s steps(2) infinite reverse;
+  clip-path: polygon(0 60%, 100% 60%, 100% 85%, 0 85%);
+}
+
+@keyframes sc-glitch-anim-1 {
+  0% {
+    clip-path: polygon(0 15%, 100% 15%, 100% 40%, 0 40%);
+  }
+  50% {
+    clip-path: polygon(0 45%, 100% 45%, 100% 70%, 0 70%);
+  }
+  100% {
+    clip-path: polygon(0 10%, 100% 10%, 100% 35%, 0 35%);
+  }
+}
+
+@keyframes sc-glitch-anim-2 {
+  0% {
+    clip-path: polygon(0 65%, 100% 65%, 100% 90%, 0 90%);
+  }
+  50% {
+    clip-path: polygon(0 30%, 100% 30%, 100% 55%, 0 55%);
+  }
+  100% {
+    clip-path: polygon(0 75%, 100% 75%, 100% 95%, 0 95%);
+  }
+}
+
+/* ==========================================================================
+   CATEGORY 6: TECHNICAL GHOST & HUD OUTLINES
+   ========================================================================== */
+
+/* 6.1 Structural Hairline Inversion */
+.sc-outline-minimal,
+.kb-outline-minimal {
+  background: transparent;
+  color: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  position: relative;
+  z-index: 1;
+}
+
+.sc-outline-minimal::before,
+.kb-outline-minimal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #f8fafc;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+.sc-outline-minimal:hover,
+.kb-outline-minimal:hover {
+  color: #0f172a;
+  border-color: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(248, 250, 252, 0.15);
+}
+
+.sc-outline-minimal:hover::before,
+.kb-outline-minimal:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.sc-outline-minimal:active,
+.kb-outline-minimal:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 6.2 Harmonic Teal/Amber Gradient Border */
+.sc-outline-gradient,
+.kb-outline-gradient {
+  background: linear-gradient(#0f172a, #0f172a) padding-box,
+              linear-gradient(135deg, #0d9488, #d97706, #14b8a6) border-box;
+  border: 1.5px solid transparent;
+  color: #f8fafc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.sc-outline-gradient:hover,
+.kb-outline-gradient:hover {
+  background: linear-gradient(135deg, #0d9488, #d97706, #14b8a6) padding-box,
+              linear-gradient(135deg, #0d9488, #d97706, #14b8a6) border-box;
+  color: #0f172a;
+  font-weight: 700;
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 24px rgba(13, 148, 136, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sc-outline-gradient:active,
+.kb-outline-gradient:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 6.3 HUD Technical Bracket */
+.sc-outline-bracket,
+.kb-outline-bracket {
+  background: rgba(15, 23, 42, 0.6);
+  color: #14b8a6;
+  border: 1px solid rgba(13, 148, 136, 0.35);
+  font-family: var(--sc-btn-font-tech);
+  padding-left: calc(var(--sc-btn-pad-x) + 0.6rem);
+  padding-right: calc(var(--sc-btn-pad-x) + 0.6rem);
+  position: relative;
+}
+
+.sc-outline-bracket::before,
+.sc-outline-bracket::after,
+.kb-outline-bracket::before,
+.kb-outline-bracket::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 400;
+  font-size: 1.25em;
+  color: #0d9488;
+  opacity: 0.6;
+  transition:
+    transform var(--sc-btn-speed) var(--sc-btn-ease),
+    opacity var(--sc-btn-speed) var(--sc-btn-ease);
+}
+
+.sc-outline-bracket::before,
+.kb-outline-bracket::before {
+  content: "[";
+  left: 0.75rem;
+}
+
+.sc-outline-bracket::after,
+.kb-outline-bracket::after {
+  content: "]";
+  right: 0.75rem;
+}
+
+.sc-outline-bracket:hover,
+.kb-outline-bracket:hover {
+  background: rgba(13, 148, 136, 0.15);
+  border-color: #0d9488;
+  color: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(13, 148, 136, 0.35);
+}
+
+.sc-outline-bracket:hover::before,
+.kb-outline-bracket:hover::before {
+  transform: translate(3px, -50%);
+  opacity: 1;
+}
+
+.sc-outline-bracket:hover::after,
+.kb-outline-bracket:hover::after {
+  transform: translate(-3px, -50%);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   CATEGORY 7: 3D TACTILE MECHANICAL KEYS
+   ========================================================================== */
+
+/* 7.1 Resonant Amber 3D Push */
+.sc-3d-amber,
+.kb-3d-retro {
+  background: #d97706;
+  color: #0f172a;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 6px 0 #92400e,
+    0 10px 18px rgba(0, 0, 0, 0.35);
+  transform: translateY(0);
+  transition:
+    transform 0.15s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.15s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.sc-3d-amber:hover,
+.kb-3d-retro:hover {
+  background: #f59e0b;
+  transform: translateY(2px);
+  box-shadow:
+    0 4px 0 #92400e,
+    0 8px 14px rgba(0, 0, 0, 0.3);
+}
+
+.sc-3d-amber:active,
+.kb-3d-retro:active {
+  background: #b45309;
+  transform: translateY(6px);
+  box-shadow:
+    0 0 0 #92400e,
+    0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+/* 7.2 Deep Slate Slab 3D Key */
+.sc-3d-slate,
+.kb-3d-slate {
+  background: #334155;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 5px 0 #0f172a,
+    0 8px 16px rgba(0, 0, 0, 0.4);
+  transform: translateY(0);
+  transition:
+    transform 0.15s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.15s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.sc-3d-slate:hover,
+.kb-3d-slate:hover {
+  background: #475569;
+  border-color: rgba(13, 148, 136, 0.4);
+  transform: translateY(2px);
+  box-shadow:
+    0 3px 0 #0f172a,
+    0 6px 12px rgba(0, 0, 0, 0.35);
+}
+
+.sc-3d-slate:active,
+.kb-3d-slate:active {
+  background: #1e293b;
+  transform: translateY(5px);
+  box-shadow:
+    0 0 0 #0f172a,
+    0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* 7.3 Signal Teal Cyber Press */
+.sc-3d-teal,
+.kb-3d-cyber {
+  background: #0d9488;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 6px 0 #115e59,
+    0 12px 20px rgba(13, 148, 136, 0.35);
+  transform: translateY(0);
+  transition:
+    transform 0.15s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.15s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.sc-3d-teal:hover,
+.kb-3d-cyber:hover {
+  background: #14b8a6;
+  transform: translateY(2px);
+  box-shadow:
+    0 4px 0 #115e59,
+    0 10px 24px rgba(20, 184, 166, 0.45);
+}
+
+.sc-3d-teal:active,
+.kb-3d-cyber:active {
+  background: #0f766e;
+  transform: translateY(6px);
+  box-shadow:
+    0 0 0 #115e59,
+    0 2px 6px rgba(13, 148, 136, 0.2);
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: REDUCED MOTION PREFERENCE
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .sc-btn,
+  .kb-btn,
+  .sc-btn::before,
+  .sc-btn::after,
+  .kb-btn::before,
+  .kb-btn::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
