@@ -244,6 +244,7 @@
     }
 
     .tax-card.cat-a { border-left: 4px solid var(--teal-bright); }
+    .tax-card.cat-ar { border-left: 4px solid #818CF8; }
     .tax-card.cat-b { border-left: 4px solid var(--amber-bright); }
     .tax-card.cat-c { border-left: 4px solid var(--crimson-alert); }
 
@@ -262,6 +263,7 @@
     }
 
     .badge-a { background: var(--teal-soft); color: #5EEAD4; border: 1px solid rgba(20, 184, 166, 0.35); }
+    .badge-ar { background: var(--indigo-soft); color: #C7D2FE; border: 1px solid rgba(99, 102, 241, 0.35); }
     .badge-b { background: var(--amber-soft); color: #FDE68A; border: 1px solid rgba(245, 158, 11, 0.35); }
     .badge-c { background: var(--crimson-soft); color: #FDA4AF; border: 1px solid rgba(225, 29, 72, 0.35); }
     .badge-lead { background: var(--indigo-soft); color: #C7D2FE; border: 1px solid rgba(99, 102, 241, 0.35); }
@@ -749,7 +751,7 @@
         </div>
         <div class="meta-item">
           <strong>Documentary &amp; Computational Source Base</strong>
-          1,930 pages of official municipal/state rulemaking packets; 165 legacy Commission minutes (2013–2020; 734 pp.); 36 USGS Landsat Collection 2 Level-2 surface-temperature observations (1994–2024; 324 buffered pixels); Open-Meteo/ERA5-Land/CAMS atmospheric retrievals; and primary federal/state court dockets.
+          1,930 pages of official municipal/state rulemaking packets; 165 historical Commission minutes (2013–2020; 734 pp.); twelve USGS Landsat Collection 2 Level-2 surface-temperature scenes (1994–2024; 36 point extractions, 324 buffered pixels; native 100–120 m thermal bands resampled to 30 m); Open-Meteo/ERA5-Land/CAMS atmospheric retrievals; and primary federal/state court filings.
         </div>
         <div class="meta-item">
           <strong>Principal Investigator &amp; Compendium Architecture</strong>
@@ -759,10 +761,11 @@
 
       <div class="publication-notice">
         <strong>Publication Notice &amp; Methodological Disclaimer.</strong>
-        This compendium is an independent desk-based documentary and reproducible computational assessment, not a judicial finding, certified expert report, or accusation of criminal wrongdoing. Following comparative documentary audit standards, every finding is strictly classified as:
-        <strong>(A) Independently Reproduced or Verified Documentary Statement</strong>,
-        <strong>(B) Analytical &amp; Governance Risk Indicator / Mixed Evidence</strong>, or
-        <strong>(C) Provisional / Unverified Hypothesis or Adverse Counter-Evidence Preserved for Integrity</strong>.
+        This is an independent, self-published study. It is not peer-reviewed, not a certified expert report, and not a finding of wrongdoing. Every finding is classified by evidentiary strength so that each claim can be weighed independently:
+        <strong>(A-V) Verified in an inspected official record</strong>,
+        <strong>(A-R) Reproduced by this project's computational pipeline (internal consistency only; not independently replicated by an outside party)</strong>,
+        <strong>(B) Documented variance requiring primary transaction records to establish legal effect</strong>, or
+        <strong>(C) Unresolved question or preserved counter-evidence</strong>.
         The environmental forensics investigation (Workstream 3) is maintained independently of the utility and ADA investigations (Workstreams 1–2); workstreams are connected solely through documented facts, dates, and public records rather than an assumed unified causal narrative.
       </div>
 
@@ -772,24 +775,30 @@
       </div>
     </header>
 
-    <!-- Evidentiary Taxonomy Strip (Latvian Study Categories A / B / C) -->
+    <!-- Evidentiary Taxonomy Strip (Four-Tier Classification: A-V / A-R / B / C) -->
     <section class="taxonomy-strip" aria-label="Evidentiary Classification Taxonomy">
       <div class="tax-card cat-a">
-        <span class="tax-badge badge-a">Category A · Verified / Reproduced</span>
+        <span class="tax-badge badge-a">Class A-V · Verified in Record</span>
         <p class="prose" style="margin:0; font-size:0.84rem;">
-          <strong>Confirmed Documentary or Computational Fact:</strong> Exact statement in an inspected official record or satellite/statistical calculation independently reproduced within stated numerical tolerance (e.g., 12/12 Landsat thermal contrasts reproduced within <code>±0.005°F</code>; Feb 3, 2026 staff admission of no codified water/sewer appeal process).
+          <strong>Verified Documentary Fact:</strong> Direct quotation or explicit provision verified in an inspected official record (e.g., Feb 3, 2026 Public Works memo stating the Code establishes no formal water/sewer appeal process; Aug 19, 2026 ADA Plan limited to rights-of-way; Ordinance 26-1007 text).
+        </p>
+      </div>
+      <div class="tax-card cat-ar">
+        <span class="tax-badge badge-ar">Class A-R · Pipeline Reproduced</span>
+        <p class="prose" style="margin:0; font-size:0.84rem;">
+          <strong>Internal Pipeline Reproduction Only:</strong> Calculation reproduced by this project's computational pipeline from archived datasets (e.g., Chapin &gt; two-control mean across 12/12 Landsat scenes; weather provenance reconciliation). Reflects internal numerical consistency, not independent replication by an outside party.
         </p>
       </div>
       <div class="tax-card cat-b">
-        <span class="tax-badge badge-b">Category B · Governance Risk / Mixed</span>
+        <span class="tax-badge badge-b">Class B · Documented Variance</span>
         <p class="prose" style="margin:0; font-size:0.84rem;">
-          <strong>Analytical Risk Indicator &amp; Discretion Gap:</strong> Documented variance, policy-to-practice tension, or comparator overlap requiring primary transaction ledgers or work orders to establish legal causation (e.g., 180-day payment plans vs. 509-day residential shutoff; 3–2 vote against independent manager review).
+          <strong>Variance Requiring Transaction Records:</strong> Documented policy-to-practice tension or cross-context comparison requiring primary transaction records or comparator logs to establish legal effect (e.g., Promenade right-of-way forbearance vs. complaint-driven residential model; § 504 departmental scope).
         </p>
       </div>
       <div class="tax-card cat-c">
-        <span class="tax-badge badge-c">Category C · Adverse / Provisional</span>
+        <span class="tax-badge badge-c">Class C · Unresolved / Counter-Evidence</span>
         <p class="prose" style="margin:0; font-size:0.84rem;">
-          <strong>Preserved Counter-Evidence &amp; Unverified Leads:</strong> Inconvenient findings and methodological limits retained in full for scientific credibility (e.g., 2006 peak thermal excess <code>+17.31°F</code> predating 2009–2018 tree removals; Cycle 3 modeled AQI <code>79</code> not reproducing screenshot AQI <code>91</code>).
+          <strong>Unresolved Question or Counter-Evidence:</strong> Unregistered account records, unreconciled offsets, or adverse timing/model evidence preserved in full (e.g., 509-day shutoff duration pending source registration; 2006 peak thermal contrast <code>+17.31°F</code> predating 2009–2018 removals; heatwave amplification <code>p ≈ 0.27/0.13/0.42</code>; AQI <code>91</code> vs. modeled <code>79</code>).
         </p>
       </div>
     </section>
@@ -812,27 +821,27 @@
           <div>
             <div class="ws-num">Workstream 1</div>
             <div class="ws-title">Utility Billing &amp; Enforcement</div>
-            <p class="ws-sub">Rates, shutoffs, collections, codified appeal gaps, 180-day payment plans, institutional sewer adjustments, and WIFIA federal financing.</p>
+            <p class="ws-sub">Rates, shutoffs, collections, codified appeal gaps, 30-day review window, 180-day payment arrangements, and WIFIA financing.</p>
           </div>
-          <span class="tax-badge badge-a">Findings F1–F3, F9–F10</span>
+          <span class="tax-badge badge-a">Classes A-V, B &amp; C</span>
         </a>
 
         <a href="#workstream-2" class="ws-card">
           <div>
             <div class="ws-num">Workstream 2</div>
             <div class="ws-title">ADA Governance &amp; Public Voices</div>
-            <p class="ws-sub">Right-of-way transition plan exclusions, grievance escalation to City Manager, DLCD Division 47 RAC record, and 165 legacy minutes (2013–2020).</p>
+            <p class="ws-sub">Right-of-way transition plan scope, grievance escalation to City Manager, DLCD Division 47 RAC record, and 165 historical minutes (2013–2020).</p>
           </div>
-          <span class="tax-badge badge-a">Findings F7–F8, S1–S11, C1–C3</span>
+          <span class="tax-badge badge-a">Classes A-V &amp; B</span>
         </a>
 
         <a href="#workstream-3" class="ws-card">
           <div>
             <div class="ws-num">Workstream 3</div>
             <div class="ws-title">Environmental Forensics</div>
-            <p class="ws-sub">12-date Landsat Collection 2 Level-2 LST series (1994–2024), 3×3 (324-pixel) spatial buffer audit, Open-Meteo weather provenance, and AQI sensitivity.</p>
+            <p class="ws-sub">12 USGS Landsat Collection 2 Level-2 scenes (1994–2024; 100–120 m native resampled to 30 m), 3×3 buffer audit, and AQI sensitivity.</p>
           </div>
-          <span class="tax-badge badge-a">Cycles 1, 2 &amp; 3 · ±0.005°F</span>
+          <span class="tax-badge badge-ar">Classes A-R &amp; C</span>
         </a>
 
         <a href="#workstream-4" class="ws-card">
@@ -841,7 +850,7 @@
             <div class="ws-title">Code Enforcement &amp; Comparators</div>
             <p class="ws-sub">Complaint-driven model, Promenade encroachment forbearance, sidewalk grant gaps, $300→$1,000/day penalty proposal, and comparator dockets.</p>
           </div>
-          <span class="tax-badge badge-b">Findings F4–F6, P1–P12</span>
+          <span class="tax-badge badge-b">Classes A-V, B &amp; C</span>
         </a>
       </div>
 
@@ -859,90 +868,108 @@
     <!-- Section 1 & 2: Abstract and Documentary Findings at a Glance (Latvian Study Structure) -->
     <section class="paper-section" id="abstract-and-glance">
       <div class="section-eyebrow">Section 1 &amp; 2 · Executive Synthesis</div>
-      <h2 class="section-title">Abstract &amp; Documentary Findings at a Glance</h2>
+      <h2 class="section-title">Abstract &amp; Evidentiary Classification Table</h2>
       <p class="prose">
-        <strong>Abstract.</strong> This study examines whether published municipal packets, administrative policies, historical commission minutes, and satellite environmental datasets in Oregon City permit rigorous public scrutiny of utility disconnections, disability accommodation processing, code-enforcement discretion, and neighborhood microclimate conditions. Across 1,930 pages of reviewed public records and 36 USGS Landsat Collection 2 Level-2 satellite observations (324 buffered pixels), the investigation documents: (1) an explicit February 3, 2026 Public Works admission that the Municipal Code establishes no formal appeal process for water or sanitary sewer billing; (2) an August 19, 2026 ADA Transition Plan scoped strictly to physical rights-of-way while excluding City programs and services; (3) individualized Commission forbearance for commercial/promenade encroachments alongside complaint-driven residential code enforcement; and (4) an independently reproduced 30-year surface-temperature excess at Chapin Court (<code>+10.48°F</code> to <code>+12.86°F</code> above two comparison sites) whose largest single contrast occurred in 2006 (<code>+17.31°F</code>), prior to the 2009–2018 corridor tree-removal window. Preserving both corroborating and adverse findings, this compendium establishes a transparent, hash-verified baseline for targeted public-records reconciliation.
+        <strong>Abstract.</strong> This study reviews published Oregon City records (1,930 pages of municipal and state rulemaking packets, 165 historical Commission minutes, and federal and state court filings) and twelve USGS Landsat Collection 2 Level-2 surface-temperature scenes (1994–2024) to examine how the City administers utility billing, disability-access processes, code enforcement, and neighborhood surface-temperature conditions. Findings are classified by evidentiary strength — verified in an inspected record, reproduced by this project's computational pipeline, documented variance, or unresolved question — so that each claim can be weighed independently. Four principal findings are reported. (1) A February 3, 2026 Public Works memorandum states that the Municipal Code establishes no formal appeal process for water or sanitary sewer charges; an internal policy describes a 30-day written review window, and the record does not yet show what notice of that window was given in any individual case. (2) The City's August 19, 2026 ADA Transition Plan is limited to physical barriers in the public right-of-way. (3) Commission records show individualized forbearance on certain right-of-way encroachments within a generally complaint-driven enforcement model; the comparison involves different property types and is not yet established as a pattern. (4) Surface temperatures at Chapin Court exceeded two comparison sites on all twelve sampled dates (+7.0°F to +17.3°F). The contrast is persistent, but the data do not identify its cause, do not show that it widened after the 2009–2018 period, and — because Landsat thermal bands are natively 100–120 m and resampled to 30 m — cannot support parcel-scale attribution. This is an independent, self-published study. It is not peer-reviewed, not a certified expert report, and not a finding of wrongdoing.
       </p>
 
       <div tabindex="0" role="region" aria-labelledby="glance-caption" class="table-wrapper">
         <table class="data-table">
-          <caption id="glance-caption">Table 1 · Documentary &amp; Computational Findings at a Glance (Cross-Workstream Summary)</caption>
+          <caption id="glance-caption">Table 1 · Evidentiary Classification of Principal &amp; Subsidiary Findings</caption>
           <thead>
             <tr>
-              <th>Indicator / Workstream Metric</th>
-              <th>Baseline / Claimed Benchmark</th>
-              <th>Audited / Reproduced Record (2024–2026)</th>
-              <th>Class</th>
-              <th>Interpretive &amp; Evidentiary Significance</th>
+              <th style="width: 30%;">Finding</th>
+              <th style="width: 16%;">Class</th>
+              <th style="width: 54%;">Basis</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th>Water &amp; Sewer Billing Appeal Process (WS1)</th>
-              <td data-label="Baseline">Assumed codified municipal due-process review</td>
-              <td data-label="Audited Record">“The Code does not establish a formal appeal process” (Feb 3, 2026 PW Memo, <code>S1</code> pp. 20–27)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Confirms reliance on “interpretation or past practice”; internal policy mentions 30-day review window requiring notice verification.</td>
+              <th>No codified appeal (Feb 3, 2026 memo)</th>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
+              <td data-label="Basis">Direct quotation, inspected record (<code>S1</code>, Feb 10, 2026 packet pp. 20–27)</td>
             </tr>
             <tr>
-              <th>Utility Payment Plans &amp; Rate Relief (WS1)</th>
-              <td data-label="Baseline">509-day residential water shutoff (Jun 25, 2024–Nov 16, 2025)</td>
-              <td data-label="Audited Record">180-day payment plans; 50% base / 20% usage low-income rate reduction (<code>S1</code> pp. 25–27); $36,900/yr CCC sewer relief (<code>S4</code>)</td>
-              <td data-label="Class"><span class="tax-badge badge-b">Cat B</span></td>
-              <td data-label="Significance">Establishes recognized administrative flexibility; requires account-specific eligibility and denial records.</td>
+              <th>Internal 30-day review window</th>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
+              <td data-label="Basis">Policy text (<code>S1</code>, packet p. 27); notice in practice unknown</td>
             </tr>
             <tr>
-              <th>Federal Financial Assistance Nexus (WS1/WS2)</th>
-              <td data-label="Baseline">Rehabilitation Act § 504 program coverage inquiry</td>
-              <td data-label="Audited Record">$9,291,680 Henrici Water Main WIFIA loan award (<code>S2</code> pp. 80–85) + <em>Burgard</em> ECF 17 Answer admission</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Documents federal EPA WIFIA financing in Public Works water infrastructure and City admission of departmental federal aid.</td>
+              <th>180-day payment arrangements</th>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
+              <td data-label="Basis">Policy text (<code>S1</code>, packet pp. 25–27); a payment term, not a disconnection cap</td>
             </tr>
             <tr>
-              <th>ADA Self-Evaluation Scope &amp; Final Review (WS2)</th>
-              <td data-label="Baseline">Title II program-wide self-evaluation &amp; neutral review</td>
-              <td data-label="Audited Record">Aug 19, 2026 Plan restricted to public rights-of-way; excludes City programs/services (<code>S2</code> pp. 27–62); City Manager final arbiter (<code>S5</code>)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Confirms right-of-way scope boundary and concentrates final ADA grievance review in the City Manager or designee.</td>
+              <th>509-day disconnection duration</th>
+              <td data-label="Class"><span class="tax-badge badge-c">C (or A-R — not B)</span></td>
+              <td data-label="Basis">Author's own account record, not yet in source register; restoration conditions and payment history under review (Priority 1). <code>B</code> requires a registered record and a valid comparator; neither currently exists.</td>
             </tr>
             <tr>
-              <th>Landsat Collection 2 Level-2 LST Contrasts (WS3)</th>
-              <td data-label="Baseline">12 scenes (1994–2024), 3 sites, 36 point samples</td>
-              <td data-label="Audited Record">12/12 Chapin LSTs, 12/12 control means, and 12/12 excess values reproduced within <code>±0.005°F</code> (Oct 28 Cycle 2)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Major reproducibility milestone from raw USGS/Planetary Computer rasters; all 36 <code>QA_PIXEL</code> samples clear (bits 0–5 = 0).</td>
+              <th>WIFIA award ($9.29M)</th>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
+              <td data-label="Basis">Contract and staff report (<code>S2</code>, Aug 19, 2026 packet pp. 80–85)</td>
             </tr>
             <tr>
-              <th>Centered 3×3 (90×90 m) Spatial Buffer Test (WS3)</th>
-              <td data-label="Baseline">Point-sample sensitivity to roof/road pixel registration</td>
-              <td data-label="Audited Record">All 324/324 pixels valid; positive excess on 12/12 dates (mean <code>+10.48°F</code> normal, <code>+12.08°F</code> heat ≥90°F)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Demonstrates persistent neighborhood surface-temperature contrast robust to 90×90 m spatial buffering.</td>
+              <th>§ 504 coverage of Public Works</th>
+              <td data-label="Class"><span class="tax-badge badge-b">B</span></td>
+              <td data-label="Basis">Departmental scope unproven (Priority 4)</td>
             </tr>
             <tr>
-              <th>Weather Provenance &amp; Overpass Timing (WS3)</th>
-              <td data-label="Baseline">Published Ambient column labeled “ERA5-Land Overpass”</td>
-              <td data-label="Audited Record">Matches <code>best_match</code> local-day max (<code>MAE = 0.058°F</code>); exact UTC overpass is <code>~9.44°F</code> cooler (Nov 2 Cycle 3)</td>
-              <td data-label="Class"><span class="tax-badge badge-c">Cat C</span></td>
-              <td data-label="Significance">Crucial provenance correction: published Ambient reflects daily-high air temperature, not ~18:45 UTC satellite overpass air temperature.</td>
+              <th>ADA Plan limited to right-of-way</th>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
+              <td data-label="Basis">Plan text (<code>S2</code>, Aug 19, 2026 packet pp. 27–62)</td>
             </tr>
             <tr>
-              <th>Pre-2009 Thermal Peak &amp; AQI 91 vs. Model 79 (WS3)</th>
-              <td data-label="Baseline">Post-2009 tree removal widening &amp; Nov 1 AQI 91 screenshot</td>
-              <td data-label="Audited Record">Largest contrast in 2006 (<code>+17.31°F</code>); CAMS modeled AQI at Nov 1 08:45 PST is <code>79</code> (McMinnville <code>83</code>)</td>
-              <td data-label="Class"><span class="tax-badge badge-c">Cat C</span></td>
-              <td data-label="Significance">Preserves adverse timing evidence against simple post-2009 linear causation and requires independent AQI screenshot authentication.</td>
+              <th><em>Burgard</em> admissions</th>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span> <span class="tax-badge badge-b">rel. B</span></td>
+              <td data-label="Basis">Filed Answer (<code>P3</code>, ECF 17); relevance to 2024 notice is <code>B</code></td>
             </tr>
             <tr>
-              <th>Code Enforcement Forbearance &amp; Penalty Hike (WS4)</th>
-              <td data-label="Baseline">Uniform mandatory code enforcement; $300/day Class A cap</td>
-              <td data-label="Audited Record">Individualized Promenade encroachment forbearance (<code>S2</code> pp. 173–175); Oct 7, 2026 proposal to raise cap to <code>$1,000/day</code> (<code>C4</code>)</td>
-              <td data-label="Class"><span class="tax-badge badge-b">Cat B</span></td>
-              <td data-label="Significance">Documents discretionary relief for selected right-of-way encroachments and proposed 233% civil-infraction cap increase.</td>
+              <th>Chapin &gt; control average, 12/12</th>
+              <td data-label="Class"><span class="tax-badge badge-ar">A-R</span></td>
+              <td data-label="Basis">Reproduced by this project's pipeline; not independently replicated</td>
+            </tr>
+            <tr>
+              <th>Individual control values (9/12)</th>
+              <td data-label="Class"><span class="tax-badge badge-c">C</span></td>
+              <td data-label="Basis">Unreconciled offsets up to ~4°F</td>
+            </tr>
+            <tr>
+              <th>Tree removal caused the heating</th>
+              <td data-label="Class"><span class="tax-badge badge-c">C</span></td>
+              <td data-label="Basis">Epoch means do not support it; 2006 peak (<code>+17.31°F</code>) predates 2009–2018 removals; removal dates unverified</td>
+            </tr>
+            <tr>
+              <th>Heatwave amplification</th>
+              <td data-label="Class"><span class="tax-badge badge-c">C</span></td>
+              <td data-label="Basis"><code>p ≈ 0.27 / 0.13 / 0.42</code></td>
+            </tr>
+            <tr>
+              <th>Weather provenance correction</th>
+              <td data-label="Class"><span class="tax-badge badge-ar">A-R</span></td>
+              <td data-label="Basis">Reconciled against <code>best_match</code> local-day maxima (<code>MAE 0.058°F</code>); stated once, in the methods section</td>
+            </tr>
+            <tr>
+              <th>AQI 91 vs. modeled 79</th>
+              <td data-label="Class"><span class="tax-badge badge-c">C</span></td>
+              <td data-label="Basis">Screenshot unauthenticated</td>
+            </tr>
+            <tr>
+              <th>Forbearance vs. complaint-driven</th>
+              <td data-label="Class"><span class="tax-badge badge-b">B</span></td>
+              <td data-label="Basis">Commercial vs. residential parcels (<code>S2</code>, pp. 173–175); comparator log required</td>
+            </tr>
+            <tr>
+              <th>Ordinance 26-1007 ($300 &rarr; $1,000/day)</th>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
+              <td data-label="Basis">Text only (<code>C4</code>, Oct 7, 2026 packet pp. 160–169); selective enforcement not shown</td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p class="prose" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.65rem; margin-bottom: 0;">
+        <strong>Class key:</strong> <strong>A-V</strong> verified in an inspected record; <strong>A-R</strong> reproduced by this project's computational pipeline (internal consistency only); <strong>B</strong> documented variance requiring primary transaction records to establish legal effect; <strong>C</strong> unresolved question or preserved counter-evidence. No finding in this table has been independently replicated by an outside party.
+      </p>
     </section>
 
     <!-- WORKSTREAM 1: Utility Billing and Enforcement -->
@@ -950,63 +977,63 @@
       <div class="section-eyebrow">Workstream 1 · Municipal Public Works &amp; Finance</div>
       <h2 class="section-title">Utility Billing, Disconnection Governance, and Financial Assistance</h2>
       <p class="section-lead">
-        Mirroring Sections 3–6 of the Latvian <em>Ķekavas nami</em> utility study, Workstream 1 separates (a) codified municipal ordinance authority, (b) internal administrative billing policy, (c) discretionary institutional adjustments, and (d) federal infrastructure financing.
+        Mirroring Sections 3–6 of the Latvian <em>Ķekavas nami</em> utility study, Workstream 1 separates (a) codified municipal ordinance authority, (b) internal administrative billing policy, (c) unverified account-level duration records awaiting primary ledger registration, and (d) federal infrastructure financing.
       </p>
 
       <h3 class="sub-heading">
-        <span>1.1 Codified Appeal Gaps vs. Internal Billing Policy (Findings F1–F3)</span>
-        <span class="tax-badge badge-a">Category A · Primary Admission</span>
+        <span>1.1 Codified Appeal Absence, Internal 30-Day Review Window &amp; 180-Day Payment Terms</span>
+        <span class="tax-badge badge-a">Class A-V · Verified Record &amp; Policy Text</span>
       </h3>
       <p class="prose">
-        In the February 10, 2026 City Commission Work Session packet (<code>S1</code>, CivicClerk Event 3240, File 8700, pp. 20–27), Public Works Director Dayna Webb presented the February 3, 2026 memorandum <em>Utility Service Charges Code Consistency Review</em>. Evaluating water, sanitary sewer, stormwater, and pavement maintenance charges billed on a combined monthly statement, the memorandum states on the official record: <strong>“The Code does not establish a formal appeal process”</strong> for water and sanitary sewer charges, noting that staff rely on <strong>“interpretation or past practice”</strong> and that combined utility billing suffers from materially inconsistent collection, lien, assistance, and appeal rules across services.
+        In the February 10, 2026 City Commission Work Session packet (<code>S1</code>, CivicClerk Event 3240, File 8700, pp. 20–27), Public Works Director Dayna Webb presented the February 3, 2026 memorandum <em>Utility Service Charges Code Consistency Review</em>. Evaluating water, sanitary sewer, stormwater, and pavement maintenance charges billed on a combined monthly statement, the memorandum states on the official record: <strong>“The Code does not establish a formal appeal process”</strong> for water and sanitary sewer charges (<code>Class A-V</code>, direct quotation from inspected record), noting that staff rely on <strong>“interpretation or past practice”</strong> and that combined utility billing has inconsistent collection, lien, assistance, and appeal rules across services.
       </p>
       <p class="prose">
-        At the same time, the accompanying matrix on packet page 27 identifies a 30-day written appeal window to the Finance Director/City Manager inside an internal <em>Utility Billing Policy</em>, alongside two recognized administrative relief programs (packet pp. 25–27): (1) payment arrangements ordinarily up to <strong>180 days</strong>, and (2) an income-based reduced-rate program cutting base charges by <strong>50%</strong> and water consumption charges by approximately <strong>20%</strong>. This documentary pair frames the exact accountability question: what notice of the internal 30-day appeal and 180-day payment plan was provided prior to the June 25, 2024 disconnection, and who held authority to suspend shutoff while disputed charges were reviewed?
+        The accompanying matrix on packet page 27 and policy summary on pages 25–27 identify two distinct internal provisions that must not be conflated: first, an <strong>internal 30-day written review window</strong> to the Finance Director/City Manager inside an internal <em>Utility Billing Policy</em> (<code>Class A-V</code> for the policy text; what notice of that window was given in practice in any individual case remains unknown); and second, <strong>180-day payment arrangements</strong> (<code>Class A-V</code> for the policy text; this is a payment-plan term, <em>not</em> a cap on disconnection duration), alongside an income-based reduced-rate program cutting base charges by <strong>50%</strong> and water consumption charges by approximately <strong>20%</strong>.
       </p>
 
       <h3 class="sub-heading">
-        <span>1.2 Institutional Rate Flexibility &amp; Federal WIFIA Nexus (Findings F9–F10)</span>
-        <span class="tax-badge badge-b">Category B · Governance &amp; Funding Leads</span>
+        <span>1.2 Federal WIFIA Award ($9.29M) vs. Unproven § 504 Departmental Scope</span>
+        <span class="tax-badge badge-b">Class A-V (WIFIA Contract) · Class B (§ 504 Scope)</span>
       </h3>
       <p class="prose">
-        Two additional primary packets establish institutional billing flexibility and federal financial assistance coverage. First, in the May 15, 2024 Commission packet (<code>S4</code>, pp. 46–53, proposed Resolution 24-16), staff recommended a bespoke sewer-billing methodology adjustment for Clackamas Community College (whose irrigation water did not enter the sanitary sewer), reducing annual sewer charges from <code>$62,528</code> to <code>$25,657</code> (an estimated <code>$36,900/year</code> reduction). While an institutional irrigation customer is not a matched legal comparator for a residential account, the record demonstrates administrative capacity to revise billing formulas where standard metering produces an inequitable charge. Second, the August 19, 2026 packet (<code>S2</code>, pp. 80–85) documents a <code>$9,291,680</code> (<code>$9,295,710</code> staff recommendation) construction award for the Henrici Water Transmission Main funded under the City's federal EPA <strong>WIFIA loan</strong>—providing a concrete federal financial assistance nexus for Rehabilitation Act § 504 analysis in Public Works water operations.
+        Two additional primary packets examine institutional billing flexibility and federal financial assistance. First, in the May 15, 2024 Commission packet (<code>S4</code>, pp. 46–53, proposed Resolution 24-16), staff recommended a sewer-billing methodology adjustment for Clackamas Community College (whose irrigation water did not enter the sanitary sewer), reducing annual sewer charges from <code>$62,528</code> to <code>$25,657</code> (an estimated <code>$36,900/year</code> reduction; <code>Class A-V</code> for the record text, though an institutional irrigation account is not a matched residential comparator). Second, the August 19, 2026 packet (<code>S2</code>, pp. 80–85) documents a <code>$9,291,680</code> (<code>$9,295,710</code> staff recommendation) construction award for the Henrici Water Transmission Main funded under the City's federal EPA <strong>WIFIA loan</strong> (<code>Class A-V</code>, contract and staff report). However, whether Rehabilitation Act § 504 program coverage extends across Public Works utility billing and disconnection administration remains <strong><code>Class B</code> (departmental scope unproven; Priority 4)</strong> until the executed WIFIA loan agreement, federal civil-rights assurances, and departmental accounting records are inspected.
       </p>
 
       <div class="verification-box">
-        <strong class="vbox-title">Arithmetic &amp; Chronology Verification Protocol (Workstream 1)</strong>
-        • <strong>Water Severance Duration:</strong> June 25, 2024 to November 16, 2025 equals exactly <strong>509 elapsed days</strong> (or <strong>510 inclusive calendar dates</strong>). All public and litigation tables standardize on this exact count.<br/>
-        • <strong>Primary Records Required Next:</strong> Work Orders <code>24-000915</code> and <code>25-001106</code> with full audit trails; Management Policy <code>3-29</code> and 2023–2026 Utility Billing Policy versions; itemized account ledger separating water, sewer, storm, pavement, interest, and physical barrier charges; and third-party check receipt/suspense return logs.
+        <strong class="vbox-title">Evidentiary Classification of the 509-Day Disconnection Duration (Class A-R or C — Not Class B)</strong>
+        • <strong>509-Day Disconnection Duration (June 25, 2024 – November 16, 2025):</strong> Classified as <strong><code>A-R or C — not B</code></strong>. While the calendar interval between June 25, 2024 and November 16, 2025 equals 509 elapsed days (510 inclusive dates), this figure currently derives from the author's own account record, which is not yet in the public source register, and the restoration conditions and payment history remain under review (<strong>Priority 1 &amp; Priority 2</strong>). Classification in <code>Class B</code> requires both a registered primary record and a valid comparator (Remember: the 180-day policy provision is a payment arrangement term, not a disconnection cap); neither currently exists.<br/>
+        • <strong>Primary Records Required Next (Priority 1–2):</strong> Work Orders <code>24-000915</code> and <code>25-001106</code> with full audit trails; Management Policy <code>3-29</code> and 2023–2026 Utility Billing Policy versions; itemized account ledger separating water, sewer, storm, pavement, interest, and physical barrier charges; and third-party check receipt/suspense return logs.
       </div>
     </section>
 
     <!-- WORKSTREAM 2: ADA Governance & Public Voices -->
     <section class="paper-section" id="workstream-2">
       <div class="section-eyebrow">Workstream 2 · Civil Rights Governance &amp; Rulemaking Participation</div>
-      <h2 class="section-title">ADA Title II Scope Boundaries, Civic Voices &amp; State Rulemaking</h2>
+      <h2 class="section-title">ADA Title II Scope Boundaries, Historical Public Voices &amp; State Rulemaking</h2>
       <p class="section-lead">
-        Workstream 2 evaluates the documentary alignment between published disability-inclusion commitments, administrative grievance structures, comparator federal pleadings, and 13 years of recorded resident testimony (2013–2026).
+        Workstream 2 examines the documentary relationship between published disability-access plans, administrative grievance structures, comparator federal pleadings, and 13 years of recorded resident testimony (2013–2026).
       </p>
 
       <h3 class="sub-heading">
-        <span>2.1 The August 2026 ADA Transition Plan Scope Limitation &amp; Grievance Routing (Findings F7–F8)</span>
-        <span class="tax-badge badge-a">Category A · Verified Policy Text</span>
+        <span>2.1 The August 2026 ADA Transition Plan Right-of-Way Scope &amp; Grievance Routing</span>
+        <span class="tax-badge badge-a">Class A-V · Verified Plan &amp; Policy Text</span>
       </h3>
       <p class="prose">
-        In the August 19, 2026 Commission packet (<code>S2</code>, pp. 27–62), Assistant City Manager Alexandra Troutman and Public Works Operations Manager Josh Wheeler presented the City's <em>Self-Evaluation and ADA Transition Plan</em>. While acknowledging Title II obligations to evaluate public services, policies, and practices, the plan explicitly restricts its scope to <strong>physical barriers in the public right-of-way</strong> and states that other City facilities, programs, and administrative services are outside its evaluation. Concurrently, the City's published ADA Grievance Procedure webpage (<code>S5</code>) assigns final administrative appeal authority over service-access grievances to the <strong>City Manager or designee</strong>.
+        In the August 19, 2026 Commission packet (<code>S2</code>, pp. 27–62), Assistant City Manager Alexandra Troutman and Public Works Operations Manager Josh Wheeler presented the City's <em>Self-Evaluation and ADA Transition Plan</em>. While noting Title II obligations to evaluate public services, policies, and practices, the plan explicitly limits its scope to <strong>physical barriers in the public right-of-way</strong> and states that other City facilities, programs, and administrative services are outside its evaluation (<code>Class A-V</code>, Plan text). Concurrently, the City's published ADA Grievance Procedure webpage (<code>S5</code>) assigns final administrative appeal authority over service-access grievances to the <strong>City Manager or designee</strong> (<code>Class A-V</code>).
       </p>
       <p class="prose">
-        Contemporaneous institutional awareness of heat and disability vulnerability is documented in the July 17, 2024 Commission packet (<code>S3</code>, pp. 3, 16, 28, 48–49), which pairs a <em>Disability Pride Month Proclamation</em> with Natural Hazard Mitigation Plan updates ranking <strong>Extreme Heat #2</strong> in the local hazard matrix (Risk Score <code>220</code>, High Probability / High Vulnerability) and emphasizing Public Works' role in potable water delivery during heat emergencies.
+        Contemporaneous municipal records in the July 17, 2024 Commission packet (<code>S3</code>, pp. 3, 16, 28, 48–49) pair a <em>Disability Pride Month Proclamation</em> with Natural Hazard Mitigation Plan updates ranking <strong>Extreme Heat #2</strong> in the local hazard matrix (Risk Score <code>220</code>, High Probability / High Vulnerability) and noting Public Works' role in potable water delivery during heat emergencies (<code>Class A-V</code>).
       </p>
 
       <h3 class="sub-heading">
-        <span>2.2 Comparator Federal Admissions (Burgard) &amp; Legacy Public Voices (2013–2020)</span>
-        <span class="tax-badge badge-b">Category B · Institutional Notice Leads</span>
+        <span>2.2 Comparator Federal Admissions (Burgard) &amp; Historical Public Voices (2013–2020)</span>
+        <span class="tax-badge badge-b">Class A-V (Filed Answer) · Relevance Class B</span>
       </h3>
       <p class="prose">
-        In <em>Burgard v. City of Oregon City</em>, No. 3:25-cv-01198-AR (D. Or., filed July 10, 2025; Answer ECF 17 filed Sept 18, 2025, <code>P2/P3</code>), the City's formal Answer <strong>admits</strong> receiving September 2023 disability accommodation requests (including requests for an alternative meeting location away from police facilities) and <strong>admits</strong> that certain City departments receive federal financial assistance, while denying liability.
+        In <em>Burgard v. City of Oregon City</em>, No. 3:25-cv-01198-AR (D. Or., filed July 10, 2025; Answer ECF 17 filed Sept 18, 2025, <code>P2/P3</code>), the City's formal Answer <strong>admits</strong> receiving September 2023 disability accommodation requests (including requests for an alternative meeting location away from police facilities) and <strong>admits</strong> that certain City departments receive federal financial assistance, while denying liability. The existence of those admissions in the filed Answer is <strong><code>Class A-V</code></strong>, whereas their relevance to 2024 policymaker notice or Public Works departmental operations is <strong><code>Class B</code></strong>.
       </p>
       <p class="prose">
-        A systematic text scan of <strong>165 legacy City Commission minutes (734 pages, 2013–2020)</strong> retrieved via the Legistar/Granicus API (1,704 total event records audited) surfaced three verified historical episodes of resident and former-official testimony regarding enforcement hardship and oversight independence:
+        A systematic text scan of <strong>165 historical City Commission minutes (734 pages, 2013–2020)</strong> retrieved via the Legistar/Granicus API (1,704 total event records audited) surfaced three verified historical episodes of resident and former-official testimony regarding enforcement hardship and oversight independence:
       </p>
 
       <div tabindex="0" role="region" aria-labelledby="voices-caption" class="table-wrapper">
@@ -1026,28 +1053,28 @@
               <th>Aug 21, 2013<br/>City Commission</th>
               <td data-label="Source ID" class="mono-num">C1 · Event 1684<br/>Minutes pp. 1–2</td>
               <td data-label="Speakers">Doris Enderlin, Judy Coleman, Sherry Roe, Irene Toth, Sheila Heesch</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
               <td data-label="Testimony">Five residents testified regarding mandatory street-tree/sidewalk replacement costs, conflicting ownership information, fixed-income burdens, and disability hardship (with Tony Konkol recorded present as Community Development Director).</td>
             </tr>
             <tr>
               <th>Oct 21, 2015<br/>City Commission</th>
               <td data-label="Source ID" class="mono-num">C2 · Event 2105<br/>Minutes p. 2</td>
               <td data-label="Speakers">Betty Mumm (Former Commissioner), James Nicita, Kevin Hunt, Kathy Roth</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
               <td data-label="Testimony">Former Commissioner Mumm called for a policy allowing staff to reach the Commission without fear of retaliation; Nicita testified on structural conflicts in the City Manager's authority over the City Attorney.</td>
             </tr>
             <tr>
               <th>Nov 20, 2019<br/>City Commission</th>
               <td data-label="Source ID" class="mono-num">C3 · Event 2879<br/>Minutes pp. 1–2, 5–6</td>
               <td data-label="Speakers">Paul Edgar, Bob Mahoney, Cmr. Rocky Smith</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
               <td data-label="Testimony">Right-of-way dispute, due-process questions, and Commissioner Rocky Smith's formal request for the count of written complaints against staff and City responses.</td>
             </tr>
             <tr>
               <th>Feb–Oct 2026<br/>DLCD / LCDC Div. 47</th>
               <td data-label="Source ID" class="mono-num">S1–S11 · MHOR RAC<br/>Exhibit 3 &amp; Packets</td>
               <td data-label="Speakers">Annika Eriksson (1 of 4 Lived-Experience RAC Members)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
               <td data-label="Testimony">Formal appointment on Phase One Roster (<code>S1</code>); published written submissions across Apr 7, May 14–15, Jul 7 (<code>Exhibit 3</code>), Sept 28/30 (<code>S8</code> pp. 30–37), and Oct 3 Formal Memorandum. Aug 2026 staff report (<code>S7</code> p. 10) substantively summarized utility-continuity and housing-preservation concerns before classifying them outside Division 47 scope. <a href="dlcd-division47-rulemaking.html" style="color:var(--teal-bright); font-weight:700;">Open Structured DLCD Division 47 Archive &amp; Redlines &rarr;</a></td>
             </tr>
           </tbody>
@@ -1071,22 +1098,25 @@
     <!-- WORKSTREAM 3: Environmental Forensics (Landsat, Microclimate, AQI, Weather) -->
     <section class="paper-section" id="workstream-3">
       <div class="section-eyebrow">Workstream 3 · Independent Geospatial &amp; Atmospheric Investigation</div>
-      <h2 class="section-title">Environmental Forensics: 30-Year Landsat Raster Audit, Spatial Buffering &amp; AQI Sensitivity</h2>
+      <h2 class="section-title">Environmental Forensics: Twelve USGS Landsat Surface-Temperature Scenes (1994–2024), Spatial Resolution Limits &amp; AQI Audit</h2>
       <p class="section-lead">
-        Preserved as a standalone scientific investigation across three iterative audit cycles (Cycle 1 Litigation-Readiness Critique, Oct 19, 2026; Cycle 2 USGS Collection 2 Level-2 Raster Verification, Oct 28, 2026; and Cycle 3 Weather Provenance, 3×3 Spatial Buffer &amp; CAMS AQI Reanalysis, Nov 2, 2026).
+        Examined as a separate environmental investigation across three internal audit cycles (Cycle 1 Litigation-Readiness Critique, Oct 19, 2026; Cycle 2 USGS Collection 2 Level-2 Raster Pipeline Reproduction, Oct 28, 2026; and Cycle 3 Weather Provenance, 3×3 Spatial Buffer &amp; CAMS AQI Reanalysis, Nov 2, 2026).
       </p>
 
       <h3 class="sub-heading">
-        <span>3.1 Cycle 2 Milestone: 100% Reproduction of All 12 Landsat Surface-Temperature Contrasts (±0.005°F)</span>
-        <span class="tax-badge badge-a">Category A · Reproduced within ±0.005°F</span>
+        <span>3.1 Methods, Native Sensor Resolution (100–120 m Resampled to 30 m) &amp; Pipeline Reproduction of 12 Landsat Scenes</span>
+        <span class="tax-badge badge-ar">Class A-R · Pipeline Reproduced (Internal Consistency Only)</span>
       </h3>
       <p class="prose">
-        Using the Microsoft Planetary Computer STAC API (<code>landsat-c2-l2</code>) and the USGS Collection 2 Level-2 surface-temperature scaling formula ($K = \text{DN} \times 0.00341802 + 149.0$; $^{\circ}\text{F} = (K - 273.15) \times 1.8 + 32$), all 12 historical summer scenes spanning <strong>1994–2024</strong> were retrieved at the exact WGS84 coordinates for <strong>Chapin Court</strong> (<code>45.33286, -122.61601</code>), <strong>Rivercrest Park</strong> (<code>45.34510, -122.60766</code>), and <strong>Hillendale Park</strong> (<code>45.32901, -122.59703</code>). Every Chapin Court Land Surface Temperature (LST), every two-control mean, and every calculated thermal excess reproduced within <strong><code>±0.005°F</code></strong> (matching published hundredths of a degree), with all 36 <code>QA_PIXEL</code> samples clear (bits 0–5 unset) and <code>QA_RADSAT = 0</code>.
+        Using the Microsoft Planetary Computer STAC API (<code>landsat-c2-l2</code>) and the USGS Collection 2 Level-2 surface-temperature scaling formula ($K = \text{DN} \times 0.00341802 + 149.0$; $^{\circ}\text{F} = (K - 273.15) \times 1.8 + 32$), twelve historical summer Landsat scenes spanning <strong>1994–2024</strong> were sampled at the WGS84 coordinates for <strong>Chapin Court</strong> (<code>45.33286, -122.61601</code>), <strong>Rivercrest Park</strong> (<code>45.34510, -122.60766</code>), and <strong>Hillendale Park</strong> (<code>45.32901, -122.59703</code>). Surface temperatures at Chapin Court exceeded the two-control average on all twelve sampled dates (<code>+7.02°F</code> to <code>+17.31°F</code>), and this project's computational pipeline reproduced every published Chapin Court Land Surface Temperature (LST), every two-control average, and every calculated contrast within <strong><code>±0.005°F</code></strong> (all 36 <code>QA_PIXEL</code> samples clear, bits 0–5 unset; <code>QA_RADSAT = 0</code>).
+      </p>
+      <p class="prose">
+        <strong>Methodological Scope, Native Sensor Resolution &amp; Weather Provenance (<code>Class A-R</code>):</strong> Three methodological constraints govern interpretation of Table 3. First, <code>Class A-R</code> denotes internal computational reproduction by this project's scripts from archived USGS Collection 2 Level-2 rasters; the analysis has not been independently replicated by an outside party. Second, because Landsat thermal infrared sensors (Landsat 5 TM Band 6 at <code>120 m</code>, Landsat 7 ETM+ Band 6 at <code>60 m</code>, and Landsat 8/9 TIRS Band 10 at <code>100 m</code>) have a <strong>native spatial resolution of 100–120 m (60–120 m across sensors) that is cubic-convolution resampled by USGS onto a 30 m product grid</strong>, adjacent 30 m pixels are not independent measurements and <strong>cannot support parcel-scale attribution</strong>. Third, as a methodological provenance reconciliation (<code>Class A-R</code>), comparing the published Ambient column against Open-Meteo historical series established that the published values match <strong><code>best_match</code> local-calendar-day maxima</strong> within <code>MAE = 0.058°F</code> (<code>RMSE = 0.076°F</code>), whereas interpolated air temperatures at the exact ~18:45 UTC (~10:45–11:56 AM local) satellite overpass are <code>~9.44°F</code> cooler; accordingly, the published Ambient column reflects daily-high air temperature rather than overpass-hour air temperature.
       </p>
 
       <div tabindex="0" role="region" aria-labelledby="landsat-caption" class="table-wrapper">
         <table class="data-table">
-          <caption id="landsat-caption">Table 3 · Complete 12-Date USGS Landsat Collection 2 Level-2 Raster Verification Ledger (1994–2024)</caption>
+          <caption id="landsat-caption">Table 3 · Complete 12-Scene USGS Landsat Collection 2 Level-2 Raster Verification Ledger (1994–2024)</caption>
           <thead>
             <tr>
               <th>Date</th>
@@ -1121,7 +1151,7 @@
               <td data-label="Excess" class="mono-num"><strong>+8.29</strong> / +8.293</td>
               <td data-label="Pub Ambient" class="mono-num">82.0</td>
               <td data-label="Overpass Air" class="mono-num">71.76 / 71.76</td>
-              <td data-label="QA Notes">T1 · QA=5440 · ±0.51°F symmetric control offset</td>
+              <td data-label="QA Notes">T1 · QA=5440 · ±0.51°F symmetric control offset (Class C)</td>
             </tr>
             <tr>
               <th class="mono-num">2002-07-29</th>
@@ -1132,7 +1162,7 @@
               <td data-label="Excess" class="mono-num"><strong>+14.09</strong> / +14.089</td>
               <td data-label="Pub Ambient" class="mono-num">81.0</td>
               <td data-label="Overpass Air" class="mono-num">73.56 / 73.56</td>
-              <td data-label="QA Notes">T1 · QA=5440 · ±2.12°F symmetric control offset</td>
+              <td data-label="QA Notes">T1 · QA=5440 · ±2.12°F symmetric control offset (Class C)</td>
             </tr>
             <tr>
               <th class="mono-num">2004-07-26</th>
@@ -1143,7 +1173,7 @@
               <td data-label="Excess" class="mono-num"><strong>+12.06</strong> / +12.056</td>
               <td data-label="Pub Ambient" class="mono-num">82.6</td>
               <td data-label="Overpass Air" class="mono-num">71.69 / 71.69</td>
-              <td data-label="QA Notes">T1 · QA=5440 · Resolves unrounded 12.056°F→12.06°F</td>
+              <td data-label="QA Notes">T1 · QA=5440 · ±0.56°F symmetric control offset (Class C)</td>
             </tr>
             <tr>
               <th class="mono-num">2006-07-24</th>
@@ -1154,7 +1184,7 @@
               <td data-label="Excess" class="mono-num"><strong>+17.31</strong> / +17.313</td>
               <td data-label="Pub Ambient" class="mono-num">96.4</td>
               <td data-label="Overpass Air" class="mono-num">88.78 / 88.78</td>
-              <td data-label="QA Notes"><strong>Peak contrast (Pre-2009)</strong> · Counter-evidence preserved</td>
+              <td data-label="QA Notes"><strong>Peak contrast (Pre-2009)</strong> · Counter-evidence preserved (Class C)</td>
             </tr>
             <tr>
               <th class="mono-num">2010-08-20</th>
@@ -1165,7 +1195,7 @@
               <td data-label="Excess" class="mono-num"><strong>+7.02</strong> / +7.020</td>
               <td data-label="Pub Ambient" class="mono-num">73.0</td>
               <td data-label="Overpass Air" class="mono-num">64.92 / 64.92</td>
-              <td data-label="QA Notes"><strong>Tier 2 (T2)</strong> disclosed · ±3.98°F control offset</td>
+              <td data-label="QA Notes"><strong>Tier 2 (T2)</strong> disclosed · ±3.98°F control offset (Class C)</td>
             </tr>
             <tr>
               <th class="mono-num">2013-07-27</th>
@@ -1176,7 +1206,7 @@
               <td data-label="Excess" class="mono-num"><strong>+12.54</strong> / +12.539</td>
               <td data-label="Pub Ambient" class="mono-num">77.7</td>
               <td data-label="Overpass Air" class="mono-num">69.87 / 69.87</td>
-              <td data-label="QA Notes">T1 · QA=5440 · ±1.92°F symmetric control offset</td>
+              <td data-label="QA Notes">T1 · QA=5440 · ±1.92°F symmetric control offset (Class C)</td>
             </tr>
             <tr>
               <th class="mono-num">2015-08-18</th>
@@ -1187,7 +1217,7 @@
               <td data-label="Excess" class="mono-num"><strong>+9.86</strong> / +9.856</td>
               <td data-label="Pub Ambient" class="mono-num">95.5</td>
               <td data-label="Overpass Air" class="mono-num">85.64 / 85.64</td>
-              <td data-label="QA Notes">T1 · QA=5440 · ±3.15°F symmetric control offset</td>
+              <td data-label="QA Notes">T1 · QA=5440 · ±3.15°F symmetric control offset (Class C)</td>
             </tr>
             <tr>
               <th class="mono-num">2018-08-18</th>
@@ -1198,7 +1228,7 @@
               <td data-label="Excess" class="mono-num"><strong>+10.57</strong> / +10.567</td>
               <td data-label="Pub Ambient" class="mono-num">83.5</td>
               <td data-label="Overpass Air" class="mono-num">73.80 / 72.24</td>
-              <td data-label="QA Notes">T1 · QA=21824 (Clear) · ±0.43°F control offset</td>
+              <td data-label="QA Notes">T1 · QA=21824 (Clear) · ±0.43°F control offset (Class C)</td>
             </tr>
             <tr>
               <th class="mono-num">2021-07-25</th>
@@ -1220,7 +1250,7 @@
               <td data-label="Excess" class="mono-num"><strong>+12.59</strong> / +12.591</td>
               <td data-label="Pub Ambient" class="mono-num">101.5</td>
               <td data-label="Overpass Air" class="mono-num">92.24 / 92.62</td>
-              <td data-label="QA Notes">T1 · QA=21824 · ±0.16°F control offset</td>
+              <td data-label="QA Notes">T1 · QA=21824 · ±0.16°F control offset (Class C)</td>
             </tr>
             <tr>
               <th class="mono-num">2024-07-09</th>
@@ -1238,24 +1268,25 @@
       </div>
 
       <h3 class="sub-heading">
-        <span>3.2 Cycle 3 Spatial Buffering (324 Pixels) &amp; Preserved Adverse/Inconvenient Findings</span>
-        <span class="tax-badge badge-c">Category A &amp; C · Balanced Scientific Reporting</span>
+        <span>3.2 Spatial-Buffer Sensitivity (324 Pixels) &amp; Preserved Class C Limitations / Counter-Evidence</span>
+        <span class="tax-badge badge-c">Class A-R (3×3 Buffer) · Class C (Unresolved &amp; Counter-Evidence)</span>
       </h3>
       <p class="prose">
-        In Cycle 3 (November 2, 2026), three critical sensitivity and provenance tests were executed to prevent overclaiming:
+        Across Cycles 2 and 3, the following sensitivity and counter-evidence findings are preserved to prevent overclaiming:
       </p>
       <ul style="margin: 0 0 1.15rem 1.35rem; color: var(--text-body); font-size: 0.91rem; line-height: 1.65;">
-        <li><strong>Centered 3×3 (90×90 m) Spatial-Buffer Robustness:</strong> All <strong>324/324 pixels</strong> (12 dates × 3 sites × 9 pixels) passed clear-sky and saturation screening. Using 3×3 window means, Chapin Court remains warmer than the two-control average on <strong>12 of 12 dates</strong> (range <code>+7.74°F</code> to <code>+16.19°F</code>), with mean excess of <strong><code>+10.48°F</code></strong> across the 7 normal summer dates (<code>&lt;90°F</code>) and <strong><code>+12.08°F</code></strong> across the 5 high-heat dates (<code>≥90°F</code>).</li>
-        <li><strong>Weather Provenance Correction:</strong> Comparing the published Ambient column against Open-Meteo historical archives proved that the published numbers match <strong><code>best_match</code> local-calendar-day maxima</strong> within <code>MAE = 0.058°F</code> (<code>RMSE = 0.076°F</code>), whereas linear interpolation at the exact ~18:45 UTC (~10:45–11:56 AM local) satellite overpass is <strong><code>9.44°F</code> cooler</strong>. Published ambient values must therefore be labeled as daily-high air temperatures, not overpass-hour air temperatures.</li>
-        <li><strong>Adverse Timing Finding Preserved:</strong> Unadjusted period means of the surface-temperature contrast are <code>+12.81°F</code> pre-2009 ($n=5$), <code>+10.00°F</code> during 2009–2018 ($n=4$), and <code>+12.38°F</code> post-2018 ($n=3$), with the single largest contrast occurring on <strong>July 24, 2006 (<code>+17.31°F</code>)</strong>—prior to the alleged 2009–2018 corridor tree-removal wave.</li>
-        <li><strong>AQI 91 Screenshot vs. CAMS Modeled AQI 79 Preserved:</strong> While the November 1, 2026 (<code>08:45 PST</code> / <code>16:45 UTC</code>) consumer map screenshot displays a localized <strong>US AQI 91</strong> pocket over Oregon City, Cycle 3 Open-Meteo/CAMS global reanalysis models Oregon City/Chapin at <strong>US AQI 79</strong> (<code>PM2.5 = 23.15 µg/m³</code>, boundary-layer height <code>151.25 m</code>, 10 m wind <code>0.865 m/s</code>), with McMinnville modeled higher at <strong>AQI 83</strong> and Newberg at <strong>AQI 79</strong>. Both the observational screenshot and the 12-point model non-reproduction are retained side by side.</li>
+        <li><strong>Centered 3×3 (90×90 m) Spatial-Buffer Test (<code>Class A-R</code>):</strong> All <strong>324/324 pixels</strong> (12 scenes × 3 sites × 9 resampled 30 m pixels) passed clear-sky and saturation screening. Using 3×3 window means, Chapin Court remains warmer than the two-control average on <strong>12 of 12 scenes</strong> (range <code>+7.74°F</code> to <code>+16.19°F</code>), with mean excess of <strong><code>+10.48°F</code></strong> across the 7 normal summer scenes and <strong><code>+12.08°F</code></strong> across the 5 high-heat scenes. Because a 90×90 m window spans roughly the footprint of a single native 100–120 m thermal pixel, this test checks local grid-alignment sensitivity rather than independent multi-pixel replication.</li>
+        <li><strong>Individual Control Values on 9 of 12 Scenes (<code>Class C</code>):</strong> While the two-control <em>average</em> reproduced on all 12 scenes, individual Rivercrest and Hillendale control-pixel values on <strong>9 of 12 scenes</strong> exhibit equal-and-opposite unreconciled offsets of up to <strong><code>~4°F</code></strong> (<code>±0.16°F</code> to <code>±3.98°F</code>) relative to the originally published table.</li>
+        <li><strong>Tree Removal Caused the Heating (<code>Class C</code> — Not Supported by Current Data):</strong> Unadjusted epoch means of the surface-temperature contrast are <code>+12.81°F</code> pre-2009 ($n=5$), <code>+10.00°F</code> during 2009–2018 ($n=4$), and <code>+12.38°F</code> post-2018 ($n=3$), and the single largest contrast in the series occurred on <strong>July 24, 2006 (<code>+17.31°F</code>)</strong>—predating the 2009–2018 period. In addition, parcel/corridor tree-removal dates remain unverified in primary municipal permit records.</li>
+        <li><strong>Heatwave Amplification (<code>Class C</code> — Statistically Non-Significant):</strong> Comparisons between high-heat and normal-summer regimes do not establish statistically significant heatwave amplification of the Chapin–control surface-temperature contrast across tested specifications (<code>p ≈ 0.27 / 0.13 / 0.42</code>).</li>
+        <li><strong>AQI 91 Screenshot vs. Modeled AQI 79 (<code>Class C</code> — Unauthenticated):</strong> While the November 1, 2026 (<code>08:45 PST</code> / <code>16:45 UTC</code>) consumer map screenshot displays a localized <strong>US AQI 91</strong> value over Oregon City, the screenshot is not independently authenticated, and Cycle 3 Open-Meteo/CAMS global reanalysis models Oregon City/Chapin at <strong>US AQI 79</strong> (<code>PM2.5 = 23.15 µg/m³</code>, boundary-layer height <code>151.25 m</code>, 10 m wind <code>0.865 m/s</code>), with McMinnville modeled higher at <strong>AQI 83</strong> and Newberg at <strong>AQI 79</strong>. Neither unique Oregon City particulate trapping nor a verified temperature inversion is established.</li>
       </ul>
 
       <div class="deliverables-grid">
         <div class="deliv-card">
           <div>
             <h4>🌡️ Interactive 15-Slide Microclimate &amp; AQI Deck</h4>
-            <p>Full visual walkthrough of the 1994–2024 Landsat thermal series, AQI 91 observation figure, and evidentiary guardrails.</p>
+            <p>Full visual walkthrough of the 1994–2024 Landsat thermal series, AQI 91 figure, and evidentiary guardrails.</p>
           </div>
           <div class="deliv-links">
             <a href="forensic-microclimate.html" class="nav-btn nav-btn-primary">Open Interactive Deck &rarr;</a>
@@ -1281,26 +1312,26 @@
       <div class="section-eyebrow">Workstream 4 · Municipal Enforcement, Oversight &amp; Comparator Litigation</div>
       <h2 class="section-title">Code Enforcement Discretion, Manager Oversight &amp; Comparator Dockets</h2>
       <p class="section-lead">
-        Workstream 4 examines how code-enforcement initiation, property-specific forbearance, civil-infraction penalty structures, and internal complaint oversight operate across documented Commission records and five comparator dockets.
+        Workstream 4 examines how code-enforcement initiation, property-specific forbearance, civil-infraction penalty structures, and internal complaint oversight operate across inspected Commission records and five comparator dockets.
       </p>
 
       <h3 class="sub-heading">
-        <span>4.1 Property-Specific Forbearance vs. Complaint-Driven Enforcement (Findings F4–F6 &amp; C4)</span>
-        <span class="tax-badge badge-b">Category B · Comparator &amp; Policy Leads</span>
+        <span>4.1 Individualized Forbearance vs. Complaint-Driven Enforcement (Class B) &amp; Ordinance 26-1007 (Class A-V)</span>
+        <span class="tax-badge badge-b">Class B (Forbearance Comparison) · Class A-V (Ordinance Text)</span>
       </h3>
       <p class="prose">
-        The August 19, 2026 packet (<code>S2</code>, pp. 46, 52) states that, as of 2025, municipal code violations other than parking operate on a <strong>complaint-driven model</strong>. Yet the June 10, 2025 draft work-session minutes in the same packet (<code>S2</code>, pp. 173–175) document individualized Commission forbearance across multiple McLoughlin Promenade right-of-way encroachments—allowing decks, stairs, parking spaces, or a house foundation to remain at <strong>306, 406, and 408 Promenade Street</strong> and <strong>515 High Street</strong>, and contemplating a permit with a <strong>fee reduction at 123 High Street</strong>—while simultaneously recording <strong>67 sidewalk complaints</strong> in the McLoughlin neighborhood between April and mid-May 2025 where <strong>40 of 60 inspected properties did not qualify</strong> for the City's $1,500 tree-root grant program.
+        The August 19, 2026 packet (<code>S2</code>, pp. 46, 52) states that, as of 2025, municipal code violations other than parking operate on a <strong>complaint-driven model</strong>. In the same packet, the June 10, 2025 draft work-session minutes (<code>S2</code>, pp. 173–175) record individualized Commission forbearance on certain McLoughlin Promenade right-of-way encroachments—allowing decks, stairs, parking spaces, or a house foundation to remain at <strong>306, 406, and 408 Promenade Street</strong> and <strong>515 High Street</strong>, and discussing a permit with a <strong>fee reduction at 123 High Street</strong>—while also noting <strong>67 sidewalk complaints</strong> in the McLoughlin neighborhood between April and mid-May 2025 where <strong>40 of 60 inspected properties did not qualify</strong> for the City's $1,500 tree-root grant program. Because this comparison involves different property types (commercial/promenade vs. residential parcels) and the underlying comparator enforcement log has not yet been inspected, it is classified as <strong><code>Class B</code> (not yet established as a pattern)</strong>.
       </p>
       <p class="prose">
-        Furthermore, in the October 7, 2026 Commission packet (<code>C4</code>, CivicClerk File 9311, pp. 160–169), staff introduced proposed Ordinance No. 26-1007 increasing the maximum Class A civil infraction penalty from <strong><code>$300/day</code> to <code>$1,000/day</code></strong> (+233%), with the staff financial impact statement noting that general civil-infraction revenue would increase if adopted.
+        Separately, in the October 7, 2026 Commission packet (<code>C4</code>, CivicClerk File 9311, pp. 160–169), staff introduced proposed Ordinance No. 26-1007 increasing the maximum Class A civil infraction penalty from <strong><code>$300/day</code> to <code>$1,000/day</code></strong> (+233%). The ordinance text and staff financial impact statement are verified in the inspected packet (<strong><code>Class A-V</code>, text only</strong>); selective enforcement is not shown by the ordinance text.
       </p>
 
       <h3 class="sub-heading">
         <span>4.2 Administrative Oversight Concentration &amp; Comparator Litigation Matrix</span>
-        <span class="tax-badge badge-b">Category A &amp; B · Docket &amp; Minutes Matrix</span>
+        <span class="tax-badge badge-b">Class A-V, Class B &amp; Class C · Docket &amp; Minutes Matrix</span>
       </h3>
       <p class="prose">
-        Mirroring Section 8 and Section 15 of the Latvian governance study, Table 4 reconciles the 2021–2023 City Manager oversight records and the five comparator litigation matters examined in the October 12, 2026 supplement, separating verified judicial rulings and party admissions from unproved allegations or adverse dispositions.
+        Mirroring Section 8 and Section 15 of the Latvian governance study, Table 4 reconciles the 2021–2023 City Manager oversight records and the five comparator litigation matters examined in the October 12, 2026 supplement, separating verified judicial rulings and party admissions (<code>Class A-V</code>) from documented variances requiring primary records (<code>Class B</code>) and counter-evidence (<code>Class C</code>).
       </p>
 
       <div tabindex="0" role="region" aria-labelledby="comparators-caption" class="table-wrapper">
@@ -1320,35 +1351,35 @@
               <th>2021 Manager Investigation Vote &amp; 2023 HR Structure</th>
               <td data-label="Source ID" class="mono-num">A1–A3 · P1 · P12<br/>Dec 1, 2021 &amp; Sep 20, 2023 Minutes</td>
               <td data-label="Status">Reported 3–2 vote (Oct 6, 2021) declining outside investigation after HR Director Foiles reviewed his own boss; Sept 20, 2023 draft minutes on HR/Manager reporting lines.</td>
-              <td data-label="Class"><span class="tax-badge badge-b">Cat B</span></td>
+              <td data-label="Class"><span class="tax-badge badge-b">B</span></td>
               <td data-label="Use &amp; Limits">Identifies structural question of independent review when complaints involve the City Manager; does not by itself prove an unchanged 2021 policy in 2024.</td>
             </tr>
             <tr>
               <th><em>Burgard v. City of Oregon City</em><br/>No. 3:25-cv-01198-AR (D. Or.)</th>
               <td data-label="Source ID" class="mono-num">P2 (ECF 2) · P3 (ECF 17)<br/>Sept 18, 2025 Answer</td>
               <td data-label="Status">Active federal ADA Title II / Rehab Act § 504 action; City Answer admits Sept 2023 accommodation communications and departmental federal financial assistance.</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Use &amp; Limits">Strong institutional-process and federal-funding lead; 2025 filing cannot retroactively supply policymaker notice prior to June 2024 unless Sept 2023 emails are linked.</td>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span> <span class="tax-badge badge-b">rel. B</span></td>
+              <td data-label="Use &amp; Limits">Filed Answer text is <code>A-V</code>; relevance to 2024 policymaker notice is <code>B</code> (2025 filing cannot retroactively supply notice prior to June 2024 unless Sept 2023 records are linked).</td>
             </tr>
             <tr>
               <th><em>Kelvin &amp; Dunlap v. Oregon City</em><br/>Clackamas No. CV15050082 (2015)</th>
               <td data-label="Source ID" class="mono-num">P4 · DOJ Elder-Justice Repo (22 pp.)</td>
               <td data-label="Status">2015 state complaint alleging warrantless code/building/police entry, “Dangerous Building” placarding without emergency notice, displacement of disabled veteran, and water shutoff.</td>
-              <td data-label="Class"><span class="tax-badge badge-b">Cat B</span></td>
-              <td data-label="Use &amp; Limits">Strongest historical operational comparator lead for placarding/notice discovery; allegations unproved and named employees (Mueller, Roberts, Busch) differ from 2024 actors.</td>
+              <td data-label="Class"><span class="tax-badge badge-b">B</span></td>
+              <td data-label="Use &amp; Limits">Historical operational comparator lead for placarding/notice discovery; allegations unproved and named employees (Mueller, Roberts, Busch) differ from 2024 actors.</td>
             </tr>
             <tr>
               <th><em>Nicita v. Holladay</em><br/>No. 3:19-cv-01960-YY (D. Or. 2022)</th>
               <td data-label="Source ID" class="mono-num">P5 (ECF 37) · P6 (ECF 44)<br/>Apr 4, 2022 Final Order</td>
               <td data-label="Status">Judge Hernández held that denying an ~$8,000 discretionary appeal-fee waiver plausibly stated a First Amendment retaliation claim; claims against Konkol did not survive.</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
               <td data-label="Use &amp; Limits">Provides local federal legal reasoning that an authorized financial burden may still be retaliatory; pleading-stage survival only, and settled Jan 23, 2024 without merits judgment.</td>
             </tr>
             <tr>
               <th><em>Hometown Boys LLC v. Oregon City</em><br/>No. 3:13-cv-00301-ST (D. Or. 2013)</th>
               <td data-label="Source ID" class="mono-num">P9 · A4/A5<br/>May 28, 2013 Remand Order</td>
               <td data-label="Status">2013 water-line/landslide dispute and occupancy interaction; federal remand granted and City fee request rejected; 2014 settlement favored City maintenance position.</td>
-              <td data-label="Class"><span class="tax-badge badge-c">Cat C</span></td>
+              <td data-label="Class"><span class="tax-badge badge-c">C</span></td>
               <td data-label="Use &amp; Limits">Shows utility/occupancy interaction, but landslide engineering rationale and 2014 settlement outcome represent significant counter-evidence against a wrongful-shutoff parallel.</td>
             </tr>
           </tbody>
@@ -1407,71 +1438,71 @@
       <div class="section-eyebrow">Section 5 · Phase 1 Reconciliation, Audit Work Programme &amp; Hash Inventory</div>
       <h2 class="section-title">Evidence Reconciliation Matrix, Priority Public-Records Programme &amp; Master Source Register</h2>
       <p class="section-lead">
-        Implementing the five-step Phase 1 methodology recommended in the research synthesis and Sections 14–15 of the Latvian study, this section reconciles what has been independently reproduced against what remains provisional, specifies the exact public records required to resolve open questions, and locks every source file to its cryptographic <code>SHA-256</code> digest.
+        Implementing the Phase 1 methodology and Sections 14–15 of the Latvian study, this section summarizes what would change or resolve each assessment across classes <code>A-V</code>, <code>A-R</code>, <code>B</code>, and <code>C</code>, specifies the priority public records required next, and locks every registered source file to its cryptographic <code>SHA-256</code> digest.
       </p>
 
       <!-- Table 5: Preserved Findings & Evidentiary Strength Classification -->
       <div tabindex="0" role="region" aria-labelledby="reconciliation-caption" class="table-wrapper">
         <table class="data-table">
-          <caption id="reconciliation-caption">Table 5 · Findings Classified by Evidentiary Strength &amp; What Would Change the Assessment</caption>
+          <caption id="reconciliation-caption">Table 5 · Findings Classified by Evidentiary Strength (A-V, A-R, B, C) &amp; What Primary Evidence Would Change the Assessment</caption>
           <thead>
             <tr>
               <th>Finding / Issue</th>
-              <th>Current Evidentiary Status</th>
+              <th>Current Evidentiary Basis</th>
               <th>Class</th>
-              <th>Research Significance</th>
+              <th>Scope &amp; Methodological Boundary</th>
               <th>What Primary Evidence Would Resolve or Change the Assessment</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th>All 12 Landsat contrasts reproduced (±0.005°F)</th>
-              <td data-label="Status">Independently verified from raw USGS Collection 2 Level-2 rasters (Oct 28 Cycle 2)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Strong computational reproducibility milestone across 1994–2024</td>
-              <td data-label="Next Evidence">Recover original single-control extraction geometry to reconcile the 9/12 equal-and-opposite control point offsets.</td>
+              <th>Chapin &gt; control average on 12/12 Landsat scenes (±0.005°F) &amp; 3×3 buffer</th>
+              <td data-label="Basis">Reproduced by this project's computational pipeline from USGS C2L2 rasters (Oct 28 &amp; Nov 2); not independently replicated</td>
+              <td data-label="Class"><span class="tax-badge badge-ar">A-R</span></td>
+              <td data-label="Boundary">Persistent neighborhood-scale surface-temperature contrast (+7.0°F to +17.3°F); native 100–120 m thermal bands resampled to 30 m cannot support parcel-scale attribution</td>
+              <td data-label="Next Evidence">Independent third-party replication and high-resolution airborne/ground thermal or dated orthophoto surface-cover series.</td>
             </tr>
             <tr>
-              <th>All 12 contrasts remain positive using 3×3 (90×90 m) windows</th>
-              <td data-label="Status">Independently verified across 324/324 clear pixels (Nov 2 Cycle 3)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Demonstrates robustness to 90×90 m spatial buffering (<code>+10.48°F</code> to <code>+12.08°F</code> mean excess)</td>
-              <td data-label="Next Evidence">Dated high-resolution orthophoto canopy classification and parcel impervious-surface history to separate canopy from roof/pavement effects.</td>
+              <th>Individual control values (9/12), tree-removal causation &amp; heatwave amplification</th>
+              <td data-label="Basis">Unreconciled control offsets up to ~4°F; 2006 peak (+17.31°F) predates 2009–2018 removals; <code>p ≈ 0.27 / 0.13 / 0.42</code></td>
+              <td data-label="Class"><span class="tax-badge badge-c">C</span></td>
+              <td data-label="Boundary">Current data do not identify the cause of the contrast, do not show post-2009 widening, and do not establish heatwave amplification</td>
+              <td data-label="Next Evidence">Original single-control extraction geometry, geocoded Title 12 tree/sidewalk permit ledger with verified removal dates, and expanded multi-year scene inventory.</td>
             </tr>
             <tr>
-              <th>Published Ambient matches <code>best_match</code> local-day maxima, not overpass hour</th>
-              <td data-label="Status">Verified numeric reconciliation (<code>MAE = 0.058°F</code> vs. <code>-9.44°F</code> overpass deficit)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Essential correction to weather-data provenance and heat-regime labeling</td>
-              <td data-label="Next Evidence">Replace “verified overpass ERA5-Land temperature” label with “published daily-high-like ambient” in all downstream summaries.</td>
+              <th>AQI 91 screenshot vs. modeled AQI 79</th>
+              <td data-label="Basis">Nov 1 screenshot unauthenticated; Cycle 3 CAMS reanalysis models Oregon City at AQI 79 (McMinnville = 83)</td>
+              <td data-label="Class"><span class="tax-badge badge-c">C</span></td>
+              <td data-label="Boundary">Does not establish unique Oregon City particulate trapping or a verified temperature inversion</td>
+              <td data-label="Next Evidence">Original file/provider metadata for the Nov 1 screenshot and regulatory ground-monitor data.</td>
             </tr>
             <tr>
-              <th>2006 has the largest reported thermal contrast (+17.31°F)</th>
-              <td data-label="Status">Verified pre-2009 sample maximum contrast</td>
-              <td data-label="Class"><span class="tax-badge badge-c">Cat C</span></td>
-              <td data-label="Significance">Adverse timing evidence against a simple post-2009 tree-removal widening claim</td>
-              <td data-label="Next Evidence">Geocoded Title 12 tree/sidewalk permit ledger with verified removal dates and expanded summer scene inventory.</td>
+              <th>No codified appeal (Feb 3, 2026 memo), internal 30-day window &amp; 180-day payment terms</th>
+              <td data-label="Basis">Direct quotation and policy text in inspected Feb 10, 2026 packet (<code>S1</code> pp. 20–27)</td>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span></td>
+              <td data-label="Boundary">Establishes code gap and internal policy terms; notice in practice is unknown and 180-day term is a payment arrangement, not a disconnection cap</td>
+              <td data-label="Next Evidence">2024 Utility Billing Policy text, shutoff notice templates, and customer notice records in individual accounts.</td>
             </tr>
             <tr>
-              <th>AQI 91 screenshot vs. Cycle 3 modeled AQI 79</th>
-              <td data-label="Status">12-point model non-reproduction; McMinnville modeled at AQI 83</td>
-              <td data-label="Class"><span class="tax-badge badge-c">Cat C</span></td>
-              <td data-label="Significance">Requires independent screenshot authentication; does not establish unique Oregon City trapping</td>
-              <td data-label="Next Evidence">Original iOS/provider metadata for the Nov 1 screenshot, post-latency ERA5 reanalysis, and DEQ ground monitor series.</td>
+              <th>509-day disconnection duration (June 25, 2024 – Nov 16, 2025)</th>
+              <td data-label="Basis">Author's own account record, not yet in source register; restoration conditions and payment history under review (Priority 1)</td>
+              <td data-label="Class"><span class="tax-badge badge-c">A-R or C — not B</span></td>
+              <td data-label="Boundary"><code>Class B</code> requires both a registered primary record and a valid comparator; neither currently exists</td>
+              <td data-label="Next Evidence">Register redacted Work Orders <code>24-000915</code> / <code>25-001106</code>, itemized billing ledger, and third-party check return documentation.</td>
             </tr>
             <tr>
-              <th>Codified water/sewer appeal absence vs. internal 30-day policy</th>
-              <td data-label="Status">Verified in Feb 3, 2026 Public Works memo (<code>S1</code> pp. 20–27)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Concrete institutional-policy foundation for procedural due-process inquiry</td>
-              <td data-label="Next Evidence">2024 Utility Billing Policy text, June 2024 shutoff notice templates, and Work Orders <code>24-000915</code> / <code>25-001106</code>.</td>
+              <th>ADA Plan limited to right-of-way (A-V) &amp; § 504 Public Works scope (B)</th>
+              <td data-label="Basis">Aug 19, 2026 Plan text (<code>S2</code> pp. 27–62) &amp; WIFIA contract award (<code>S2</code> pp. 80–85)</td>
+              <td data-label="Class"><span class="tax-badge badge-a">A-V</span> <span class="tax-badge badge-b">B</span></td>
+              <td data-label="Boundary">Plan scope limitation and $9.29M WIFIA award are <code>A-V</code>; § 504 departmental coverage of Public Works billing is unproven (<code>B</code>)</td>
+              <td data-label="Next Evidence">Executed EPA WIFIA loan agreement, civil-rights assurances, and departmental fund-flow records (Priority 4).</td>
             </tr>
             <tr>
-              <th>ADA Transition Plan right-of-way restriction &amp; Manager grievance finality</th>
-              <td data-label="Status">Verified in Aug 19, 2026 packet (<code>S2</code> pp. 27–62) &amp; City webpage (<code>S5</code>)</td>
-              <td data-label="Class"><span class="tax-badge badge-a">Cat A</span></td>
-              <td data-label="Significance">Establishes program/service exclusion from self-evaluation and final manager authority</td>
-              <td data-label="Next Evidence">Historical webpage CMS versions, ADA coordinator delegation records, and June 23, 2026 denial routing file.</td>
+              <th>Forbearance vs. complaint-driven model (B) &amp; Ordinance 26-1007 text (A-V)</th>
+              <td data-label="Basis">June 10, 2025 draft minutes (<code>S2</code> pp. 173–175) &amp; Oct 7, 2026 Ordinance 26-1007 packet (<code>C4</code> pp. 160–169)</td>
+              <td data-label="Class"><span class="tax-badge badge-b">B</span> <span class="tax-badge badge-a">A-V</span></td>
+              <td data-label="Boundary">Forbearance comparison involves commercial vs. residential property types (not yet established as a pattern, <code>B</code>); Ordinance 26-1007 ($300 → $1,000/day) is text only (<code>A-V</code>)</td>
+              <td data-label="Next Evidence">Approved June 10, 2025 minutes, Promenade encroachment files, and citywide code-enforcement comparator log (Priority 5).</td>
             </tr>
           </tbody>
         </table>
