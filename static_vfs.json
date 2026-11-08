@@ -12333,6 +12333,91 @@
           "is_private": false
         }
       ]
+    },
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation": {
+      "path": "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation",
+      "breadcrumbs": [
+        {
+          "name": "~",
+          "path": "/home/annika"
+        },
+        {
+          "name": "OC Accountability Research",
+          "path": "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation"
+        }
+      ],
+      "entries": [
+        {
+          "name": "oregon-city-accountability-research.html",
+          "path": "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/oregon-city-accountability-research.html",
+          "is_dir": false,
+          "size_human": "56.2 KB",
+          "mtime_human": "Nov 07, 18:42",
+          "ext": ".html",
+          "kind": "Web Deck",
+          "static_url": "oregon-city-accountability-research.html"
+        },
+        {
+          "name": "forensic-microclimate.html",
+          "path": "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/forensic-microclimate.html",
+          "is_dir": false,
+          "size_human": "101.4 KB",
+          "mtime_human": "Nov 05, 10:00",
+          "ext": ".html",
+          "kind": "Web Deck",
+          "static_url": "forensic-microclimate.html"
+        },
+        {
+          "name": "citizen-grievance-registry.html",
+          "path": "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/citizen-grievance-registry.html",
+          "is_dir": false,
+          "size_human": "72.4 KB",
+          "mtime_human": "Nov 05, 10:00",
+          "ext": ".html",
+          "kind": "Web Deck",
+          "static_url": "citizen-grievance-registry.html"
+        },
+        {
+          "name": "Oregon_City_Public_Records_Report.pdf",
+          "path": "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/01_Reports_and_Matrices/Oregon_City_Public_Records_Report.pdf",
+          "is_dir": false,
+          "size_human": "144.0 KB",
+          "mtime_human": "Oct 21, 14:21",
+          "ext": ".pdf",
+          "kind": "PDF Document",
+          "static_url": "reports/Oregon_City_Public_Records_Report.pdf"
+        },
+        {
+          "name": "Oregon_City_Governance_and_Litigation_Supplement.pdf",
+          "path": "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/01_Reports_and_Matrices/Oregon_City_Governance_and_Litigation_Supplement.pdf",
+          "is_dir": false,
+          "size_human": "143.0 KB",
+          "mtime_human": "Oct 21, 14:21",
+          "ext": ".pdf",
+          "kind": "PDF Document",
+          "static_url": "reports/Oregon_City_Governance_and_Litigation_Supplement.pdf"
+        },
+        {
+          "name": "Oregon_City_Public_Voices_and_Rulemaking_Impact.pdf",
+          "path": "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/01_Reports_and_Matrices/Oregon_City_Public_Voices_and_Rulemaking_Impact.pdf",
+          "is_dir": false,
+          "size_human": "133.0 KB",
+          "mtime_human": "Oct 21, 14:22",
+          "ext": ".pdf",
+          "kind": "PDF Document",
+          "static_url": "reports/Oregon_City_Public_Voices_and_Rulemaking_Impact.pdf"
+        },
+        {
+          "name": "00_JULIUS_AI_GLEANING_DIGEST.md",
+          "path": "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/00_JULIUS_AI_GLEANING_DIGEST.md",
+          "is_dir": false,
+          "size_human": "17.0 KB",
+          "mtime_human": "Nov 01, 09:37",
+          "ext": ".md",
+          "kind": "Markdown Document",
+          "static_url": "reports/00_JULIUS_AI_GLEANING_DIGEST.md"
+        }
+      ]
     }
   },
   "static_files": {
@@ -12379,6 +12464,15 @@
     "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/microclimate_audit/stac_2018-08-18.json": "microclimate_audit/stac_2018-08-18.json",
     "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/microclimate_audit/stac_2021-07-25.json": "microclimate_audit/stac_2021-07-25.json",
     "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/microclimate_audit/stac_2023-08-16.json": "microclimate_audit/stac_2023-08-16.json",
-    "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/microclimate_audit/stac_2024-07-09.json": "microclimate_audit/stac_2024-07-09.json"
+    "/home/annika/Public_Research_Commons/03_Ecology_and_Land_Stewardship/Chapin_Microclimate_and_AQI_Audit/microclimate_audit/stac_2024-07-09.json": "microclimate_audit/stac_2024-07-09.json",
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/oregon-city-accountability-research.html": "oregon-city-accountability-research.html",
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/citizen-grievance-registry.html": "citizen-grievance-registry.html",
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/forensic-microclimate.html": "forensic-microclimate.html",
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/00_JULIUS_AI_GLEANING_DIGEST.md": "reports/00_JULIUS_AI_GLEANING_DIGEST.md",
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/01_Reports_and_Matrices/Oregon_City_Public_Records_Report.pdf": "reports/Oregon_City_Public_Records_Report.pdf",
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/01_Reports_and_Matrices/Oregon_City_Governance_and_Litigation_Supplement.pdf": "reports/Oregon_City_Governance_and_Litigation_Supplement.pdf",
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/01_Reports_and_Matrices/Oregon_City_Public_Voices_and_Rulemaking_Impact.pdf": "reports/Oregon_City_Public_Voices_and_Rulemaking_Impact.pdf",
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/01_Reports_and_Matrices/Oregon_City_Findings_Matrix.csv": "reports/Oregon_City_Findings_Matrix.csv",
+    "/home/annika/Documents/Federal_Complaint/JuliusAI_Oregon_City_Investigation/01_Reports_and_Matrices/Oregon_City_Litigation_Overlap_Matrix.csv": "reports/Oregon_City_Litigation_Overlap_Matrix.csv"
   }
 }

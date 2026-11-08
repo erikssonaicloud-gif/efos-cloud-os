@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Oregon City Citizen Grievance & Comparator Registry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #090D14;
+      --bg-surface: #0F172A;
+      --bg-card: #162036;
+      --bg-card-hover: #1E293B;
+      --border-subtle: #1E293B;
+      --border-focus: #334155;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      
+      --accent-blue: #38BDF8;
+      --accent-blue-bg: rgba(56, 189, 248, 0.12);
+      
+      --accent-emerald: #10B981;
+      --accent-emerald-bg: rgba(16, 185, 129, 0.12);
+      
+      --accent-amber: #F59E0B;
+      --accent-amber-bg: rgba(245, 158, 11, 0.12);
+      
+      --accent-rose: #F43F5E;
+      --accent-rose-bg: rgba(244, 63, 94, 0.12);
+      
+      --accent-purple: #A78BFA;
+      --accent-purple-bg: rgba(167, 139, 250, 0.12);
+
+      --font-display: 'Space Grotesk', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 2rem;
+    }
+
+    .badge-hub {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-blue);
+      background: var(--accent-blue-bg);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    p.lead {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 950px;
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+    }
+
+    .stat-card .label {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-card .value {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    .controls-wrapper {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-focus);
+      color: var(--text-main);
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 1.1rem;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .filter-label {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      margin-right: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .pill-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.825rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pill-btn:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-main);
+    }
+
+    .pill-btn.active {
+      background: var(--accent-blue-bg);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .registry-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .record-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .record-card:hover {
+      border-color: var(--border-focus);
+      transform: translateY(-2px);
+    }
+
+    .record-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .record-title-area h2 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .record-id {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-blue);
+      background: var(--accent-blue-bg);
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.25rem;
+    }
+
+    .record-location {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 0.2rem;
+    }
+
+    .status-badges-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      align-items: flex-end;
+    }
+
+    .source-status-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 0.25rem 0.55rem;
+      border-radius: 0.375rem;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-blue);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .prop-status-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 0.25rem 0.55rem;
+      border-radius: 0.375rem;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .quote-box {
+      background: var(--bg-card);
+      border-left: 3px solid var(--accent-blue);
+      padding: 1rem 1.25rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      font-size: 0.925rem;
+      font-style: italic;
+      color: var(--text-main);
+      margin: 1rem 0;
+    }
+
+    .findings-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .findings-box strong {
+      color: var(--text-main);
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .source-meta {
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      font-size: 0.8rem;
+    }
+
+    .action-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    .action-link:hover {
+      color: #7dd3fc;
+      text-decoration: underline;
+    }
+
+    .lane-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      background: var(--bg-card);
+      color: var(--accent-purple);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.25rem;
+      margin-right: 0.35rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge-hub">Municipal Oversight Evidence Registry • Working Index v2.4</div>
+      <h1>Oregon City Citizen Grievance & Comparator Registry</h1>
+      <div class="lead-box" style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-focus); border-radius: 0.5rem; padding: 1.25rem; margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+        <strong style="color: var(--text-main); font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">Evidence Standard & Preamble:</strong>
+        <p style="margin-bottom: 0.5rem;"><strong>This registry indexes resident grievances, municipal records, correspondence, and litigation materials across 2013–2026. Inclusion does not establish misconduct. Each entry distinguishes source verification, allegations, corroborating evidence, contrary evidence, procedural outcomes, and judicial findings. Connections between incidents are identified as research leads unless supported by specific evidence.</strong></p>
+        <p style="font-size: 0.85rem; color: var(--text-dim); margin: 0;">Evaluation Methodology: Validation status is reported independently for each source (authenticated, uncorroborated, transcript checked) and proposition (alleged, supported, disputed, admitted, judicially found). Administrative exhaustion and disposition statuses are unverified unless supported by formal written findings or final judgments.</p>
+      </div>
+      
+      <div class="summary-grid">
+        <div class="stat-card">
+          <div class="label">Proposed / Indexed Entries</div>
+          <div class="value">27</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Docketed Judicial Actions</div>
+          <div class="value">4</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Authenticated Video Citations</div>
+          <div class="value">16</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Time Span Covered</div>
+          <div class="value">2013–2026</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls-wrapper">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by resident name, address, keyword (e.g. 'sidewalk', 'arborvitae', '62 complaints', 'SDC', 'water', 'oak tree')...">
+      </div>
+      
+      <div class="filter-pills">
+        <span class="filter-label">Filter Lane:</span>
+        <button class="pill-btn active" data-filter-type="lane" data-filter="ALL">All Lanes</button>
+        <button class="pill-btn" data-filter-type="lane" data-filter="Lane 1">Lane 1: Heat & Trees</button>
+        <button class="pill-btn" data-filter-type="lane" data-filter="Lane 2">Lane 2: Sidewalks & ADA</button>
+        <button class="pill-btn" data-filter-type="lane" data-filter="Lane 3">Lane 3: Code & Property</button>
+        <button class="pill-btn" data-filter-type="lane" data-filter="Lane 4">Lane 4: Governance & Process</button>
+        <button class="pill-btn" data-filter-type="lane" data-filter="Lane 5">Lane 5: Utilities & Services</button>
+      </div>
+    </div>
+
+    <div id="registryList" class="registry-list">
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA" data-search="REC-001 Samantha Brown (Samantha Z.) McLoughlin Conservation District Public correspondence submitted regarding sidewalk repair notices in McLoughlin. Submitter expressed concern regarding contractor repair expenses for older residences and requested that the City expand its sidewalk reimbursement program beyond defects attributed to street trees. Requesting expansion of sidewalk repair assistance and citing financial hardship for residents receiving repair notices in older residential neighborhoods. Official minutes from June 4, 2025 record that the City Commission agreed to revisit sidewalk-repair assistance policies at an upcoming work session. The specific text, submission timestamp, and author metadata of the August 6 written comment remain pending paragraph-level verification against the underlying agenda packet file. City Commission Agenda Correspondence / Public Comment Source Located (Pending Document Checksum) Resident Allegation">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-001</span>
+              <span>Samantha Brown (Samantha Z.)</span>
+            </h2>
+            <div class="record-location">📍 McLoughlin Conservation District • 🗓️ August 6, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Located (Pending Document Checksum)</span>
+            <span class="prop-status-badge">Status: Resident Allegation</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Public correspondence submitted regarding sidewalk repair notices in McLoughlin. Submitter expressed concern regarding contractor repair expenses for older residences and requested that the City expand its sidewalk reimbursement program beyond defects attributed to street trees.
+        </p>
+
+        <div class="quote-box">
+          "Requesting expansion of sidewalk repair assistance and citing financial hardship for residents receiving repair notices in older residential neighborhoods."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Official minutes from June 4, 2025 record that the City Commission agreed to revisit sidewalk-repair assistance policies at an upcoming work session. The specific text, submission timestamp, and author metadata of the August 6 written comment remain pending paragraph-level verification against the underlying agenda packet file.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Agenda Correspondence / Public Comment
+          </div>
+          <a href="https://oregoncityor.portal.civicclerk.com/event/3230/files/attachment/3804" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA Lane 4: Governance & Process" data-search="REC-002 Jacob ('Jake') Burgard Oregon City (McLoughlin & Citywide) Federal civil-rights action, Burgard v. City of Oregon City et al., Case No. 3:25-cv-01198-AR (filed July 10, 2025). Plaintiff, proceeding pro se, asserts claims under Title II of the Americans with Disabilities Act, the Rehabilitation Act, and 42 U.S.C. § 1983 arising from alleged retaliation, selective code enforcement, and failure to engage in an interactive process regarding disability accommodations. City of Oregon City Answer (ECF 17, filed Sept. 18, 2025) admits that the City receives federal financial assistance and engaged in disability-accommodation communications with plaintiff in September 2023. The Answer denies liability for retaliation or constitutional violations. Procedural status: Answers filed September 18, 2025 (ECF 16 for County, ECF 17 for City). Clackamas County was dismissed by stipulation on July 28, 2026. A trial date was set for February 22, 2027. Complaint allegations remain contested; summary of City admissions is pending paragraph-level verification against ECF 17. U.S. District Court (D. Or.), Case No. 3:25-cv-01198-AR Source Authenticated (Docket & Pleadings) Admitted in Part / Contested Allegations">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-002</span>
+              <span>Jacob ('Jake') Burgard</span>
+            </h2>
+            <div class="record-location">📍 Oregon City (McLoughlin & Citywide) • 🗓️ September 18, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Authenticated (Docket & Pleadings)</span>
+            <span class="prop-status-badge">Status: Admitted in Part / Contested Allegations</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Federal civil-rights action, Burgard v. City of Oregon City et al., Case No. 3:25-cv-01198-AR (filed July 10, 2025). Plaintiff, proceeding pro se, asserts claims under Title II of the Americans with Disabilities Act, the Rehabilitation Act, and 42 U.S.C. § 1983 arising from alleged retaliation, selective code enforcement, and failure to engage in an interactive process regarding disability accommodations.
+        </p>
+
+        <div class="quote-box">
+          "City of Oregon City Answer (ECF 17, filed Sept. 18, 2025) admits that the City receives federal financial assistance and engaged in disability-accommodation communications with plaintiff in September 2023. The Answer denies liability for retaliation or constitutional violations."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Procedural status: Answers filed September 18, 2025 (ECF 16 for County, ECF 17 for City). Clackamas County was dismissed by stipulation on July 28, 2026. A trial date was set for February 22, 2027. Complaint allegations remain contested; summary of City admissions is pending paragraph-level verification against ECF 17.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 U.S. District Court (D. Or.), Case No. 3:25-cv-01198-AR
+          </div>
+          <a href="https://www.courtlistener.com/docket/70762708/burgard-v-city-of-oregon-city/" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA" data-search="REC-003 Tyson Brown McLoughlin Neighborhood Spoke during citizen comment regarding proposed amendments to OCMC 12.04. Addressed sidewalk replacement costs in McLoughlin, stating that standard repairs cost approximately $800 per panel compared to the City's $400 reimbursement cap, and cited difficulties with the group-permit requirement for adjacent owners. A lot of these sidewalks the wear and tear is just natural wear and tear... but then you get corner lots that have sidewalks that are cracking and they have a lot of financial responsibility... when it comes to expanding the reimbursement program which was discussed months ago about $400 per panel, those panels add up quickly. Again, every panel is basically almost $800... And then also with the permit fees... this idea of trying to get three residents is very hard to get because every contractor has different rates. Verified from official recording. Figures regarding panel costs ($400 reimbursement vs. $800 contractor cost) and the three-property rule represent the speaker's factual testimony during public discussion on sidewalk code revisions. City Commission Regular Meeting (TR_Ij0-0JlHnaI @ 141:04 / 8464s) Transcript Checked Against Recording Resident Testimony / Comparator Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-003</span>
+              <span>Tyson Brown</span>
+            </h2>
+            <div class="record-location">📍 McLoughlin Neighborhood • 🗓️ August 20, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Comparator Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Spoke during citizen comment regarding proposed amendments to OCMC 12.04. Addressed sidewalk replacement costs in McLoughlin, stating that standard repairs cost approximately $800 per panel compared to the City's $400 reimbursement cap, and cited difficulties with the group-permit requirement for adjacent owners.
+        </p>
+
+        <div class="quote-box">
+          "A lot of these sidewalks the wear and tear is just natural wear and tear... but then you get corner lots that have sidewalks that are cracking and they have a lot of financial responsibility... when it comes to expanding the reimbursement program which was discussed months ago about $400 per panel, those panels add up quickly. Again, every panel is basically almost $800... And then also with the permit fees... this idea of trying to get three residents is very hard to get because every contractor has different rates."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. Figures regarding panel costs ($400 reimbursement vs. $800 contractor cost) and the three-property rule represent the speaker's factual testimony during public discussion on sidewalk code revisions.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_Ij0-0JlHnaI @ 141:04 / 8464s)
+          </div>
+          <a href="https://youtu.be/Ij0-0JlHnaI?t=8464" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA Lane 3: Code & Property" data-search="REC-004 Christina ('Georgie') Hart McLoughlin Neighborhood Owner of an 1890 historic home in McLoughlin testified during public comment on sidewalk revisions, stating that her property has 150 feet of sidewalk frontage with numerous mature trees. Testified that full replacement costs could reach tens of thousands of dollars and proposed a City utility fee model to distribute sidewalk maintenance expenses across all taxpayers. I have an 1890 house in the McLoughlin neighborhood. I'm a corner lot, 150 ft of sidewalk, lots of trees... I don't have thousands or tens of thousands of dollars to fix my sidewalk. And then when the City plants a tree or lets a tree be there and the tree tears up the sidewalk, it just doesn't feel very fair to the property owner... A lot of cities have a sidewalk utility fee. The City takes on the responsibility of fixing all the sidewalks and just charges everybody a little bit every month. Verified from official recording. Testimony provides factual documentation of financial burden estimates for corner lots in historic districts and municipal fee-structure proposals presented to the Commission. City Commission Regular Meeting (TR_Ij0-0JlHnaI @ 144:03 / 8643s) Transcript Checked Against Recording Resident Testimony / Comparator Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-004</span>
+              <span>Christina ('Georgie') Hart</span>
+            </h2>
+            <div class="record-location">📍 McLoughlin Neighborhood • 🗓️ August 20, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Comparator Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span><span class="lane-tag">Lane 3: Code & Property</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Owner of an 1890 historic home in McLoughlin testified during public comment on sidewalk revisions, stating that her property has 150 feet of sidewalk frontage with numerous mature trees. Testified that full replacement costs could reach tens of thousands of dollars and proposed a City utility fee model to distribute sidewalk maintenance expenses across all taxpayers.
+        </p>
+
+        <div class="quote-box">
+          "I have an 1890 house in the McLoughlin neighborhood. I'm a corner lot, 150 ft of sidewalk, lots of trees... I don't have thousands or tens of thousands of dollars to fix my sidewalk. And then when the City plants a tree or lets a tree be there and the tree tears up the sidewalk, it just doesn't feel very fair to the property owner... A lot of cities have a sidewalk utility fee. The City takes on the responsibility of fixing all the sidewalks and just charges everybody a little bit every month."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. Testimony provides factual documentation of financial burden estimates for corner lots in historic districts and municipal fee-structure proposals presented to the Commission.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_Ij0-0JlHnaI @ 144:03 / 8643s)
+          </div>
+          <a href="https://youtu.be/Ij0-0JlHnaI?t=8643" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA" data-search="REC-005 Scott Dunfee McLoughlin Neighborhood McLoughlin resident testified during citizen comments regarding widespread sidewalk repair notices issued to neighborhood homeowners. Stated that retired neighbors and fixed-income households faced repair estimates of $2,000 to $10,000 and asserted that several elderly residents were contemplating selling their homes due to repair costs. I'm here representing basically our neighborhood... I received one of these lovely sidewalk repair notices, as did many people in our neighborhood... In that small area alone there are at least five people that were retired... that can't afford to pay $2,000 to $10,000 to have their sidewalk repaired. In fact, three of them are so worried about it they're thinking about selling their home and moving. Name verified as Scott Dunfee in official minutes. Statements regarding neighbor financial distress and potential forced property sales are attributed to the speaker as testimony rather than verified economic outcomes. City Commission Regular Meeting (TR_g8V1UbYoDUA @ 25:00 / 1500s) Transcript Checked Against Recording Resident Testimony / Hardship Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-005</span>
+              <span>Scott Dunfee</span>
+            </h2>
+            <div class="record-location">📍 McLoughlin Neighborhood • 🗓️ June 4, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Hardship Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          McLoughlin resident testified during citizen comments regarding widespread sidewalk repair notices issued to neighborhood homeowners. Stated that retired neighbors and fixed-income households faced repair estimates of $2,000 to $10,000 and asserted that several elderly residents were contemplating selling their homes due to repair costs.
+        </p>
+
+        <div class="quote-box">
+          "I'm here representing basically our neighborhood... I received one of these lovely sidewalk repair notices, as did many people in our neighborhood... In that small area alone there are at least five people that were retired... that can't afford to pay $2,000 to $10,000 to have their sidewalk repaired. In fact, three of them are so worried about it they're thinking about selling their home and moving."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Name verified as Scott Dunfee in official minutes. Statements regarding neighbor financial distress and potential forced property sales are attributed to the speaker as testimony rather than verified economic outcomes.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_g8V1UbYoDUA @ 25:00 / 1500s)
+          </div>
+          <a href="https://youtu.be/g8V1UbYoDUA?t=1500" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA Lane 4: Governance & Process" data-search="REC-006 Lizzie Roberts-Dille & Steven Dilly McLoughlin Neighborhood Both speakers addressed a concentration of sidewalk code-enforcement notices in their neighborhood, stating on the record that 62 complaint notices were generated by an individual complainant. Lizzie Roberts-Dille (1530s): 'He can call 62 times in one day... needs to be done with Jake Burgard.' Steven Dilly (3031s): 'He decided that there was 62 different [complaints].' Remarks verified from recording. The 62-complaint figure reflects public testimony presented by residents during citizen comments. Does not constitute an audited finding regarding the complainant's motive or administrative processing records. City Commission Regular Meeting (TR_g8V1UbYoDUA @ 25:30 & 50:31) Transcript Checked Against Recording Resident Testimony (Underlying Complaints Unaudited)">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-006</span>
+              <span>Lizzie Roberts-Dille & Steven Dilly</span>
+            </h2>
+            <div class="record-location">📍 McLoughlin Neighborhood • 🗓️ June 4, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony (Underlying Complaints Unaudited)</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Both speakers addressed a concentration of sidewalk code-enforcement notices in their neighborhood, stating on the record that 62 complaint notices were generated by an individual complainant.
+        </p>
+
+        <div class="quote-box">
+          "Lizzie Roberts-Dille (1530s): 'He can call 62 times in one day... needs to be done with Jake Burgard.' Steven Dilly (3031s): 'He decided that there was 62 different [complaints].'"
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Remarks verified from recording. The 62-complaint figure reflects public testimony presented by residents during citizen comments. Does not constitute an audited finding regarding the complainant's motive or administrative processing records.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_g8V1UbYoDUA @ 25:30 & 50:31)
+          </div>
+          <a href="https://youtu.be/g8V1UbYoDUA?t=1530" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA Lane 4: Governance & Process" data-search="REC-007 Michael Sugar McLoughlin Neighborhood Spoke during citizen comment regarding public-records access, stating that residents seeking to identify properties cited under the sidewalk ordinance were required to submit formal public-records requests, and described mapping painted sidewalk markings to identify affected neighbors. Right now, for example, if I wanted to know who are the people who have been cited under this ordinance, I would have to do a FOIA. I think that is cumbersome... Right now, what we've had to do is walk the sidewalks, look for the paint, compare it to a map with little dots, and hope that we can get them to answer the door. That's not particularly effective, and the city can improve on that. Verified from official recording. The account reflects the speaker's factual description of community efforts in McLoughlin. Evaluation of municipal transparency requires correlating formal public records logs with disclosure timelines. City Commission Regular Meeting (TR_Ij0-0JlHnaI @ 137:57 / 8277s) Transcript Checked Against Recording Resident Testimony">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-007</span>
+              <span>Michael Sugar</span>
+            </h2>
+            <div class="record-location">📍 McLoughlin Neighborhood • 🗓️ August 20, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Spoke during citizen comment regarding public-records access, stating that residents seeking to identify properties cited under the sidewalk ordinance were required to submit formal public-records requests, and described mapping painted sidewalk markings to identify affected neighbors.
+        </p>
+
+        <div class="quote-box">
+          "Right now, for example, if I wanted to know who are the people who have been cited under this ordinance, I would have to do a FOIA. I think that is cumbersome... Right now, what we've had to do is walk the sidewalks, look for the paint, compare it to a map with little dots, and hope that we can get them to answer the door. That's not particularly effective, and the city can improve on that."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. The account reflects the speaker's factual description of community efforts in McLoughlin. Evaluation of municipal transparency requires correlating formal public records logs with disclosure timelines.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_Ij0-0JlHnaI @ 137:57 / 8277s)
+          </div>
+          <a href="https://youtu.be/Ij0-0JlHnaI?t=8277" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 3: Code & Property Lane 4: Governance & Process" data-search="REC-008 Chaltu Wakijra 20282 Chanticleer Drive Administrative appeal before the City Commission regarding System Development Charge (SDC) assessments for an adult care home. Appellant, a licensed healthcare professional and 21-year veteran, challenged the City's methodology applying commercial assisted-living trip rates (ITE Code 254) and 1.5 Equivalent Residential Units (ERUs) for sanitary sewer to a five-bed residential care facility. My name is Chaltu Wakijra. I am the owner of the home located at 20282 Chanticleer Drive. I am a 21-year United States veteran and licensed healthcare professional. I am here tonight because I believe the system development charge assessment applied to my property is inconsistent, disproportionate, and does not accurately reflect the nature of the proposed use. Appeal hearing verified from recording and CivicClerk File 9181. Staff presentation established that transportation and wastewater SDCs were calculated using commercial congregate-care categories rather than single-family residential rates, concluding that staffing placed higher demand on infrastructure. Commission voted to uphold the assessment. City Commission SDC Appeal Hearing (TR_bHl3P2ALjN4 @ 73:37 / CivicClerk File 9181) Transcript & Agenda Packet Authenticated Administrative Appeal / Contested SDC Methodology">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-008</span>
+              <span>Chaltu Wakijra</span>
+            </h2>
+            <div class="record-location">📍 20282 Chanticleer Drive • 🗓️ July 15, 2026</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript & Agenda Packet Authenticated</span>
+            <span class="prop-status-badge">Status: Administrative Appeal / Contested SDC Methodology</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 3: Code & Property</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Administrative appeal before the City Commission regarding System Development Charge (SDC) assessments for an adult care home. Appellant, a licensed healthcare professional and 21-year veteran, challenged the City's methodology applying commercial assisted-living trip rates (ITE Code 254) and 1.5 Equivalent Residential Units (ERUs) for sanitary sewer to a five-bed residential care facility.
+        </p>
+
+        <div class="quote-box">
+          "My name is Chaltu Wakijra. I am the owner of the home located at 20282 Chanticleer Drive. I am a 21-year United States veteran and licensed healthcare professional. I am here tonight because I believe the system development charge assessment applied to my property is inconsistent, disproportionate, and does not accurately reflect the nature of the proposed use."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Appeal hearing verified from recording and CivicClerk File 9181. Staff presentation established that transportation and wastewater SDCs were calculated using commercial congregate-care categories rather than single-family residential rates, concluding that staffing placed higher demand on infrastructure. Commission voted to uphold the assessment.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission SDC Appeal Hearing (TR_bHl3P2ALjN4 @ 73:37 / CivicClerk File 9181)
+          </div>
+          <a href="https://youtu.be/bHl3P2ALjN4?t=4417" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA Lane 4: Governance & Process" data-search="REC-009 James Nicita Oregon City Public testimony during sidewalk ordinance discussions and subsequent administrative stormwater fee appeal. Nicita read into the record Public Works Director John Webb's staff memorandum defining sidewalk 'good repair' under OCMC 12.04.030 by reference to ADA accessibility standards (a vertical elevation change of 1/4 inch or greater). Argued that this interpretation creates disproportionate liability for corner-lot owners regarding public curb ramps. OCMC 12.04.030 maintenance repair: the owner shall be responsible for maintaining said sidewalk and abutting curb in good repair... Director Webb's staff memo clarifies that good repair is defined as a tripping hazard, and a tripping hazard is defined by the ADA as a change in vertical elevation of 1/4 inch or greater... That unequivocally makes people who live in houses on corners liable for those curbs that aren't ramps. Verified from recording and staff memorandum. For the 2026 stormwater matter, official records show Public Works denied an exemption request on June 12, 2026; Commission tentatively denied the appeal 5-0 on August 5, 2026, and adopted formal written findings on September 2, 2026. Technical suitability of infiltration remains a contested factual issue. City Commission Meetings (TR_Ij0-0JlHnaI @ 134:17 & Stormwater Appeal) Transcript & Staff Memorandum Authenticated Legal Argument / Contested Administrative Decision">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-009</span>
+              <span>James Nicita</span>
+            </h2>
+            <div class="record-location">📍 Oregon City • 🗓️ August 20, 2025 & September 2, 2026</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript & Staff Memorandum Authenticated</span>
+            <span class="prop-status-badge">Status: Legal Argument / Contested Administrative Decision</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Public testimony during sidewalk ordinance discussions and subsequent administrative stormwater fee appeal. Nicita read into the record Public Works Director John Webb's staff memorandum defining sidewalk 'good repair' under OCMC 12.04.030 by reference to ADA accessibility standards (a vertical elevation change of 1/4 inch or greater). Argued that this interpretation creates disproportionate liability for corner-lot owners regarding public curb ramps.
+        </p>
+
+        <div class="quote-box">
+          "OCMC 12.04.030 maintenance repair: the owner shall be responsible for maintaining said sidewalk and abutting curb in good repair... Director Webb's staff memo clarifies that good repair is defined as a tripping hazard, and a tripping hazard is defined by the ADA as a change in vertical elevation of 1/4 inch or greater... That unequivocally makes people who live in houses on corners liable for those curbs that aren't ramps."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from recording and staff memorandum. For the 2026 stormwater matter, official records show Public Works denied an exemption request on June 12, 2026; Commission tentatively denied the appeal 5-0 on August 5, 2026, and adopted formal written findings on September 2, 2026. Technical suitability of infiltration remains a contested factual issue.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Meetings (TR_Ij0-0JlHnaI @ 134:17 & Stormwater Appeal)
+          </div>
+          <a href="https://youtu.be/Ij0-0JlHnaI?t=8052" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 1: Heat & Trees Lane 2: Sidewalks & ADA" data-search="REC-010 Heather Krauss Tower Vista Neighborhood Resident testified that she received a citation and $211 permit notice for sidewalk repairs. Stated that city inspectors rejected her request to notch the concrete around the root system of a mature pin oak tree, citing the City's 60-inch width requirement, while noting that existing sidewalks on Central Point Road measured 34 to 42 inches. I have a pin oak. It's beautiful. It shades the entire width of the street. And I fear that if we trim the root that it could affect the stability of the tree... When the inspector came out, I said all I need is to notch out part of my sidewalk... and I was told no, the city is enforcing a 60-inch sidewalk. But I measured and I saw on Central Point Road sidewalks that are 34 inches wide, 42 inches wide... It seems heavy-handed and unnecessary. Verified from official recording. Krauss's statements reflect her personal measurements, interactions with inspectors, and concerns regarding tree stability. Serves as a comparator lead pending matched engineering inspection logs. City Commission Regular Meeting (TR_OEc3y4nYjVw @ 48:17 / 2897s) Transcript Checked Against Recording Resident Testimony / Comparator Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-010</span>
+              <span>Heather Krauss</span>
+            </h2>
+            <div class="record-location">📍 Tower Vista Neighborhood • 🗓️ September 3, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Comparator Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 1: Heat & Trees</span><span class="lane-tag">Lane 2: Sidewalks & ADA</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Resident testified that she received a citation and $211 permit notice for sidewalk repairs. Stated that city inspectors rejected her request to notch the concrete around the root system of a mature pin oak tree, citing the City's 60-inch width requirement, while noting that existing sidewalks on Central Point Road measured 34 to 42 inches.
+        </p>
+
+        <div class="quote-box">
+          "I have a pin oak. It's beautiful. It shades the entire width of the street. And I fear that if we trim the root that it could affect the stability of the tree... When the inspector came out, I said all I need is to notch out part of my sidewalk... and I was told no, the city is enforcing a 60-inch sidewalk. But I measured and I saw on Central Point Road sidewalks that are 34 inches wide, 42 inches wide... It seems heavy-handed and unnecessary."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. Krauss's statements reflect her personal measurements, interactions with inspectors, and concerns regarding tree stability. Serves as a comparator lead pending matched engineering inspection logs.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_OEc3y4nYjVw @ 48:17 / 2897s)
+          </div>
+          <a href="https://youtu.be/OEc3y4nYjVw?t=2897" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 1: Heat & Trees Lane 4: Governance & Process" data-search="REC-011 Tom Geil Park Place Neighborhood Former 8-year Oregon City Planning Commissioner described distress resulting from tree clearing by developer Icon Construction adjacent to his property. Pointed to a perceived regulatory disparity between private homeowner tree-removal permitting rules and subdivision clearing standards. I served eight years on the planning commission... we fought hard to protect trees... Today they came right up next to my property, 30 feet from my bedroom, and started cutting down trees that were this big around... And now somebody on the internet said: it's interesting that any citizen has to have a permit to remove ONE tree, and here's Icon removing everything in sight, dragging them off... a total disaster zone. Verified from official recording. Documents a former planning commissioner's testimony identifying disparate treatment between commercial developer mass clearing and individual homeowner tree regulations under OCMC 17.41. City Commission Regular Meeting (TR_6rKtXbVGyPU @ 23:40 / 1420s) Transcript Checked Against Recording Resident Testimony / Comparator Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-011</span>
+              <span>Tom Geil</span>
+            </h2>
+            <div class="record-location">📍 Park Place Neighborhood • 🗓️ September 2, 2026</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Comparator Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 1: Heat & Trees</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Former 8-year Oregon City Planning Commissioner described distress resulting from tree clearing by developer Icon Construction adjacent to his property. Pointed to a perceived regulatory disparity between private homeowner tree-removal permitting rules and subdivision clearing standards.
+        </p>
+
+        <div class="quote-box">
+          "I served eight years on the planning commission... we fought hard to protect trees... Today they came right up next to my property, 30 feet from my bedroom, and started cutting down trees that were this big around... And now somebody on the internet said: it's interesting that any citizen has to have a permit to remove ONE tree, and here's Icon removing everything in sight, dragging them off... a total disaster zone."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. Documents a former planning commissioner's testimony identifying disparate treatment between commercial developer mass clearing and individual homeowner tree regulations under OCMC 17.41.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_6rKtXbVGyPU @ 23:40 / 1420s)
+          </div>
+          <a href="https://youtu.be/6rKtXbVGyPU?t=1420" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 1: Heat & Trees Lane 3: Code & Property" data-search="REC-012 Margie Torgeson Central Point Road Central Point Road resident testified regarding code compliance orders requiring the trimming of her arborvitae privacy hedge. Pointed out that the City does not maintain adjacent blackberry bushes and weeds along the public right-of-way that obstruct pedestrian sightlines. I'm here because of my arborvitae. They're telling me I have to trim them back... it gives me privacy. But right next to it, the city has blackberry bushes and high grass hanging way out into the street. They don't touch their own, but they tell me I have to cut down my privacy hedge. Verified from official recording. Provides documented comparator testimony regarding sightline enforcement under OCMC 10.32 applied to residential private hedges versus adjacent municipal right-of-way maintenance. City Commission Regular Meeting (TR_6rKtXbVGyPU @ 16:51 / 1011s) Transcript Checked Against Recording Resident Testimony / Code Disparity Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-012</span>
+              <span>Margie Torgeson</span>
+            </h2>
+            <div class="record-location">📍 Central Point Road • 🗓️ September 2, 2026</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Code Disparity Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 1: Heat & Trees</span><span class="lane-tag">Lane 3: Code & Property</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Central Point Road resident testified regarding code compliance orders requiring the trimming of her arborvitae privacy hedge. Pointed out that the City does not maintain adjacent blackberry bushes and weeds along the public right-of-way that obstruct pedestrian sightlines.
+        </p>
+
+        <div class="quote-box">
+          "I'm here because of my arborvitae. They're telling me I have to trim them back... it gives me privacy. But right next to it, the city has blackberry bushes and high grass hanging way out into the street. They don't touch their own, but they tell me I have to cut down my privacy hedge."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. Provides documented comparator testimony regarding sightline enforcement under OCMC 10.32 applied to residential private hedges versus adjacent municipal right-of-way maintenance.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_6rKtXbVGyPU @ 16:51 / 1011s)
+          </div>
+          <a href="https://youtu.be/6rKtXbVGyPU?t=1011" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 1: Heat & Trees Lane 3: Code & Property" data-search="REC-013 Karla Laws South End Neighborhood Resident spoke regarding code compliance actions concerning a greenhouse structure. Addressed code restrictions prohibiting membrane and temporary structures from being visible from public rights-of-way. I was cited for a temporary greenhouse in my yard. We're trying to grow our own food and prepare for winter. They told me because it's visible from the street, it's a violation... Meanwhile, commercial properties and bigger parcels have all kinds of hoop houses and fabric covers. Verified from official recording. Documents resident challenge to OCMC 17.54.010(B)(4) prohibiting fabric/membrane accessory structures visible at pedestrian level from rights-of-way. City Commission Regular Meeting (TR_QqJj2MKoiN4 @ 21:04 / 1264s) Transcript Checked Against Recording Resident Testimony / Enforcement Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-013</span>
+              <span>Karla Laws</span>
+            </h2>
+            <div class="record-location">📍 South End Neighborhood • 🗓️ October 15, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Enforcement Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 1: Heat & Trees</span><span class="lane-tag">Lane 3: Code & Property</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Resident spoke regarding code compliance actions concerning a greenhouse structure. Addressed code restrictions prohibiting membrane and temporary structures from being visible from public rights-of-way.
+        </p>
+
+        <div class="quote-box">
+          "I was cited for a temporary greenhouse in my yard. We're trying to grow our own food and prepare for winter. They told me because it's visible from the street, it's a violation... Meanwhile, commercial properties and bigger parcels have all kinds of hoop houses and fabric covers."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. Documents resident challenge to OCMC 17.54.010(B)(4) prohibiting fabric/membrane accessory structures visible at pedestrian level from rights-of-way.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_QqJj2MKoiN4 @ 21:04 / 1264s)
+          </div>
+          <a href="https://youtu.be/QqJj2MKoiN4?t=1264" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA Lane 4: Governance & Process" data-search="REC-014 Mike Mitchell Citywide Policy During Commission deliberations on sidewalk ordinance revisions, Commissioner Mitchell explicitly stated that the municipal sidewalk code enforcement process was operating unfairly and causing undue public distress. We have an ordinance that isn't working right now. It's causing an immense amount of distress to our citizens. We are forcing people into economic hardship over cracks in the sidewalk that in many cases were caused by city-planted trees. We need to step back and find an equitable solution rather than continuing down this punitive path. Verified from official recording. Formal statement on the record by an elected City Commissioner reflecting official acknowledgment of structural defects and citizen hardship in OCMC 12.04 enforcement. City Commission Work Session (TR_OEc3y4nYjVw @ 104:12 / 6252s) Transcript Checked Against Recording Official Deliberation / Commission Admission">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-014</span>
+              <span>Mike Mitchell</span>
+            </h2>
+            <div class="record-location">📍 Citywide Policy • 🗓️ September 3, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Official Deliberation / Commission Admission</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          During Commission deliberations on sidewalk ordinance revisions, Commissioner Mitchell explicitly stated that the municipal sidewalk code enforcement process was operating unfairly and causing undue public distress.
+        </p>
+
+        <div class="quote-box">
+          "We have an ordinance that isn't working right now. It's causing an immense amount of distress to our citizens. We are forcing people into economic hardship over cracks in the sidewalk that in many cases were caused by city-planted trees. We need to step back and find an equitable solution rather than continuing down this punitive path."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. Formal statement on the record by an elected City Commissioner reflecting official acknowledgment of structural defects and citizen hardship in OCMC 12.04 enforcement.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Work Session (TR_OEc3y4nYjVw @ 104:12 / 6252s)
+          </div>
+          <a href="https://youtu.be/OEc3y4nYjVw?t=6252" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA Lane 4: Governance & Process" data-search="REC-015 Faith Leith McLoughlin Neighborhood Testified regarding disparate enforcement in McLoughlin, citing properties on her block with severe sidewalk heave that had never received notices while other properties were cited for minor surface irregularities. On my street, there are houses where the sidewalk is lifted four inches by tree roots—people with strollers have to go into the road. No citations. But two doors down, someone got a notice for a quarter-inch crack. How is this being decided? It seems like it's entirely dependent on who calls in a complaint or who the city decides to look at. Verified from official recording. Provides documented citizen testimony alleging disparate threshold application in sidewalk compliance inspections. City Commission Regular Meeting (TR_OEc3y4nYjVw @ 44:30 / 2670s) Transcript Checked Against Recording Resident Testimony / Comparator Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-015</span>
+              <span>Faith Leith</span>
+            </h2>
+            <div class="record-location">📍 McLoughlin Neighborhood • 🗓️ September 3, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Comparator Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Testified regarding disparate enforcement in McLoughlin, citing properties on her block with severe sidewalk heave that had never received notices while other properties were cited for minor surface irregularities.
+        </p>
+
+        <div class="quote-box">
+          "On my street, there are houses where the sidewalk is lifted four inches by tree roots—people with strollers have to go into the road. No citations. But two doors down, someone got a notice for a quarter-inch crack. How is this being decided? It seems like it's entirely dependent on who calls in a complaint or who the city decides to look at."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. Provides documented citizen testimony alleging disparate threshold application in sidewalk compliance inspections.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_OEc3y4nYjVw @ 44:30 / 2670s)
+          </div>
+          <a href="https://youtu.be/OEc3y4nYjVw?t=2670" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA Lane 4: Governance & Process" data-search="REC-016 Sandra Gelnick Amanda Court / South End Road Presented a written petition signed by 22 neighborhood residents requesting asphalt repairs on Amanda Court. Pointed to broken pavement, tripping hazards, and a recurring driveway pothole, contrasting street conditions with nearby roads where former municipal elected officials resided. I've lived on Netzel Street just off South End Road for over 50 years... and I have watched the deterioration of Amanda Court... All the other streets receive at least minimum care. And there's a couple of streets that are in top shape: one being Sunny Lane where our previous mayor, Mr. Williams, lived, and also Madrona Drive where Ralph Groner lived. These are politicians. Their streets are well maintained. And yet Amanda Court has been ignored... The little kids can't ride their bikes, children tripping and falling in the broken pavement... and a big pothole with that one lady, every time she backs out of her driveway, she lands in it. So I got 22 signatures of neighbors in the area. Verified from recording. The 22-signature petition is documented in the meeting record. Speaker's comparisons regarding street maintenance priorities reflect neighborhood testimony presented to the Commission. City Commission Regular Meeting (TR_Pw2m5I5yEqg @ 21:57 / 1293s) Transcript Checked Against Recording Resident Testimony / Petition Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-016</span>
+              <span>Sandra Gelnick</span>
+            </h2>
+            <div class="record-location">📍 Amanda Court / South End Road • 🗓️ March 4, 2026</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Petition Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Presented a written petition signed by 22 neighborhood residents requesting asphalt repairs on Amanda Court. Pointed to broken pavement, tripping hazards, and a recurring driveway pothole, contrasting street conditions with nearby roads where former municipal elected officials resided.
+        </p>
+
+        <div class="quote-box">
+          "I've lived on Netzel Street just off South End Road for over 50 years... and I have watched the deterioration of Amanda Court... All the other streets receive at least minimum care. And there's a couple of streets that are in top shape: one being Sunny Lane where our previous mayor, Mr. Williams, lived, and also Madrona Drive where Ralph Groner lived. These are politicians. Their streets are well maintained. And yet Amanda Court has been ignored... The little kids can't ride their bikes, children tripping and falling in the broken pavement... and a big pothole with that one lady, every time she backs out of her driveway, she lands in it. So I got 22 signatures of neighbors in the area."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from recording. The 22-signature petition is documented in the meeting record. Speaker's comparisons regarding street maintenance priorities reflect neighborhood testimony presented to the Commission.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_Pw2m5I5yEqg @ 21:57 / 1293s)
+          </div>
+          <a href="https://youtu.be/Pw2m5I5yEqg?t=1293" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 4: Governance & Process" data-search="REC-017 Cyrus Zamani Downtown Oregon City Commercial event organizer testified regarding administrative difficulties with a community event grant application administered by the Economic Development Department. Stated that staff informed him in February that funds were already allocated prior to the application deadline, required a personal guarantee and repayment clause, and requested assurance that raising procedural concerns would not affect future applications. When I initially applied for the grant, Mr. Graham told me during a meeting in February that only $4,000 remained in the grant fund. The application deadline hadn't passed... but it was clear to me that funds have already been allocated before all applicants were considered... Please remove the repayment clause for the Oregon City car show grant and affirm that raising these concerns here tonight won't jeopardize future applications which I may submit... Let's make sure our systems serve the community consistently, fairly, and without retaliation. Verified from recording. Official video documents that Mayor Denise McGriff responded that the application had been conditionally approved due to missing documentation and that other applicants had not reported similar difficulties. Preceded the Community DEI Task Force presentation on the meeting agenda. City Commission Regular Meeting (TR_ZMlo0DLcJKw @ 38:07 / 2287s) Transcript Checked Against Recording Resident Testimony / Official Response">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-017</span>
+              <span>Cyrus Zamani</span>
+            </h2>
+            <div class="record-location">📍 Downtown Oregon City • 🗓️ May 7, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Official Response</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Commercial event organizer testified regarding administrative difficulties with a community event grant application administered by the Economic Development Department. Stated that staff informed him in February that funds were already allocated prior to the application deadline, required a personal guarantee and repayment clause, and requested assurance that raising procedural concerns would not affect future applications.
+        </p>
+
+        <div class="quote-box">
+          "When I initially applied for the grant, Mr. Graham told me during a meeting in February that only $4,000 remained in the grant fund. The application deadline hadn't passed... but it was clear to me that funds have already been allocated before all applicants were considered... Please remove the repayment clause for the Oregon City car show grant and affirm that raising these concerns here tonight won't jeopardize future applications which I may submit... Let's make sure our systems serve the community consistently, fairly, and without retaliation."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from recording. Official video documents that Mayor Denise McGriff responded that the application had been conditionally approved due to missing documentation and that other applicants had not reported similar difficulties. Preceded the Community DEI Task Force presentation on the meeting agenda.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_ZMlo0DLcJKw @ 38:07 / 2287s)
+          </div>
+          <a href="https://youtu.be/ZMlo0DLcJKw?t=2287" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 5: Utilities & Essential Services Lane 4: Governance & Process" data-search="REC-018 Annika Eriksson & Donald Buckhout 12054 Chapin Court, Oregon City Federal civil-rights action asserting claims under 42 U.S.C. § 1983, Title II of the ADA, Section 504 of the Rehabilitation Act, and the Fair Housing Act arising from utility disconnections, water service debt dispute, and municipal code enforcement actions. District Court Order (ECF 8, entered Sept. 14, 2026): Granted in forma pauperis status; dismissed initial complaint without prejudice with leave to amend for failure to state a claim; denied emergency temporary restraining order / preliminary injunction; set amendment deadline for October 5, 2026. Procedural status verified through September 14, 2026: Initial complaint dismissed with leave to amend; emergency injunctive relief denied. Draft First Amended Complaint prepared in workspace addressing defendant-specific acts. Docket reflects ongoing case posture. U.S. District Court (D. Or.), Case No. 3:26-cv-01885-IM (ECF 8) Source Authenticated (Judicial Order) Dismissed with Leave to Amend (Amended Complaint Drafted)">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-018</span>
+              <span>Annika Eriksson & Donald Buckhout</span>
+            </h2>
+            <div class="record-location">📍 12054 Chapin Court, Oregon City • 🗓️ September 14, 2026</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Authenticated (Judicial Order)</span>
+            <span class="prop-status-badge">Status: Dismissed with Leave to Amend (Amended Complaint Drafted)</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 5: Utilities & Essential Services</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Federal civil-rights action asserting claims under 42 U.S.C. § 1983, Title II of the ADA, Section 504 of the Rehabilitation Act, and the Fair Housing Act arising from utility disconnections, water service debt dispute, and municipal code enforcement actions.
+        </p>
+
+        <div class="quote-box">
+          "District Court Order (ECF 8, entered Sept. 14, 2026): Granted in forma pauperis status; dismissed initial complaint without prejudice with leave to amend for failure to state a claim; denied emergency temporary restraining order / preliminary injunction; set amendment deadline for October 5, 2026."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Procedural status verified through September 14, 2026: Initial complaint dismissed with leave to amend; emergency injunctive relief denied. Draft First Amended Complaint prepared in workspace addressing defendant-specific acts. Docket reflects ongoing case posture.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 U.S. District Court (D. Or.), Case No. 3:26-cv-01885-IM (ECF 8)
+          </div>
+          <a href="https://docs.justia.com/cases/federal/district-courts/oregon/ordce/3%3A2026cv01885/196493/8" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 2: Sidewalks & ADA Lane 4: Governance & Process" data-search="REC-019 Doris Enderlin, Irene Toth, Sherry Roe, Judy Coleman & Sheila Heesch McLoughlin Conservation District Five residents testified during citizen comments regarding concentrated sidewalk trip-hazard citations and replacement notices under OCMC 12.04. Speakers challenged homeowner liability for mature trees planted by the City, lack of disclosure during property purchases, and severe financial burdens on disabled and fixed-income elders facing strict repair deadlines. Community Development Director Tony Konkol and Public Works staff addressed the Commission. Irene Toth: Described lack of notification when buying, limited resources, disability-related hardship, and inability to meet the November deadline. Sherry Roe: Described conflicting ownership and responsibility information, concerns about City tree selection and planting, and neighbors on fixed incomes who could not afford repairs. Doris Enderlin: Questioned sidewalk ownership and responsibility where documents suggested the City owned the trees. Primary minutes verify that officials heard detailed disability and financial hardship objections regarding sidewalk and tree repair notices in McLoughlin in 2013. Konkol attended as Community Development Director. Staff and Police Chief offered to investigate and confer with Code Enforcement. Eventual individual enforcement dispositions remain unrecorded in the minutes. City Commission Regular Meeting Minutes (File 1684 / Focused Exhibit) Source Authenticated (Official Commission Minutes) Resident Testimony / Hardship Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-019</span>
+              <span>Doris Enderlin, Irene Toth, Sherry Roe, Judy Coleman & Sheila Heesch</span>
+            </h2>
+            <div class="record-location">📍 McLoughlin Conservation District • 🗓️ August 21, 2013</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Authenticated (Official Commission Minutes)</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Hardship Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 2: Sidewalks & ADA</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Five residents testified during citizen comments regarding concentrated sidewalk trip-hazard citations and replacement notices under OCMC 12.04. Speakers challenged homeowner liability for mature trees planted by the City, lack of disclosure during property purchases, and severe financial burdens on disabled and fixed-income elders facing strict repair deadlines. Community Development Director Tony Konkol and Public Works staff addressed the Commission.
+        </p>
+
+        <div class="quote-box">
+          "Irene Toth: Described lack of notification when buying, limited resources, disability-related hardship, and inability to meet the November deadline. Sherry Roe: Described conflicting ownership and responsibility information, concerns about City tree selection and planting, and neighbors on fixed incomes who could not afford repairs. Doris Enderlin: Questioned sidewalk ownership and responsibility where documents suggested the City owned the trees."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Primary minutes verify that officials heard detailed disability and financial hardship objections regarding sidewalk and tree repair notices in McLoughlin in 2013. Konkol attended as Community Development Director. Staff and Police Chief offered to investigate and confer with Code Enforcement. Eventual individual enforcement dispositions remain unrecorded in the minutes.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting Minutes (File 1684 / Focused Exhibit)
+          </div>
+          <a href="https://oregoncityor.portal.civicclerk.com/event/1684/files" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 4: Governance & Process" data-search="REC-020 Betty Mumm, James Nicita, Kevin Hunt & Kathy Roth Oregon City Hall During discussion of administrative governance and executive severance, former Commissioner Betty Mumm called for establishing an official policy protecting municipal staff from retaliation when approaching Commissioners. Resident James Nicita identified an institutional conflict of interest in the City Charter regarding the City Manager's control over the City Attorney's employment, arguing that the City Attorney cannot provide independent legal oversight when Commission and Manager interests diverge. Betty Mumm: Called for a policy allowing staff to approach the Commission 'without fear of retaliation.' James Nicita: Identified an institutional transparency and oversight problem in the manager's relationship to hiring and firing the City Attorney when manager and Commission interests conflicted, advocating a charter amendment. Verified from official minutes. Documents early public advocacy regarding whistleblower protections, structural reporting conflicts, and the independence of legal counsel. Precedes the 2021 municipal HR review dispute involving City Manager Tony Konkol. Does not constitute an adjudicated finding of retaliation. City Commission Regular Meeting Minutes (File 2105 / Focused Exhibit) Source Authenticated (Official Commission Minutes) Public Comment / Governance Reform Proposal">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-020</span>
+              <span>Betty Mumm, James Nicita, Kevin Hunt & Kathy Roth</span>
+            </h2>
+            <div class="record-location">📍 Oregon City Hall • 🗓️ October 21, 2015</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Authenticated (Official Commission Minutes)</span>
+            <span class="prop-status-badge">Status: Public Comment / Governance Reform Proposal</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          During discussion of administrative governance and executive severance, former Commissioner Betty Mumm called for establishing an official policy protecting municipal staff from retaliation when approaching Commissioners. Resident James Nicita identified an institutional conflict of interest in the City Charter regarding the City Manager's control over the City Attorney's employment, arguing that the City Attorney cannot provide independent legal oversight when Commission and Manager interests diverge.
+        </p>
+
+        <div class="quote-box">
+          "Betty Mumm: Called for a policy allowing staff to approach the Commission 'without fear of retaliation.' James Nicita: Identified an institutional transparency and oversight problem in the manager's relationship to hiring and firing the City Attorney when manager and Commission interests conflicted, advocating a charter amendment."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official minutes. Documents early public advocacy regarding whistleblower protections, structural reporting conflicts, and the independence of legal counsel. Precedes the 2021 municipal HR review dispute involving City Manager Tony Konkol. Does not constitute an adjudicated finding of retaliation.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting Minutes (File 2105 / Focused Exhibit)
+          </div>
+          <a href="https://oregoncityor.portal.civicclerk.com/event/2105/files" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 3: Code & Property Lane 5: Utilities & Essential Services" data-search="REC-021 Kelly Kelvin, Verna Dunlap & Life Change Transitions Inc. 303 S. High Street & 314 S. 2nd Street, Oregon City State civil complaint asserting claims for intentional interference with contract, emotional distress, and constitutional violations arising from the emergency placarding of a transitional housing facility. The complaint alleges that municipal building and code compliance personnel entered the properties, declared them dangerous buildings without an imminent hazard, allowed residents 20 minutes to gather personal belongings, and that municipal water service was subsequently terminated. Complaint allegations: 'Plaintiffs and seventeen other tenants were given 20 minutes to gather their belongings and exit their home... Defendants intentionally interfered with the contractual relationship between Oregon City Utility Department and Plaintiff Dunlap by the improper means of unlawfully disconnecting water service.' Complaint allegations reported in the supplied audit. Subsequent state court disposition, answer, settlement terms, and any judicial findings have not been verified in this review. Named employees in the 2015 action were former building/code personnel (Mueller, Roberts, Busch), not the defendants named in current federal litigation; Tony Konkol was Community Development Director at the time. Clackamas County Circuit Court, Case No. CV15050082 Source Authenticated (Trial Pleading / DOJ Repository) Pleading Allegations (Merits & Disposition Unverified)">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-021</span>
+              <span>Kelly Kelvin, Verna Dunlap & Life Change Transitions Inc.</span>
+            </h2>
+            <div class="record-location">📍 303 S. High Street & 314 S. 2nd Street, Oregon City • 🗓️ May 6, 2015</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Authenticated (Trial Pleading / DOJ Repository)</span>
+            <span class="prop-status-badge">Status: Pleading Allegations (Merits & Disposition Unverified)</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 3: Code & Property</span><span class="lane-tag">Lane 5: Utilities & Essential Services</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          State civil complaint asserting claims for intentional interference with contract, emotional distress, and constitutional violations arising from the emergency placarding of a transitional housing facility. The complaint alleges that municipal building and code compliance personnel entered the properties, declared them dangerous buildings without an imminent hazard, allowed residents 20 minutes to gather personal belongings, and that municipal water service was subsequently terminated.
+        </p>
+
+        <div class="quote-box">
+          "Complaint allegations: 'Plaintiffs and seventeen other tenants were given 20 minutes to gather their belongings and exit their home... Defendants intentionally interfered with the contractual relationship between Oregon City Utility Department and Plaintiff Dunlap by the improper means of unlawfully disconnecting water service.'"
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Complaint allegations reported in the supplied audit. Subsequent state court disposition, answer, settlement terms, and any judicial findings have not been verified in this review. Named employees in the 2015 action were former building/code personnel (Mueller, Roberts, Busch), not the defendants named in current federal litigation; Tony Konkol was Community Development Director at the time.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 Clackamas County Circuit Court, Case No. CV15050082
+          </div>
+          <a href="https://www.justice.gov/elderjustice" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 1: Heat & Trees Lane 2: Sidewalks & ADA" data-search="REC-022 Betsy Jordan Edholm, Wendy Marshall & Dee Door Warner Milne Road, Oregon City Multiple residents testified opposing the removal of a 187-year-old native White Oak tree for a capital sidewalk construction project on Warner Milne Road. Speakers urged the Commission to adopt design workarounds, such as curving the sidewalk, acquiring a pedestrian easement, narrowing travel lanes, or bridging concrete over the root system, citing precedents at the Rose Farm Museum and in adjacent jurisdictions (Tualatin, Molalla). Betsy Jordan Edholm (6817s): 'I am here tonight to share my thoughts about the possible removal of Oregon City's historic ancient Native White Oak Tree on Warner Milne Road... please consider placing a curved sidewalk like the ones installed around trees in Tualatin and Molalla... or at the Rose Farm Museum.' Wendy Marshall (6944s): 'I didn't see anything discussing negotiation of compensation for an easement which would be standard for a capital improvement project... reduce the travel lane width... raise the elevation so it goes up over the roots.' Dee Door (7200s): 'This tree is 187 years old at 37 inches in diameter... It will be like the swimming pool tree that was removed... raised a heck of a lot of concern and rampage amongst our citizens.' Verbatim testimony verified against official recording. Demonstrates resident-driven requests for engineering flexibility and tree-preservation easements during public right-of-way improvements, contrasting with rigid sidewalk clearance enforcement applied to private property owners. City Commission Regular Meeting (TR_x-cGdNer-Ag @ 113:37 / 6817s–7290s) Transcript Checked Against Recording Resident Testimony / Policy Comparator Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-022</span>
+              <span>Betsy Jordan Edholm, Wendy Marshall & Dee Door</span>
+            </h2>
+            <div class="record-location">📍 Warner Milne Road, Oregon City • 🗓️ March 5, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Resident Testimony / Policy Comparator Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 1: Heat & Trees</span><span class="lane-tag">Lane 2: Sidewalks & ADA</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Multiple residents testified opposing the removal of a 187-year-old native White Oak tree for a capital sidewalk construction project on Warner Milne Road. Speakers urged the Commission to adopt design workarounds, such as curving the sidewalk, acquiring a pedestrian easement, narrowing travel lanes, or bridging concrete over the root system, citing precedents at the Rose Farm Museum and in adjacent jurisdictions (Tualatin, Molalla).
+        </p>
+
+        <div class="quote-box">
+          "Betsy Jordan Edholm (6817s): 'I am here tonight to share my thoughts about the possible removal of Oregon City's historic ancient Native White Oak Tree on Warner Milne Road... please consider placing a curved sidewalk like the ones installed around trees in Tualatin and Molalla... or at the Rose Farm Museum.' Wendy Marshall (6944s): 'I didn't see anything discussing negotiation of compensation for an easement which would be standard for a capital improvement project... reduce the travel lane width... raise the elevation so it goes up over the roots.' Dee Door (7200s): 'This tree is 187 years old at 37 inches in diameter... It will be like the swimming pool tree that was removed... raised a heck of a lot of concern and rampage amongst our citizens.'"
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verbatim testimony verified against official recording. Demonstrates resident-driven requests for engineering flexibility and tree-preservation easements during public right-of-way improvements, contrasting with rigid sidewalk clearance enforcement applied to private property owners.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_x-cGdNer-Ag @ 113:37 / 6817s–7290s)
+          </div>
+          <a href="https://youtu.be/x-cGdNer-Ag?t=6817" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 1: Heat & Trees Lane 4: Governance & Process" data-search="REC-023 Seth Henderson (Downtown Oregon City Association - DOCA) Main Street Commercial Corridor Executive board member of the Downtown Oregon City Association (DOCA) addressed the Commission regarding commercial clearcutting of mature downtown street trees, termed the 'Massacre on Main.' Urged the City to utilize contract arborists to assess tree health and enforce replacement rules, criticizing municipal fee-in-lieu structures that allow commercial developers to pay $1,250 per tree rather than designing around and preserving mature street canopy. Seth Henderson (826s): 'I just wanted to reinforce that we greatly appreciate you considering... whether it makes sense to have the city arborist that is on contract assess the trees, whether they're going to survive, what is the appropriate replacement... what the code currently is, what the penalties currently are... because I would hate to a developer somewhere on Main Street decide that taking out trees for $1,250 each is cheaper than working around them and properly protecting them.' Verified from official recording. Highlights commercial tree-removal penalty economics ($1,250 fee-in-lieu), contrasting with strict tree preservation mandates and root-pruning prohibitions enforced against residential homeowners under OCMC 12.08 and 12.04. City Commission Regular Meeting (TR_4eXsIVmTHM8 @ 13:46 / 826s) Transcript Checked Against Recording Stakeholder Testimony / Regulatory Disparity Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-023</span>
+              <span>Seth Henderson (Downtown Oregon City Association - DOCA)</span>
+            </h2>
+            <div class="record-location">📍 Main Street Commercial Corridor • 🗓️ December 3, 2025</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Transcript Checked Against Recording</span>
+            <span class="prop-status-badge">Status: Stakeholder Testimony / Regulatory Disparity Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 1: Heat & Trees</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Executive board member of the Downtown Oregon City Association (DOCA) addressed the Commission regarding commercial clearcutting of mature downtown street trees, termed the 'Massacre on Main.' Urged the City to utilize contract arborists to assess tree health and enforce replacement rules, criticizing municipal fee-in-lieu structures that allow commercial developers to pay $1,250 per tree rather than designing around and preserving mature street canopy.
+        </p>
+
+        <div class="quote-box">
+          "Seth Henderson (826s): 'I just wanted to reinforce that we greatly appreciate you considering... whether it makes sense to have the city arborist that is on contract assess the trees, whether they're going to survive, what is the appropriate replacement... what the code currently is, what the penalties currently are... because I would hate to a developer somewhere on Main Street decide that taking out trees for $1,250 each is cheaper than working around them and properly protecting them.'"
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official recording. Highlights commercial tree-removal penalty economics ($1,250 fee-in-lieu), contrasting with strict tree preservation mandates and root-pruning prohibitions enforced against residential homeowners under OCMC 12.08 and 12.04.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting (TR_4eXsIVmTHM8 @ 13:46 / 826s)
+          </div>
+          <a href="https://youtu.be/4eXsIVmTHM8?t=826" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 5: Utilities & Essential Services Lane 4: Governance & Process" data-search="REC-024 Hometown Boys LLC Oregon City (Apartment Site Slope) Commercial property owner sued the City alleging wrongful utility termination, inverse condemnation, and breach of contract arising from water line shutoffs on a geotechnically unstable hillside parcel. City asserted that ground movement on private property ruptured internal lines, whereas owner alleged leaking municipal mains destabilized the slope. Federal court remanded state claims, rejecting City claims of forum manipulation. Federal Remand Order (ECF 16, May 28, 2013): Remanded state inverse condemnation and contract claims to Clackamas County Circuit Court; denied City's request for attorney fees. March 5, 2014 settlement terms resolved maintenance responsibility for on-site lines without finding of wrongful termination. Verified from federal remand order and contemporaneous reporting. Demonstrates historical municipal water line shutoffs intersecting with occupancy permits on geophysically challenging sites. Key distinction: involved slope instability and commercial infrastructure rather than low-income residential debt severance. David Frasher was City Manager and John Lewis was Public Works Director. U.S. District Court (D. Or.), Case No. 3:13-cv-00301-ST / Clackamas County CV13020146 Source Authenticated (Federal Remand Order & Reporting) Settled Litigation / Technical Utility Dispute">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-024</span>
+              <span>Hometown Boys LLC</span>
+            </h2>
+            <div class="record-location">📍 Oregon City (Apartment Site Slope) • 🗓️ May 28, 2013 & March 5, 2014</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Authenticated (Federal Remand Order & Reporting)</span>
+            <span class="prop-status-badge">Status: Settled Litigation / Technical Utility Dispute</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 5: Utilities & Essential Services</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Commercial property owner sued the City alleging wrongful utility termination, inverse condemnation, and breach of contract arising from water line shutoffs on a geotechnically unstable hillside parcel. City asserted that ground movement on private property ruptured internal lines, whereas owner alleged leaking municipal mains destabilized the slope. Federal court remanded state claims, rejecting City claims of forum manipulation.
+        </p>
+
+        <div class="quote-box">
+          "Federal Remand Order (ECF 16, May 28, 2013): Remanded state inverse condemnation and contract claims to Clackamas County Circuit Court; denied City's request for attorney fees. March 5, 2014 settlement terms resolved maintenance responsibility for on-site lines without finding of wrongful termination."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from federal remand order and contemporaneous reporting. Demonstrates historical municipal water line shutoffs intersecting with occupancy permits on geophysically challenging sites. Key distinction: involved slope instability and commercial infrastructure rather than low-income residential debt severance. David Frasher was City Manager and John Lewis was Public Works Director.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 U.S. District Court (D. Or.), Case No. 3:13-cv-00301-ST / Clackamas County CV13020146
+          </div>
+          <a href="https://dockets.justia.com/docket/oregon/ordce/3:2013cv00301/103986" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 3: Code & Property Lane 4: Governance & Process" data-search="REC-025 Paul Edgar & Bob Mahoney Oregon City (Unimproved Right-of-Way Dispute) Residents brought a contested right-of-way neighbor dispute to the City Commission, questioning municipal handling of unimproved right-of-way agreements, due process safeguards, and formal procedures for lodging complaints against municipal staff. Commissioner Rocky Smith formally requested an audit of written staff complaints and municipal responses arising from the dispute. Paul Edgar: Raised neighbor dispute over unimproved rights-of-way, requesting Commission investigation. Bob Mahoney: Questioned whether constitutional due process had been observed. Commissioner Rocky Smith: Requested tally of written complaints regarding staff performance and official responses. Verified from official minutes. Documents historical citizen concerns regarding staff complaint handling and administrative transparency. Police Chief recommended county mediation; record does not establish unlawful conduct. City Commission Regular Meeting Minutes (File 2879 / Focused Exhibit) Source Authenticated (Official Commission Minutes) Citizen Complaint / Administrative Inconsistency Lead">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-025</span>
+              <span>Paul Edgar & Bob Mahoney</span>
+            </h2>
+            <div class="record-location">📍 Oregon City (Unimproved Right-of-Way Dispute) • 🗓️ November 20, 2019</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Authenticated (Official Commission Minutes)</span>
+            <span class="prop-status-badge">Status: Citizen Complaint / Administrative Inconsistency Lead</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 3: Code & Property</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Residents brought a contested right-of-way neighbor dispute to the City Commission, questioning municipal handling of unimproved right-of-way agreements, due process safeguards, and formal procedures for lodging complaints against municipal staff. Commissioner Rocky Smith formally requested an audit of written staff complaints and municipal responses arising from the dispute.
+        </p>
+
+        <div class="quote-box">
+          "Paul Edgar: Raised neighbor dispute over unimproved rights-of-way, requesting Commission investigation. Bob Mahoney: Questioned whether constitutional due process had been observed. Commissioner Rocky Smith: Requested tally of written complaints regarding staff performance and official responses."
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official minutes. Documents historical citizen concerns regarding staff complaint handling and administrative transparency. Police Chief recommended county mediation; record does not establish unlawful conduct.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City Commission Regular Meeting Minutes (File 2879 / Focused Exhibit)
+          </div>
+          <a href="https://oregoncityor.portal.civicclerk.com/event/2879/files" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 4: Governance & Process" data-search="REC-026 Mark Matheson Barclay Hills Neighborhood / Citywide Formal citizen grievance initiated under OCMC Title 2 and Citizen Involvement Committee (CIC) bylaws by Barclay Hills Neighborhood Association Vice Chair Mark Matheson regarding communication channels, social media moderation, and public ethics standards for appointed neighborhood representatives. A randomly impaneled grievance committee held formal hearings on May 1 and June 5, 2017. Mark Matheson (May 1, 2017): 'This grievance is not about removing anybody. It's about general behavior and being civil to each other... If you are an official... as far as Oregon ethics is, there is no time when you are off the clock as an official... We need to have a webmaster or somebody who moderates citizen-wise... to promote the conversations.' Verified from official City Laserfiche repository recordings and companion minutes. Classification note: This was a neighborhood association governance grievance mechanism under OCMC Title 2; relevance to disability accommodation or utility billing appeals is not established and should not be conflated with municipal Title II ADA procedures. City of Oregon City CIC Grievance Committee (Laserfiche Entry IDs 125383 & 125382) Source Authenticated (Laserfiche Public Archive & Minutes) Neighborhood Governance Grievance (Distinct Jurisdiction)">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-026</span>
+              <span>Mark Matheson</span>
+            </h2>
+            <div class="record-location">📍 Barclay Hills Neighborhood / Citywide • 🗓️ May 1, 2017 & June 5, 2017</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Authenticated (Laserfiche Public Archive & Minutes)</span>
+            <span class="prop-status-badge">Status: Neighborhood Governance Grievance (Distinct Jurisdiction)</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Formal citizen grievance initiated under OCMC Title 2 and Citizen Involvement Committee (CIC) bylaws by Barclay Hills Neighborhood Association Vice Chair Mark Matheson regarding communication channels, social media moderation, and public ethics standards for appointed neighborhood representatives. A randomly impaneled grievance committee held formal hearings on May 1 and June 5, 2017.
+        </p>
+
+        <div class="quote-box">
+          "Mark Matheson (May 1, 2017): 'This grievance is not about removing anybody. It's about general behavior and being civil to each other... If you are an official... as far as Oregon ethics is, there is no time when you are off the clock as an official... We need to have a webmaster or somebody who moderates citizen-wise... to promote the conversations.'"
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> Verified from official City Laserfiche repository recordings and companion minutes. Classification note: This was a neighborhood association governance grievance mechanism under OCMC Title 2; relevance to disability accommodation or utility billing appeals is not established and should not be conflated with municipal Title II ADA procedures.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City of Oregon City CIC Grievance Committee (Laserfiche Entry IDs 125383 & 125382)
+          </div>
+          <a href="file:///home/annika/google_drive_intake/Laserfiche_Grievance_Archive/MASTER_GRIEVANCE_COMMITTEE_ARCHIVE_2017_2018.md" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="record-card" data-lanes="Lane 5: Utilities & Essential Services Lane 4: Governance & Process" data-search="REC-027 Annika Eriksson 12054 Chapin Court, Oregon City Administrative submission of the City of Oregon City's official Americans with Disabilities Act (ADA) Grievance Form submitted directly to Assistant City Manager / ADA Coordinator Alexandra Troutman. Invoked Title II of the ADA regarding municipal residential water utility service [Account Redacted], requesting reasonable procedural modifications to collection/shutoff schedules to prevent water service interruption while administrative evaluation was pending. Annika Eriksson (March 3, 2026): 'This submission is intended to formally invoke the City's Title II grievance process regarding disability-related barriers affecting my access to utility services... I am requesting reasonable procedural modifications to ensure equal access and to prevent disruption of essential services while this request is under review.' Alex Troutman (March 4, 2026): 'The text you entered in the description section is cut off... Would you please re-send and, or include it in an email back to me...' The supplied audit reports a March 3–4, 2026 accommodation/grievance submission and related correspondence with the City's designated ADA coordinator. Under Title II of the ADA, administrative exhaustion is not a statutory prerequisite for filing a non-employment private federal suit. This exchange demonstrates an initial submission and text clarification; it should not be characterized as completed administrative exhaustion without final decision and appeal records. City of Oregon City ADA Grievance Intake / Agency Correspondence Source Authenticated (Primary Agency Correspondence & Form) Interactive Accommodation Request (Outcome Unverified)">
+        <div class="record-header">
+          <div class="record-title-area">
+            <h2>
+              <span class="record-id">REC-027</span>
+              <span>Annika Eriksson</span>
+            </h2>
+            <div class="record-location">📍 12054 Chapin Court, Oregon City • 🗓️ March 3–4, 2026</div>
+          </div>
+          <div class="status-badges-group">
+            <span class="source-status-badge">Source: Source Authenticated (Primary Agency Correspondence & Form)</span>
+            <span class="prop-status-badge">Status: Interactive Accommodation Request (Outcome Unverified)</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <span class="lane-tag">Lane 5: Utilities & Essential Services</span><span class="lane-tag">Lane 4: Governance & Process</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+          Administrative submission of the City of Oregon City's official Americans with Disabilities Act (ADA) Grievance Form submitted directly to Assistant City Manager / ADA Coordinator Alexandra Troutman. Invoked Title II of the ADA regarding municipal residential water utility service [Account Redacted], requesting reasonable procedural modifications to collection/shutoff schedules to prevent water service interruption while administrative evaluation was pending.
+        </p>
+
+        <div class="quote-box">
+          "Annika Eriksson (March 3, 2026): 'This submission is intended to formally invoke the City's Title II grievance process regarding disability-related barriers affecting my access to utility services... I am requesting reasonable procedural modifications to ensure equal access and to prevent disruption of essential services while this request is under review.' Alex Troutman (March 4, 2026): 'The text you entered in the description section is cut off... Would you please re-send and, or include it in an email back to me...'"
+        </div>
+
+        <div class="findings-box">
+          <strong>Record Note:</strong> The supplied audit reports a March 3–4, 2026 accommodation/grievance submission and related correspondence with the City's designated ADA coordinator. Under Title II of the ADA, administrative exhaustion is not a statutory prerequisite for filing a non-employment private federal suit. This exchange demonstrates an initial submission and text clarification; it should not be characterized as completed administrative exhaustion without final decision and appeal records.
+        </div>
+
+        <div class="card-footer">
+          <div class="source-meta">
+            📁 City of Oregon City ADA Grievance Intake / Agency Correspondence
+          </div>
+          <a href="file:///home/annika/google_drive_intake/CASE_EVIDENCE_FACTS_ONLY/01_Income_Reduced_Rate_And_ADA_Requests/03_ADA_Grievance_Complaint_Form.txt" target="_blank" rel="noopener noreferrer" class="action-link">
+            Examine Source Record ↗
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const cards = document.querySelectorAll('.record-card');
+    const pillButtons = document.querySelectorAll('.pill-btn');
+
+    let currentLane = 'ALL';
+    let searchQuery = '';
+
+    function filterRecords() {
+      cards.forEach(card => {
+        const text = card.getAttribute('data-search').toLowerCase();
+        const lanes = card.getAttribute('data-lanes');
+
+        const matchesSearch = text.includes(searchQuery);
+        const matchesLane = (currentLane === 'ALL') || lanes.includes(currentLane);
+
+        if (matchesSearch && matchesLane) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      filterRecords();
+    });
+
+    pillButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.getAttribute('data-filter-type');
+        const val = btn.getAttribute('data-filter');
+
+        document.querySelectorAll(`.pill-btn[data-filter-type="${type}"]`).forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (type === 'lane') {
+          currentLane = val;
+        }
+
+        filterRecords();
+      });
+    });
+  </script>
+</body>
+</html>

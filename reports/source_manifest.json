@@ -1,0 +1,68 @@
+[
+  {
+    "path": "research/2024_05_15_commission_packet.pdf",
+    "bytes": 94960226,
+    "sha256": "c13595a8681700c0c55047cd687c2874ba760cdf395e458515c3fbd5e729c8ce",
+    "pdf_pages": 282
+  },
+  {
+    "path": "research/2024_07_17_commission_packet.pdf",
+    "bytes": 9203683,
+    "sha256": "c0588442b2d362528b33b7e3cb8eecfbf06a1c3aaf42b9efd47b8564bd401a1a",
+    "pdf_pages": 93
+  },
+  {
+    "path": "research/2026_02_10_work_session_packet.pdf",
+    "bytes": 2220163,
+    "sha256": "0718eba52858c4d4335817e559790a3f05638998d0246eb82f6d2d43eb3974f4",
+    "pdf_pages": 63
+  },
+  {
+    "path": "research/2026_08_19_commission_packet.pdf",
+    "bytes": 52819487,
+    "sha256": "6f37edb54ab269e321382e1d00a7bb1dc53b191eaf3416fc7f5853af4571ef2b",
+    "pdf_pages": 225
+  },
+  {
+    "path": "research/ADA_plan_and_staff_report.pdf",
+    "bytes": 4130137,
+    "sha256": "5bd85086d7e24d6e929773303f22500d4c1288fb3984a6ffb1d6246bf4f74173",
+    "pdf_pages": 36
+  },
+  {
+    "path": "research/Disability_proclamation_2024.pdf",
+    "bytes": 175033,
+    "sha256": "f08b1b85305c224fc3f4220ef35c4f1bc1048861b46f735196eedacefcbfa6e6",
+    "pdf_pages": 1
+  },
+  {
+    "path": "research/Hazard_plan_selected_pages_2024.pdf",
+    "bytes": 926708,
+    "sha256": "08b8c291cc76fef1b8df49d7d1876db81a6d90b3b90549fe828ef135421a7581",
+    "pdf_pages": 5
+  },
+  {
+    "path": "research/Institutional_sewer_billing_2024.pdf",
+    "bytes": 945578,
+    "sha256": "13150d66093bd5b6a6c30b61f677fb9f457cc627cb53fd00b2dbd323018291a0",
+    "pdf_pages": 9
+  },
+  {
+    "path": "research/June_10_2025_draft_minutes.pdf",
+    "bytes": 82241,
+    "sha256": "f4d90f6d1a15ba2078450ec19f62dd218d69a7389b9502ddc44a62603e14c34a",
+    "pdf_pages": 3
+  },
+  {
+    "path": "research/Utility_policy_review_February_2026.pdf",
+    "bytes": 342079,
+    "sha256": "85a90309785e3b94bfa3b7e1afca532d0bcbddd4eeab3fef4d93678992a34d2f",
+    "pdf_pages": 8
+  },
+  {
+    "path": "research/WIFIA_contract_staff_report_corrected.pdf",
+    "bytes": 470399,
+    "sha256": "08deb4c0ab322b6aed90ae4d7e2f5306d51738396d77aae020a27661b0984dc1",
+    "pdf_pages": 6
+  }
+]
