@@ -4837,6 +4837,20 @@
       ],
       "entries": [
         {
+          "name": "dlcd-division47-rulemaking.html",
+          "path": "/home/annika/Public_Research_Commons/dlcd-division47-rulemaking.html",
+          "static_url": "dlcd-division47-rulemaking.html",
+          "is_dir": false,
+          "size": 36840,
+          "size_human": "36.0 KB",
+          "mtime": 1794106000.0,
+          "mtime_human": "Nov 08, 02:24",
+          "ext": ".html",
+          "kind": "HTML Document",
+          "is_cloud": false,
+          "is_private": false
+        },
+        {
           "name": "01_Mathematics_and_Data",
           "path": "/home/annika/Public_Research_Commons/01_Mathematics_and_Data",
           "is_dir": true,
