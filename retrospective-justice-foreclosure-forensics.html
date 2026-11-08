@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retrospective Justice Engine &amp; Foreclosure Crisis Aftermath — Distressed Portfolio Forensics, Frontier Law &amp; Municipal Code Traps</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-slate: #0F172A;
+      --bg-panel: #1E293B;
+      --bg-card: #162033;
+      --bg-elevated: #0B1120;
+      --teal: #0D9488;
+      --teal-bright: #14B8A6;
+      --amber: #D97706;
+      --amber-bright: #F59E0B;
+      --chalk: #F8FAFC;
+      --muted: #94A3B8;
+      --border: #334155;
+      --rose: #E11D48;
+      --rose-soft: rgba(225, 29, 72, 0.14);
+      --teal-soft: rgba(13, 148, 136, 0.14);
+      --amber-soft: rgba(217, 119, 6, 0.14);
+      --indigo-soft: rgba(99, 102, 241, 0.14);
+      --indigo-bright: #818CF8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-slate);
+      color: var(--chalk);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.68;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .display-font {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    code, pre, .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    a {
+      color: var(--teal-bright);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    a:hover {
+      color: var(--amber-bright);
+      text-decoration: underline;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-badge {
+      background: var(--amber);
+      color: #0F172A;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.22rem 0.55rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--chalk);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      align-items: center;
+    }
+
+    .nav-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      padding: 0.38rem 0.72rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+      color: var(--chalk);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--teal-bright);
+      background: var(--teal-soft);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-btn.primary {
+      background: var(--teal);
+      border-color: var(--teal-bright);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .nav-btn.amber {
+      background: var(--amber-soft);
+      border-color: var(--amber);
+      color: var(--amber-bright);
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    .hero {
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.96), rgba(15, 23, 42, 0.98));
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--amber);
+      border-radius: 12px;
+      padding: 2.5rem 2.25rem;
+      margin-bottom: 2.25rem;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--amber-bright);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+      line-height: 1.16;
+      margin-bottom: 1rem;
+      color: var(--chalk);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: #CBD5E1;
+      max-width: 1020px;
+      margin-bottom: 1.5rem;
+    }
+
+    .meta-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.9rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .meta-item {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+    }
+
+    .meta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .meta-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--chalk);
+    }
+
+    .section-block {
+      margin-top: 3rem;
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 800px;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--teal-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-title {
+      font-size: 1.65rem;
+      color: var(--chalk);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 1.35rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .card.teal-top {
+      border-top: 4px solid var(--teal);
+    }
+
+    .card.amber-top {
+      border-top: 4px solid var(--amber);
+    }
+
+    .card.rose-top {
+      border-top: 4px solid var(--rose);
+    }
+
+    .card.indigo-top {
+      border-top: 4px solid var(--indigo-bright);
+    }
+
+    .card h3 {
+      font-size: 1.22rem;
+      color: var(--chalk);
+    }
+
+    .card p {
+      font-size: 0.94rem;
+      color: #CBD5E1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.22rem 0.58rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      width: fit-content;
+    }
+
+    .badge.teal {
+      background: var(--teal-soft);
+      color: var(--teal-bright);
+      border: 1px solid rgba(20, 184, 166, 0.35);
+    }
+
+    .badge.amber {
+      background: var(--amber-soft);
+      color: var(--amber-bright);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    .badge.rose {
+      background: var(--rose-soft);
+      color: #FDA4AF;
+      border: 1px solid rgba(225, 29, 72, 0.35);
+    }
+
+    .badge.indigo {
+      background: var(--indigo-soft);
+      color: var(--indigo-bright);
+      border: 1px solid rgba(129, 140, 248, 0.35);
+    }
+
+    .callout {
+      background: rgba(13, 148, 136, 0.09);
+      border: 1px solid rgba(20, 184, 166, 0.35);
+      border-left: 4px solid var(--teal-bright);
+      border-radius: 8px;
+      padding: 1.25rem 1.4rem;
+      margin: 1.25rem 0;
+    }
+
+    .callout.amber {
+      background: rgba(217, 119, 6, 0.09);
+      border-color: rgba(245, 158, 11, 0.35);
+      border-left-color: var(--amber-bright);
+    }
+
+    .callout.rose {
+      background: rgba(225, 29, 72, 0.09);
+      border-color: rgba(225, 29, 72, 0.35);
+      border-left-color: var(--rose);
+    }
+
+    .callout-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.02rem;
+      margin-bottom: 0.4rem;
+      color: var(--chalk);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--teal-bright);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.65);
+      color: #E2E8F0;
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(15, 23, 42, 0.42);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: auto;
+      padding-top: 0.6rem;
+    }
+
+    .dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 0.48rem 0.85rem;
+      border-radius: 6px;
+      background: rgba(13, 148, 136, 0.16);
+      border: 1px solid var(--teal-bright);
+      color: var(--chalk);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .dl-btn:hover {
+      background: var(--teal);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .dl-btn.secondary {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: var(--border);
+      color: #CBD5E1;
+    }
+
+    .dl-btn.secondary:hover {
+      border-color: var(--amber-bright);
+      color: var(--amber-bright);
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--chalk);
+      padding: 0.55rem 0.9rem;
+      border-radius: 6px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.88rem;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--teal-bright);
+    }
+
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip.active, .chip:hover {
+      background: var(--teal);
+      border-color: var(--teal-bright);
+      color: #fff;
+    }
+
+    .quote-box {
+      background: rgba(15, 23, 42, 0.75);
+      border-left: 3px solid var(--amber-bright);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: #E2E8F0;
+      font-size: 0.92rem;
+    }
+
+    .quote-cite {
+      display: block;
+      margin-top: 0.45rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-style: normal;
+      font-size: 0.74rem;
+      color: var(--amber-bright);
+    }
+
+    .footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding: 1.65rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-badge">RETROSPECTIVE JUSTICE ENGINE</span>
+      <span class="brand-title">Foreclosure Crisis Aftermath, Portfolio Forensics &amp; Frontier Law</span>
+    </div>
+    <nav class="nav-links">
+      <a class="nav-btn" href="oregon-city-accountability-research.html">&larr; Oregon City Research</a>
+      <a class="nav-btn amber" href="dlcd-division47-rulemaking.html">DLCD Div. 47 Archive</a>
+      <a class="nav-btn primary" href="paladin.html">PALADIN Suite</a>
+      <a class="nav-btn" href="why-paladin.html">Why PALADIN (Frontier Law)</a>
+      <a class="nav-btn" href="privity-paradox.html">Privity Paradox Map</a>
+      <a class="nav-btn" href="library.html">Evidence Archive (3,295)</a>
+      <a class="nav-btn" href="os.html">EFOS Mini-OS</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="eyebrow">
+        <span>ECUMENICAL SYSTEMIC RESEARCH MONOGRAPH</span>
+        <span>&bull;</span>
+        <span>OREGON &amp; PACIFIC NORTHWEST DOCKETS (2011&ndash;2026)</span>
+        <span>&bull;</span>
+        <span>PALADIN RETROSPECTIVE JUSTICE ENGINE</span>
+      </div>
+      <h1>The Aftermath of the Foreclosure Crisis: Distressed Portfolio Forensics, Frontier Homesteader Law &amp; Municipal Enforcement Traps</h1>
+      <p class="hero-sub">
+        The 2008&ndash;2018 mortgage foreclosure crisis did not disappear cleanly from local land records. Across Oregon and the Pacific Northwest, unresolved securitization defects, collapsed distressed-property investor portfolios (including the former <strong>Baron / Turning Leaf Homes / RenX / Crimson / Fite LLC</strong> network), institutional counsel side-switching, and unrecorded post-auction Sheriff&rsquo;s Deeds left a long tail of clouded titles. When those private-law title clouds intersect with municipal utility shutoffs, punitive nuisance-abatement regimes, and state housing-production accounting, they create structural traps that neither traditional legal-aid intake nor municipal code enforcement is equipped to resolve.
+      </p>
+
+      <div class="meta-strip">
+        <div class="meta-item">
+          <div class="meta-label">Analytical Framework</div>
+          <div class="meta-val">PALADIN Retrospective Justice Engine</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Portfolio Docket Dataset</div>
+          <div class="meta-val">115+ State &amp; Bankruptcy Actions (2011&ndash;2025)</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Scholarly Grounding</div>
+          <div class="meta-val">Dudley &bull; Diller &bull; Odinet &bull; Shoemaker &bull; Veblen</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Policy Integration</div>
+          <div class="meta-val">DLCD Div. 47 (OAR 660-047) &amp; Municipal Audits</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXECUTIVE ARCHITECTURE CALLOUT -->
+    <div class="callout">
+      <div class="callout-title">Methodological Scope: Why an Ecumenical, Retrospective Justice Perspective Matters</div>
+      <p style="font-size: 0.93rem; color: #E2E8F0;">
+        Rather than treating foreclosure defense, bankruptcy estate administration, municipal code enforcement, and state land-use rulemaking as isolated personal disputes, this compendium applies a <strong>systemic, multi-docket forensic methodology</strong>. By auditing parallel cases across Clackamas, Multnomah, Washington, and Yamhill counties alongside primary legal scholarship (Kelli Dudley&rsquo;s <em>An Excerpt of Iniquity</em> and <em>Without Due Process of Law: Deprivation and Gentrification in Chicago</em>; Shane Diller&rsquo;s <em>Is Nuisance Abatement Broken Windows Policing</em>), this archive demonstrates how documentary breakdowns in secondary-market mortgage servicing directly feed municipal displacement and involuntary housing vacancy.
+      </p>
+    </div>
+
+    <!-- SECTION 1: PALADIN FRONTIER LAW & HOMESTEADER SURVIVAL -->
+    <section class="section-block" id="frontier-law">
+      <div class="section-header">
+        <div>
+          <div class="section-num">Section 01 &bull; Jurisprudential Architecture</div>
+          <h2 class="section-title">Frontier Law, Homesteader Survival &amp; The PALADIN Retrospective Justice Engine</h2>
+        </div>
+        <div class="btn-row" style="margin-top:0;">
+          <a class="dl-btn" href="why-paladin.html">Open Full Frontier Law Manifesto &rarr;</a>
+          <a class="dl-btn secondary" href="paladin.html">Explore PALADIN Suite &rarr;</a>
+          <a class="dl-btn secondary" href="privity-paradox.html">Interactive Privity Paradox Map &rarr;</a>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 1.35rem;">
+        <div class="card teal-top">
+          <span class="badge teal">THE HOMESTEADER THESIS</span>
+          <h3>The Full Circle of Real Property Law: Physical Stewardship vs. Paper Abstraction</h3>
+          <p>
+            In the 19th-century American West, homesteaders who cleared timber, dug wells, and built dwellings repeatedly confronted a structural legal threat: absentee speculators and railroad syndicates wielding defective land scrip, robo-signed patent transfers, and distant capital leverage to eject physical occupants. Early state legislatures and courts responded by enacting strict <strong>local county recording acts</strong>, requiring public chain-of-title transparency and physical possession of negotiable instruments before an occupant could be dispossessed.
+          </p>
+          <p>
+            A century and a half later, real property law has come full circle. During the residential mortgage backed securities (RMBS) boom, Wall Street originators bypassed county recording systems via <strong>MERS</strong>, split promissory notes from deeds of trust, lost original instruments between warehouse lenders and securitized trusts (<code>CWALT</code>, <code>CWABS</code>), and relied on high-volume default mills to push unrepresented homeowners through summary dockets.
+          </p>
+          <div class="quote-box">
+            &ldquo;Property law rules that once balanced the rights of mortgagors and mortgagees now completely fail to furnish aggrieved homeowners with meaningful relief when faced with wrongs that stem from the complexities of the securitization of mortgage loans and the acts of intermediaries.&rdquo;
+            <span class="quote-cite">&mdash; Prof. Christopher K. Odinet, Modernizing Mortgage Law, 100 N.C. L. Rev. 89 (2021)</span>
+          </div>
+        </div>
+
+        <div class="card amber-top">
+          <span class="badge amber">COMPUTATIONAL FORENSICS</span>
+          <h3>How the Retrospective Justice Engine Audits a Cold or Clouded Docket</h3>
+          <p>
+            Traditional legal triage assumes that once a foreclosure judgment or bankruptcy dismissal is entered, the factual record is closed. The <strong>PALADIN Retrospective Justice Engine</strong> operates on the opposite premise: under black-letter Oregon authority (<em>Portland Gen. Elec. Co. v. Ebasco Servs., Inc.</em>, 353 Or 856; <em>Wells Fargo Bank, N.A. v. Jasper</em>, 289 Or App 617; <code>ORCP 71 B(1)(d)</code> &amp; <code>71 C</code>), a judgment procured without personal jurisdiction or through undisclosed attorney conflicts and extrinsic fraud is <strong>void</strong>, carries no time limitation, and cannot ripen into validity through the passage of time.
+          </p>
+          <p>
+            PALADIN ingests multi-decade dockets&mdash;county land records, PACER bankruptcy claims, SEC pooling and servicing agreements, remittance reports, and municipal enforcement logs&mdash;to build a deterministic, page-linked chronology that separates internet foreclosure folklore from admissible statutory defects.
+          </p>
+          <div class="btn-row">
+            <a class="dl-btn" href="foreclosure_commons/PALADIN_Academic_Preprint_Manuscript.md" target="_blank">Download PALADIN Academic Preprint (.md)</a>
+            <a class="dl-btn secondary" href="foreclosure_commons/PALADIN_PNW_Strategic_Playbook.md" target="_blank">PNW Strategic Playbook (.md)</a>
+            <a class="dl-btn secondary" href="library.html">Search 3,295 Archive Records &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FRONTIER PATTERN VS MODERN MACHINE TABLE -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 22%;">Doctrinal Axis</th>
+              <th style="width: 26%;">19th-Century Frontier Pattern</th>
+              <th style="width: 26%;">21st-Century Securitization Machine</th>
+              <th style="width: 26%;">PALADIN Evidence-Gate Audit Standard</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>01. Absentee Paper vs. Physical Stewardship</strong></td>
+              <td>Railroad land-grant syndicates and absentee scrip speculators asserting paper claims over improved homesteads (Veblen, 1923).</td>
+              <td>Private-label RMBS trusts (e.g., <code>CWALT 2006-OC10</code> vs. <code>OC11</code>) and distressed-debt buyers litigating against physical occupants while leaving parcels unmaintained.</td>
+              <td>Audit real-party-in-interest standing under <code>ORS 73.0301</code>, <code>ORS 88.010</code>, and <em>Nationstar Mortgage, LLC v. Hinkle</em>, 321 Or App 300 (2022).</td>
+            </tr>
+            <tr>
+              <td><strong>02. The Broken Chain of Title &amp; Recording Acts</strong></td>
+              <td>Unrecorded pocket deeds and secret agency assignments used tocloud county land titles and defeat bona fide purchasers.</td>
+              <td><strong>MERS</strong> acting solely as &ldquo;nominee&rdquo; attempting to assign beneficial interests without documented agency from the note holder, or assigning to Trust B while Trust A sues.</td>
+              <td>Enforce <em>Brandrup v. ReconTrust Co.</em>, 353 Or 668 (2013) and <em>Niday v. GMAC Mortgage, LLC</em>, 353 Or 648 (2013); cross-check county recordings against SEC remittance data.</td>
+            </tr>
+            <tr>
+              <td><strong>03. The Lost-Instrument Gambit</strong></td>
+              <td>Claim-jumpers asserting debt collection without producing the original bond or promissory obligation.</td>
+              <td>Servicers filing boilerplate Lost Note Affidavits after notes were destroyed or never delivered to the trust custodian, without proving who possessed the note when lost.</td>
+              <td>Strict statutory compliance audit under <strong>UCC &sect; 3-309 / ORS 73.0309</strong>: require proof of possession at loss, lawful entitlement, and chain of custody.</td>
+            </tr>
+            <tr>
+              <td><strong>04. The Hearsay &ldquo;Boarding&rdquo; Machine</strong></td>
+              <td>Ex parte affidavits from distant land-office clerks lacking personal knowledge of local survey boundaries or payments.</td>
+              <td>Successor servicers (e.g., <code>Shellpoint / NewRez</code>, <code>Select Portfolio Servicing</code>) testifying to prior servicers&rsquo; unverified payment histories via generic &ldquo;boarding&rdquo; claims.</td>
+              <td>Enforce <strong>Oregon Evidence Code Rule 803(6)</strong> and <em>State v. Flamer</em>, 294 Or App 661 (2018): third-party records require foundational knowledge of the creating entity&rsquo;s recordkeeping practices.</td>
+            </tr>
+            <tr>
+              <td><strong>05. Extrinsic Fraud, Conflicts &amp; Service Bypass</strong></td>
+              <td>Default judgments obtained by serving notices at abandoned post offices or employing conflicted local land agents.</td>
+              <td>Serving dispositive motions on withdrawn counsel (<code>ORCP 9 / ORS 9.390</code>), misidentifying dissolved entities, or prosecuting foreclosures against one&rsquo;s own former client (<code>ORPC 1.9 / 3.3</code>).</td>
+              <td>Mandatory void-judgment relief under <strong>ORCP 71 B(1)(d)</strong> &amp; <strong>ORCP 71 C</strong> (<em>Wells Fargo v. Jasper</em>; <em>Heritage Props., LLC v. Wells Fargo</em>, 318 Or App 480; <em>Portland Gen. Elec.</em>).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 2: SCHOLARSHIP ON THE FORECLOSURE CRISIS AFTERMATH & MUNICIPAL GENTRIFICATION -->
+    <section class="section-block" id="scholarship">
+      <div class="section-header">
+        <div>
+          <div class="section-num">Section 02 &bull; Primary Legal Scholarship &amp; Research Notes</div>
+          <h2 class="section-title">Excerpts of Iniquity, Chicago Gentrification &amp; Broken-Windows Nuisance Abatement</h2>
+        </div>
+      </div>
+
+      <p style="color: #CBD5E1; margin-bottom: 1.35rem; max-width: 1050px;">
+        A central finding of post-2008 legal scholarship is that the foreclosure crisis did not end at the courthouse steps. Instead, a two-stage institutional pipeline emerged: <strong>Stage 1</strong> occurred inside overloaded state foreclosure dockets, where courts, bar associations, and triaged legal-aid clinics treated complex securitization and servicing defects as &ldquo;indefensible&rdquo; borrower defaults; <strong>Stage 2</strong> unfolded in municipal code-enforcement and administrative building courts, where clouded titles, zombie foreclosures, and utility shutoffs were weaponized to strip equity and accelerate neighborhood displacement.
+      </p>
+
+      <div class="grid-3">
+        <!-- DUDLEY 1: EXCERPT OF INIQUITY -->
+        <div class="card rose-top">
+          <span class="badge rose">FORECLOSURE COURT TRIAGE &bull; DEPAUL J. SOC. JUST.</span>
+          <h3>Kelli Dudley &mdash; <em>An Excerpt of Iniquity: How Court Systems, Attorneys, and Legal Aid Organizations Cheated Homeowners in Foreclosure</em> (2019)</h3>
+          <p>
+            Written by veteran Chicago foreclosure defense and civil rights attorney Kelli Dudley (<em>12 DePaul Journal for Social Justice</em>), this landmark article dismantles the pervasive institutional myth of the &ldquo;indefensible foreclosure.&rdquo; Dudley documents how special foreclosure Rocket Dockets, unexamined hearsay affidavits, and grant-dependent legal-aid triage protocols systematically screened out meritorious defenses involving standing, fabricated endorsements, servicer misapplication of payments, and Truth in Lending / RESPA violations.
+          </p>
+          <div class="quote-box">
+            &ldquo;Homeowners were told their cases were indefensible not because the banks could satisfy the rules of evidence, but because the institutional apparatus&mdash;courts, bar associations, and legal aid intake screens&mdash;refused to require banks to obey the rules of civil procedure.&rdquo;
+            <span class="quote-cite">&mdash; Kelli Dudley, An Excerpt of Iniquity (2019), synthesized in PALADIN Research Notes</span>
+          </div>
+          <p style="font-size: 0.86rem; color: var(--muted);">
+            <strong>June 2024 Scholarly Correspondence Note:</strong> In direct correspondence preserved in the PALADIN archive (June 17, 2024), Dudley highlighted how appellate decisions such as <em>U.S. Bank v. Emma Chmiel</em> and forensic audits by <em>McDonnell Property Analytics</em> expose the institutional resistance faced by litigants who uncover systemic servicing and title-chain fraud.
+          </p>
+          <div class="btn-row">
+            <a class="dl-btn" href="foreclosure_commons/An_Excerpt_of_Iniquity_Kelli_Dudley.pdf" target="_blank">Download Full Article PDF (294 KB)</a>
+            <a class="dl-btn secondary" href="library.html?q=Dudley">View in PALADIN Library &rarr;</a>
+          </div>
+        </div>
+
+        <!-- DUDLEY 2: CHICAGO GENTRIFICATION & DUE PROCESS -->
+        <div class="card amber-top">
+          <span class="badge amber">MUNICIPAL COURTS &amp; GENTRIFICATION</span>
+          <h3>Kelli Dudley &mdash; <em>Without Due Process of Law: Deprivation and Gentrification in Chicago</em></h3>
+          <p>
+            In her companion study of Chicago&rsquo;s Housing and Building Court apparatus, Dudley traces what happens to properties after mortgage servicing breakdowns or economic shocks leave homeowners financially strained. Rather than providing infrastructure repair assistance, municipalities deploy fast-track administrative building and nuisance dockets that strip procedural safeguards, impose compounding daily fines, order utility disconnections or summary vacates, and appoint private receivers or demolition contractors.
+          </p>
+          <div class="quote-box">
+            &ldquo;Municipal building and nuisance enforcement operates as an engine of involuntary title transfer&mdash;converting temporary infrastructure distress or title-clouded maintenance delays into permanent dispossession and developer gentrification without constitutional due process.&rdquo;
+            <span class="quote-cite">&mdash; Research Synthesis: Without Due Process of Law (Dudley) &amp; DLCD Div. 47 Rulemaking Record</span>
+          </div>
+          <p style="font-size: 0.86rem; color: var(--muted);">
+            <strong>Direct Oregon City &amp; DLCD Parallel:</strong> Provides the exact theoretical and empirical precedent for the &ldquo;Involuntary Vacancy Paradox&rdquo; documented in the <a href="dlcd-division47-rulemaking.html">DLCD Division 47 Rulemaking Archive</a>, where municipal water shutoffs and backdated placards manufacture uninhabitable housing while cities claim housing-production deficits.
+          </p>
+          <div class="btn-row">
+            <a class="dl-btn" href="foreclosure_commons/Without_Due_Process_Deprivation_and_Gentrification_Chicago_Kelli_Dudley.pdf" target="_blank">Download Full Study PDF (1.6 MB)</a>
+            <a class="dl-btn secondary" href="dlcd-division47-rulemaking.html">Compare with DLCD Div. 47 &rarr;</a>
+          </div>
+        </div>
+
+        <!-- DILLER: NUISANCE ABATEMENT AS BROKEN WINDOWS POLICING -->
+        <div class="card teal-top">
+          <span class="badge teal">CODE ENFORCEMENT FORENSICS</span>
+          <h3>Shane Diller &mdash; <em>Is Nuisance Abatement Broken Windows Policing?</em></h3>
+          <p>
+            Examines how modern municipal nuisance-abatement ordinances and code-enforcement divisions function as a civil, property-targeted analog to &ldquo;broken windows&rdquo; policing. Because civil nuisance proceedings lack Sixth Amendment counsel guarantees and often operate through administrative notices or summary abatement liens, code-enforcement officers exercise sweeping discretion over who receives extensions versus who faces utility termination, placarding, and armed police accompaniment.
+          </p>
+          <div class="quote-box">
+            &ldquo;When municipal code enforcement treats physical signs of financial or title distress as public nuisances to be abated through punitive fines and forced vacates, it criminalizes poverty while bypassing the constitutional checks of criminal procedure.&rdquo;
+            <span class="quote-cite">&mdash; Research Synthesis: Shane Diller, Is Nuisance Abatement Broken Windows Policing</span>
+          </div>
+          <p style="font-size: 0.86rem; color: var(--muted);">
+            <strong>Cross-Reference to Workstream 1 &amp; 4:</strong> Directly informs the Oregon City municipal code-enforcement and utility-shutoff analysis in <a href="oregon-city-accountability-research.html">Oregon City Accountability Research</a> and the <a href="citizen-grievance-registry.html">Citizen Grievance Registry</a>.
+          </p>
+          <div class="btn-row">
+            <a class="dl-btn" href="foreclosure_commons/Is_Nuisance_Abatement_Broken_Windows_Policing_Shane_Diller.pdf" target="_blank">Download Full Paper PDF (1.3 MB)</a>
+            <a class="dl-btn secondary" href="oregon-city-accountability-research.html#ws4">View Code Enforcement Workstream &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADDITIONAL TREATISES & REGIONAL AUDIT DOWNLOAD STRIP -->
+      <div class="card indigo-top" style="margin-top: 1.35rem;">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem;">
+          <div>
+            <span class="badge indigo">PUBLIC LEGAL TREATISES, APPELLATE STANDARDS &amp; REGIONAL AUDITS</span>
+            <h3 style="margin-top:0.45rem;">Companion Statutory, Appellate &amp; Regional Housing Audit Authorities</h3>
+            <p style="font-size:0.9rem; color:#CBD5E1;">
+              Primary reference manuals and regional governance audits preserved in the Public Research Commons for cross-checking appellate standards of review, 2024 Oregon statutory amendments, and Metro regional housing oversight.
+            </p>
+          </div>
+          <div class="btn-row" style="margin-top:0;">
+            <a class="dl-btn secondary" href="foreclosure_commons/Oregon_Appellate_Standards_of_Review_2024.pdf" target="_blank">OR Appellate Standards of Review (410 KB PDF)</a>
+            <a class="dl-btn secondary" href="foreclosure_commons/Oregon_Laws_2024_Ch42.pdf" target="_blank">Oregon Laws 2024 Ch. 42 (33 KB PDF)</a>
+            <a class="dl-btn secondary" href="foreclosure_commons/Metro_Supportive_Housing_Services_Audit_Highlights_Nov2025.pdf" target="_blank">Metro SHS Audit Highlights (214 KB PDF)</a>
+            <a class="dl-btn secondary" href="foreclosure_commons/Metro_Supportive_Housing_Services_FollowUp_Audit_Nov2025.pdf" target="_blank">Metro SHS Full Follow-Up Audit (2.0 MB PDF)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: THE FORMER BARON PORTFOLIO & RELATED CASES -->
+    <section class="section-block" id="baron-portfolio">
+      <div class="section-header">
+        <div>
+          <div class="section-num">Section 03 &bull; Multi-Docket Forensic Investigation (2011&ndash;2026)</div>
+          <h2 class="section-title">The Former Baron Distressed Portfolio (<code>Turning Leaf Homes / RenX / Crimson / Fite LLC</code>) &amp; Parallel Regional Cases</h2>
+        </div>
+        <div class="btn-row" style="margin-top:0;">
+          <a class="dl-btn" href="foreclosure_commons/Baron_Entity_Litigation_Tracker_Master.xlsx" download>Download Master 6-Sheet Workbook (.xlsx)</a>
+          <a class="dl-btn secondary" href="https://docs.google.com/spreadsheets/d/1IT1R6a9HQrLqyglFRkPTEB6OCh4tu4-P/edit?usp=drivesdk" target="_blank" rel="noopener">Open Live Google Sheet &nearr;</a>
+        </div>
+      </div>
+
+      <p style="color: #CBD5E1; margin-bottom: 1.25rem; max-width: 1080px;">
+        Between 2011 and 2018, a network of Oregon distressed-property investment entities managed by <strong>Tracey Baron</strong> and <strong>Matthewiner/Baron affiliates</strong>&mdash;including <code>Big Blue Capital Partners, LLC</code>, <code>Turning Leaf Homes, LLC</code>, <code>Turning Leaf Homes II, III, IV &amp; V</code>, <code>RenX Group, LLC</code>, <code>RenX Group II, LLC</code>, <code>Crimson Investment Group, LLC</code>, and <code>Fite, LLC</code>&mdash;acquired dozens of residential parcels across Clackamas, Multnomah, Washington, and Yamhill counties out of Chapter 7 bankruptcy estates and distressed homeowner sales. What followed across <strong>more than 115 state and federal court dockets</strong> provides an extraordinary forensic window into how post-2008 foreclosure litigation operated in practice.
+      </p>
+
+      <!-- DOWNLOAD BAR FOR ALL 5 SPREADSHEETS -->
+      <div class="callout amber" style="margin-bottom: 1.5rem;">
+        <div class="callout-title">Primary Forensic Datasets &amp; Compiled Workbooks (Direct Download)</div>
+        <p style="font-size: 0.9rem; color: #E2E8F0; margin-bottom: 0.85rem;">
+          All underlying docket trackers, Oregon Secretary of State corporate merger/dissolution filings, U.S. Bankruptcy Court case registers, and the 6-tab Master Litigation &amp; Conflict-of-Interest Workbook are preserved below for independent verification:
+        </p>
+        <div class="btn-row">
+          <a class="dl-btn" href="foreclosure_commons/Baron_Entity_Litigation_Tracker_Master.xlsx" download>1. Master Baron Entity Litigation &amp; Myers Conflict Tracker (6 Tabs, 57 KB .xlsx)</a>
+          <a class="dl-btn secondary" href="foreclosure_commons/Oregon_Court_Legal_Actions_and_Property_Foreclosure_Filings.xlsx" download>2. Oregon Court Foreclosure Filings (8.7 KB .xlsx)</a>
+          <a class="dl-btn secondary" href="foreclosure_commons/Oregon_Bankruptcy_Cases_and_Baron_Entity_Property_Interests.xlsx" download>3. Oregon Bankruptcy Cases &amp; Property Interests (9.9 KB .xlsx)</a>
+          <a class="dl-btn secondary" href="foreclosure_commons/Secretary_of_State_Filings_for_Turning_Leaf_Homes_and_Fite_LLC.xlsx" download>4. OR Secretary of State Filings: TLH &amp; Fite LLC (8.5 KB .xlsx)</a>
+          <a class="dl-btn secondary" href="foreclosure_commons/Tracey_Baron_Affiliated_Entities_and_Bankruptcy_Case_Details.xlsx" download>5. Tracey Baron Affiliated Entities &amp; USBC Details (7.7 KB .xlsx)</a>
+        </div>
+      </div>
+
+      <!-- SUBSECTION 3.1: THE INSTITUTIONAL SIDE-SWITCHING & BRANDRUP PARADOX -->
+      <div class="card rose-top" style="margin-bottom: 1.5rem;">
+        <span class="badge rose">FORENSIC ANOMALY &bull; ORPC 1.9 &amp; ORPC 3.3 SIDE-SWITCHING AUDIT</span>
+        <h3>3.1 The Institutional Side-Switching Paradox: From Arguing <em>Brandrup v. ReconTrust</em> &amp; Defending the Baron Portfolio to Prosecuting Foreclosures Against the Same Client</h3>
+        <p>
+          One of the most striking institutional findings in the 6-sheet Master Tracker is the documented trajectory of attorney <strong>Jeffrey A. Myers (OSB #094561)</strong>. In <strong>2013</strong>, Myers argued and won the landmark Oregon Supreme Court decision <strong><em>Brandrup v. ReconTrust Co.</em>, 353 Or 668 (2013)</strong>, establishing that Mortgage Electronic Registration Systems (MERS) is neither a statutory beneficiary under the Oregon Trust Deed Act nor eligible to hold or transfer legal title to a trust deed without proof of agency from the note owner.
+        </p>
+        <p>
+          From <strong>2011 through 2016</strong> (Phase 1), while practicing at <em>Bowles Fernandez Law LLC</em> (which simultaneously served as registered agent for <code>Turning Leaf Homes, LLC</code>), Myers served as company and litigation defense counsel for the Baron portfolio entities (<code>Big Blue Capital Partners</code>, <code>Turning Leaf Homes, LLC</code>, <code>Turning Leaf Homes III, LLC</code>, and <code>RenX Group, LLC</code>) across state and federal courts&mdash;including helping <code>Turning Leaf Homes III</code> acquire the distressed residential parcel at <code>12054 Chapin Ct., Oregon City</code> out of the <em>Garboden</em> Chapter 7 bankruptcy estate (<code>15-35133-rld7</code>). In those cases, Myers repeatedly pleaded two signature affirmative defenses and counterclaims against foreclosing banks: (1) that the securitized trust plaintiff was <strong>not the real party in interest</strong> due to defective MERS assignments under <em>Brandrup</em>, and (2) an affirmative <strong>Counterclaim for Accounting and Right of Redemption</strong>.
+        </p>
+        <p>
+          In <strong>2017</strong> (Phase 2), Myers transitioned to the institutional foreclosure firm <strong>ZBS Law, LLP</strong> (formerly Zieve, Brodnax &amp; Steele). Without disclosing his prior attorney-client relationship to the court or obtaining informed consent under <code>ORPC 1.9(a)</code>, Myers initiated and prosecuted judicial foreclosures on behalf of <code>The Bank of New York Mellon</code> and <code>U.S. Bank N.A.</code> <strong>directly against his own former client (<code>Turning Leaf Homes / Fite, LLC</code>)</strong>&mdash;including on the <strong>exact same Oregon City property (<code>17CV38591</code>, 12054 Chapin Ct.)</strong> he had assisted <code>TLH</code> in acquiring. In <code>17CV38591</code>, Myers moved for summary judgment to dismiss <code>TLH</code>&rsquo;s identical Accounting/Redemption counterclaim and suppressed the fact that the 2012 MERS assignment ran to a different securitized trust (<code>CWALT 2006-OC11</code>) than his named plaintiff (<code>CWALT 2006-OC10</code>)&mdash;the precise defect governed by <em>Brandrup</em>.
+        </p>
+
+        <!-- SIDE BY SIDE TABLE FROM SHEET 6 -->
+        <div class="table-wrap" style="margin-top: 0.5rem;">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 18%;">Doctrinal Element</th>
+                <th style="width: 30%;">Phase 1 Position (2011&ndash;2016)<br>Counsel for Baron / TLH / RenX / Big Blue</th>
+                <th style="width: 30%;">Phase 2 Position (2017&ndash;2023)<br>Counsel for Institutional Lender (ZBS Law)</th>
+                <th style="width: 22%;">Forensic &amp; Procedural Significance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Client &amp; Entity Identity</strong></td>
+                <td>Represented <code>Turning Leaf Homes LLC</code>, <code>TLH III</code>, <code>RenX Group LLC</code>, and <code>Big Blue Capital Partners</code> in <code>CV15070620</code>, <code>C151603CV</code>, <code>CV15020527</code>, <code>14CV01997</code>, <code>15CV19942</code>, and USBC <code>15-35133-rld7</code>. Firm served as <code>TLH</code>&rsquo;s registered agent.</td>
+                <td>Represented <code>The Bank of New York Mellon</code> and <code>U.S. Bank N.A.</code> against <code>Turning Leaf Homes LLC / Fite LLC</code> in <code>17CV38591</code> (Chapin Ct.), <code>18CV51697</code> (Wilsonville), and <code>17CV43937</code> (Molalla Ave.).</td>
+                <td>Direct side-switch adverse to former client on substantially related&mdash;and in <code>17CV38591</code>, the <strong>identical</strong>&mdash;property transaction without informed consent (<code>ORPC 1.9(a)</code>).</td>
+              </tr>
+              <tr>
+                <td><strong>Standing &amp; <em>Brandrup</em> MERS Doctrine</strong></td>
+                <td>Argued and won <em>Brandrup v. ReconTrust</em> (<code>353 Or 668</code>, 2013). Pleaded in <code>C151603CV</code> (RenX Answer &para;&para; 27&ndash;28): <em>&ldquo;Plaintiff is NOT the real party in interest to initiate judicial foreclosure.&rdquo;</em></td>
+                <td>Prosecuted <code>17CV38591</code> in the name of <code>CWALT 2006-OC10</code> where the 2012 MERS assignment on record ran to <code>CWALT 2006-OC11</code>; moved to dismiss <code>TLH</code>&rsquo;s real-party-in-interest defense.</td>
+                <td>Direct doctrinal reversal: suppressed the exact MERS/trust-mismatch defect established by his own Oregon Supreme Court precedent (<code>ORPC 3.3(a)(3)</code>).</td>
+              </tr>
+              <tr>
+                <td><strong>Accounting &amp; Right of Redemption Counterclaim</strong></td>
+                <td>Built and pleaded signature Counterclaims for Accounting in <code>C151603CV</code> (RenX), <code>CV15070620</code> (TLH), and <code>Big Blue</code> cases to determine the true lien amount and protect statutory redemption.</td>
+                <td>In <code>17CV38591</code>, filed Motion for Summary Judgment (Feb. 2019) to dismiss <code>TLH / Fite</code>&rsquo;s identical Accounting &amp; Redemption counterclaim after <code>TLH</code>&rsquo;s counsel withdrew.</td>
+                <td>Weaponized prior confidential litigation strategy against former client while serving dispositive motion papers on withdrawn counsel (<code>ORCP 9 / ORS 9.390</code>).</td>
+              </tr>
+              <tr>
+                <td><strong>Entity Misidentification (<code>TLH</code> vs. Dissolved <code>Fite LLC</code>)</strong></td>
+                <td>Direct knowledge of <code>TLH</code>&rsquo;s corporate structure and acquisition of <code>12054 Chapin Ct.</code> via the Jan. 28 / Apr. 14, 2016 bankruptcy trustee settlement.</td>
+                <td>Represented to the court on Feb. 27, 2019 that <code>TLH</code> was &ldquo;now known as FITE,&rdquo; even though <code>Fite LLC</code> had been administratively dissolved four months earlier (Oct. 11, 2018), while captioning <code>TLH</code> separately in <code>18CV51697</code> three months later.</td>
+                <td>Under <em>Harmon v. Meyer</em> (<code>146 Or App 295</code>) and <em>Heritage Props., LLC v. Wells Fargo</em> (<code>318 Or App 480</code>), undisclosed conflicts and entity misidentification constitute extrinsic fraud under <code>ORCP 71 C</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SUBSECTION 3.2: BANKRUPTCY COLLAPSE & U.S. TRUSTEE AUDIT -->
+      <div class="grid-2" style="margin-bottom: 1.5rem;">
+        <div class="card amber-top">
+          <span class="badge amber">USBC DISTRICT OF OREGON &bull; CHAPTER 11 COLLAPSE WAVE</span>
+          <h3>3.2 The 2016&ndash;2018 Bankruptcy Wave &amp; U.S. Trustee Refiling Bar</h3>
+          <p>
+            As institutional lenders accelerated judicial foreclosures against the Baron portfolio between 2016 and 2018, the portfolio entities filed a sequence of Chapter 11 petitions in the U.S. Bankruptcy Court for the District of Oregon: <code>16-32747-tmb11</code> (<em>Crimson Investment Group</em>), <code>17-30353-tmb11</code> (<em>Turning Leaf Homes IV</em>), <code>17-31944-tmb11</code> (<em>Turning Leaf Homes V</em>), <code>17-33139-tmb11</code> (<em>RenX Group II</em>), and finally <code>18-30038-tmb11</code> (<em>Fite, LLC</em>).
+          </p>
+          <p>
+            On <strong>January 3, 2018</strong>&mdash;two days before filing <code>18-30038-tmb11</code>&mdash;<code>Turning Leaf Homes, LLC</code>, <code>TLH IV</code>, and <code>TLH V</code> executed Articles of Merger into newly formed <code>Fite, LLC</code>, consolidating roughly 20 encumbered Oregon properties into a single bankruptcy estate. U.S. Trustee trial attorney <strong>Carla McClurg</strong> initiated an intensive compliance audit in February&ndash;March 2018 (documented in Sheet 5 of the Master Workbook), demanding property-by-property rent rolls, security-deposit accounting, and insurance proof. On <strong>April 30, 2018</strong>, the Bankruptcy Court dismissed <code>18-30038-tmb11</code> <strong>with prejudice and imposed a bar on refiling</strong>, followed by administrative dissolution of <code>Fite, LLC</code> on October 11, 2018.
+          </p>
+        </div>
+
+        <div class="card teal-top">
+          <span class="badge teal">DOWNSTREAM MUNICIPAL IMPACT &bull; ZOMBIE FORECLOSURES</span>
+          <h3>3.3 How Portfolio Collapse + Unrecorded Sheriff&rsquo;s Deeds Create Municipal Traps</h3>
+          <p>
+            When <code>Fite, LLC</code> collapsed in 2018 and its state-court counsel withdrew across pending foreclosure dockets, institutional plaintiffs obtained summary judgments on unopposed records. Yet in multiple instances, the foreclosing trusts and their servicers (<code>Shellpoint / NewRez</code>) failed to complete clean title transfers:
+          </p>
+          <ul style="padding-left: 1.2rem; color: #CBD5E1; font-size: 0.92rem; display: flex; flex-direction: column; gap: 0.45rem;">
+            <li><strong>Unrecorded Post-Auction Deeds:</strong> Even after conducting a credit-bid Sheriff&rsquo;s Sale (such as the November 1, 2023 auction in <code>17CV38591</code>), no Sheriff&rsquo;s Deed was recorded in the county land records (<code>ORS 18.960</code>, <code>ORS 93.640</code>) after the 180-day redemption window expired.</li>
+            <li><strong>Dual-Track Servicer Billing:</strong> Months after claiming to have auctioned the property, the servicer continued issuing monthly mortgage statements billing active principal, interest, and force-placed hazard insurance.</li>
+            <li><strong>The Municipal Permit &amp; Utility Lockout:</strong> Because the title remains clouded between a void/unrecorded foreclosure and a dissolved predecessor portfolio, municipal building departments and state weatherization programs refuse to process standard owner-occupant repair permits&mdash;setting the stage for punitive code enforcement.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SUBSECTION 3.4: INTERACTIVE MASTER DOCKET TABLE -->
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.75rem;">
+          <div>
+            <span class="badge teal">INTERACTIVE MULTI-COUNTY DOCKET REGISTER</span>
+            <h3 style="margin-top:0.35rem;">3.4 Representative Dockets from the Baron Portfolio &amp; Parallel Regional Foreclosure/Municipal Archive</h3>
+          </div>
+          <span class="mono" id="docketCountBadge" style="font-size:0.78rem; color:var(--teal-bright);">Showing 18 representative dockets</span>
+        </div>
+
+        <div class="filter-bar">
+          <input type="text" id="docketSearch" class="search-box" placeholder="Filter by case number, county, city (e.g., Oregon City, Gladstone, Wilsonville, Lake Oswego), entity, or legal issue..." />
+          <div class="chip-group" id="docketChips">
+            <button class="chip active" data-filter="ALL">All Tracks (18)</button>
+            <button class="chip" data-filter="MYERS-CONFLICT">Myers Side-Switch / Brandrup</button>
+            <button class="chip" data-filter="MUNICIPAL-PARALLEL">Municipal / Utility Parallels</button>
+            <button class="chip" data-filter="BANKRUPTCY">USBC Bankruptcy Wave</button>
+            <button class="chip" data-filter="PORTFOLIO">Baron / TLH / RenX Portfolio</button>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:0;">
+          <table id="docketTable">
+            <thead>
+              <tr>
+                <th style="width: 13%;">Docket / Case No.</th>
+                <th style="width: 14%;">Court / Jurisdiction</th>
+                <th style="width: 18%;">Property / Location</th>
+                <th style="width: 22%;">Parties &amp; Portfolio Entity</th>
+                <th style="width: 33%;">Forensic Significance &amp; Structural Pattern</th>
+              </tr>
+            </thead>
+            <tbody id="docketTableBody">
+              <tr data-tags="MYERS-CONFLICT PORTFOLIO">
+                <td class="mono"><strong>353 Or 668</strong><br>(SC S060281, 2013)</td>
+                <td>Oregon Supreme Court</td>
+                <td>Statewide Precedent (Oregon Trust Deed Act)</td>
+                <td><em>Brandrup v. ReconTrust Co., N.A.</em></td>
+                <td><strong>Foundational Precedent:</strong> Argued and won by Jeffrey A. Myers (July 2013). Held that MERS is not a statutory beneficiary under <code>ORS 86.705</code> and cannot hold or transfer legal title to a trust deed without proof of agency from the note holder.</td>
+              </tr>
+              <tr data-tags="MYERS-CONFLICT MUNICIPAL-PARALLEL PORTFOLIO">
+                <td class="mono"><strong>17CV38591</strong><br>(2017&ndash;2026)</td>
+                <td>Clackamas County Circuit Court</td>
+                <td><strong>12054 Chapin Ct.</strong><br>Oregon City, OR 97045</td>
+                <td><em>The Bank of New York Mellon (CWALT 2006-OC10) v. Garboden, Turning Leaf Homes LLC (nka Fite LLC), et al.</em></td>
+                <td><strong>Convergence of All Four Structural Defects:</strong> (1) 2012 MERS assignment ran to <code>CWALT 2006-OC11</code>, not plaintiff <code>OC10</code>; (2) Myers prosecuted foreclosure against his own former client <code>TLH</code> on the exact parcel he helped <code>TLH</code> acquire in <code>15-35133-rld7</code>, dismissing the identical Accounting counterclaim he authored in Phase 1; (3) MSJ served on withdrawn counsel while misidentifying dissolved <code>Fite LLC</code>; (4) Nov. 2023 credit-bid auction produced <strong>no recorded Sheriff&rsquo;s Deed</strong> while <code>Shellpoint</code> continued billing and Oregon City terminated water service (June 2024) and posted a backdated red placard (July 2025).</td>
+              </tr>
+              <tr data-tags="MUNICIPAL-PARALLEL PORTFOLIO">
+                <td class="mono"><strong>15CV34832</strong><br>(2015&ndash;2019)</td>
+                <td>Clackamas County Circuit Court</td>
+                <td><strong>635 E. Fairfield St.</strong><br>Gladstone, OR 97027</td>
+                <td><em>Fitch / Lienholders v. Turning Leaf Homes, LLC, et al.</em></td>
+                <td><strong>Parallel Clackamas County Municipal &amp; Title-Cloud Case:</strong> Distressed Baron/TLH portfolio parcel in neighboring Gladstone where prolonged foreclosure/title litigation overlapped with municipal code enforcement and nuisance-abatement pressure (cited in DLCD Division 47 regional evidence).</td>
+              </tr>
+              <tr data-tags="MUNICIPAL-PARALLEL">
+                <td class="mono"><strong>Kelvin &amp; Dunlap v. Oregon City</strong><br>(Clackamas / Fed.)</td>
+                <td>Clackamas County / District of Oregon</td>
+                <td><strong>314 S. 2nd St.</strong><br>Oregon City, OR 97045</td>
+                <td><em>Kelvin &amp; Dunlap v. City of Oregon City, Roberts, Busch &amp; Mueller</em></td>
+                <td><strong>Parallel Municipal Code &amp; Utility Enforcement Case:</strong> Independent Oregon City property owners challenging punitive code-enforcement and utility/habitability actions by the exact same municipal officials (Code Enforcement Manager <code>Busch</code>, <code>Roberts</code>, <code>Mueller</code>).</td>
+              </tr>
+              <tr data-tags="MUNICIPAL-PARALLEL">
+                <td class="mono"><strong>24CV02984</strong><br>(2024&ndash;2026)</td>
+                <td>Multnomah County Circuit Court</td>
+                <td><strong>SE Pipeline Rd.</strong><br>Gresham, OR</td>
+                <td><em>The Bank of New York Mellon v. Dysinger, et al.</em></td>
+                <td><strong>Parallel Regional Utility-Corridor Foreclosure:</strong> 2024 <code>BNYM</code> judicial foreclosure action involving residential property situated along a municipal water-main/pipeline corridor, illustrating regional convergence of legacy securitized trusts and utility infrastructure disputes.</td>
+              </tr>
+              <tr data-tags="MYERS-CONFLICT PORTFOLIO">
+                <td class="mono"><strong>18CV51697</strong><br>(2018&ndash;2020)</td>
+                <td>Clackamas County Circuit Court</td>
+                <td><strong>Wilsonville Parcel</strong><br>Clackamas County, OR</td>
+                <td><em>The Bank of New York Mellon v. Hiday, Turning Leaf Homes, LLC, Fite, LLC, et al.</em></td>
+                <td><strong>Judicial Estoppel &amp; Entity Knowledge Proof:</strong> Filed by Myers (ZBS Law) on behalf of <code>BNYM</code> just three months after the Feb. 27, 2019 hearing in <code>17CV38591</code>. Properly named <code>Turning Leaf Homes, LLC</code> and <code>Fite, LLC</code> as separate defendants&mdash;proving actual knowledge that <code>TLH</code> was a standalone entity and refuting the &ldquo;nka FITE&rdquo; representation in <code>17CV38591</code>.</td>
+              </tr>
+              <tr data-tags="MYERS-CONFLICT PORTFOLIO">
+                <td class="mono"><strong>17CV43937</strong><br>(2017&ndash;2019)</td>
+                <td>Clackamas County Circuit Court</td>
+                <td><strong>855 Molalla Ave.</strong><br>Oregon City, OR 97045</td>
+                <td><em>U.S. Bank N.A. v. Matheson, Turning Leaf Homes, LLC, et al.</em></td>
+                <td><strong>Parallel Oregon City Judicial Foreclosure:</strong> Prosecuted by Myers (ZBS Law) for institutional trustee against former client <code>Turning Leaf Homes, LLC</code> on an Oregon City residential property; asserted institutional holder standing directly contradicting Phase 1 pleadings.</td>
+              </tr>
+              <tr data-tags="PORTFOLIO">
+                <td class="mono"><strong>18CV36917</strong><br>(2018&ndash;2019)</td>
+                <td>Clackamas County Circuit Court</td>
+                <td><strong>523 Warner Parrott Rd.</strong><br>Oregon City, OR 97045</td>
+                <td><em>Lender v. Turning Leaf Homes, LLC, et al.</em></td>
+                <td><strong>Third Oregon City Baron-Portfolio Parcel:</strong> Judicial foreclosure on a distressed Oregon City residential property held in the <code>Turning Leaf Homes</code> portfolio during the 2018 post-bankruptcy collapse wave.</td>
+              </tr>
+              <tr data-tags="MYERS-CONFLICT PORTFOLIO">
+                <td class="mono"><strong>C151603CV</strong><br>(2015&ndash;2016)</td>
+                <td>Washington County Circuit Court</td>
+                <td><strong>Tigard Residential Parcel</strong><br>Washington County, OR</td>
+                <td><em>U.S. Bank N.A. v. RenX Group, LLC, et al.</em></td>
+                <td><strong>Phase 1 Benchmark Pleading:</strong> Myers represented Baron affiliate <code>RenX Group, LLC</code>, filing an Answer (&para;&para; 27&ndash;28) asserting that plaintiff trust was <em>&ldquo;NOT the real party in interest to initiate judicial foreclosure&rdquo;</em> and pleading an affirmative Counterclaim for Accounting &amp; Right of Redemption.</td>
+              </tr>
+              <tr data-tags="MYERS-CONFLICT PORTFOLIO">
+                <td class="mono"><strong>CV15070620</strong><br>(2015&ndash;2017)</td>
+                <td>Clackamas County Circuit Court</td>
+                <td><strong>18901 Hilltop Rd.</strong><br>Lake Oswego, OR 97034</td>
+                <td><em>Lender v. Turning Leaf Homes, LLC, et al.</em></td>
+                <td><strong>Phase 1 Representation of Turning Leaf Homes in Clackamas County:</strong> Myers appeared directly as defense counsel for <code>Turning Leaf Homes, LLC</code> in Clackamas County Circuit Court, deploying the Accounting &amp; Redemption counterclaim strategy he later moved to dismiss in the same court in <code>17CV38591</code>.</td>
+              </tr>
+              <tr data-tags="MYERS-CONFLICT PORTFOLIO">
+                <td class="mono"><strong>14CV01997</strong><br>(2014&ndash;2016)</td>
+                <td>Yamhill County Circuit Court</td>
+                <td><strong>Carlton Residential Parcel</strong><br>Yamhill County, OR</td>
+                <td><em>Lender v. Turning Leaf Homes, LLC</em></td>
+                <td><strong>Phase 1 Representation of Turning Leaf Homes:</strong> Early judicial foreclosure defense of <code>Turning Leaf Homes, LLC</code> by Myers / Bowles Fernandez challenging securitized trust standing and note-enforcement authority.</td>
+              </tr>
+              <tr data-tags="MYERS-CONFLICT PORTFOLIO">
+                <td class="mono"><strong>CV15020527</strong> &amp; <strong>15CV19942</strong></td>
+                <td>Clackamas &amp; Multnomah Circuit Courts</td>
+                <td>Clackamas &amp; Portland Metro Parcels</td>
+                <td><em>Lenders v. Turning Leaf Homes, LLC / RenX Group, LLC</em></td>
+                <td><strong>Phase 1 Regional Portfolio Defense:</strong> Additional state circuit court dockets in which Myers represented <code>Turning Leaf Homes</code> and <code>RenX Group</code> as company defense counsel prior to joining ZBS Law.</td>
+              </tr>
+              <tr data-tags="MYERS-CONFLICT PORTFOLIO">
+                <td class="mono"><strong>6:11-cv-06368</strong> &amp; <strong>3:12-cv-00448</strong></td>
+                <td>U.S. District Court, District of Oregon</td>
+                <td>Oregon Distressed Investor Portfolio</td>
+                <td><em>Big Blue Capital Partners, LLC v. ReconTrust Co. / Bank of America</em></td>
+                <td><strong>Federal Foreclosure &amp; OTDA Challenges:</strong> Federal actions litigated by Myers on behalf of Baron predecessor entity <code>Big Blue Capital Partners, LLC</code> challenging nonjudicial foreclosures and MERS assignments.</td>
+              </tr>
+              <tr data-tags="BANKRUPTCY MYERS-CONFLICT PORTFOLIO">
+                <td class="mono"><strong>15-35133-rld7</strong><br>(2015&ndash;2016)</td>
+                <td>U.S. Bankruptcy Court, District of Oregon</td>
+                <td><strong>12054 Chapin Ct.</strong><br>Oregon City, OR 97045</td>
+                <td><em>In re Garboden</em> (Ch. 7) &bull; Acquisition by <code>Turning Leaf Homes III, LLC</code></td>
+                <td><strong>Origin of the Chapin Court Acquisition:</strong> Chapter 7 Trustee settlement (Jan. 28, 2016; approved Apr. 14, 2016) transferring bankruptcy estate&rsquo;s interest in <code>12054 Chapin Ct.</code> to <code>Turning Leaf Homes III, LLC</code> while Myers&rsquo;s firm (Bowles Fernandez) served as <code>TLH</code>&rsquo;s counsel and registered agent.</td>
+              </tr>
+              <tr data-tags="BANKRUPTCY PORTFOLIO">
+                <td class="mono"><strong>16-32747-tmb11</strong><br>(2016&ndash;2017)</td>
+                <td>U.S. Bankruptcy Court, District of Oregon</td>
+                <td>Multi-Property Portfolio (Clackamas / Multnomah)</td>
+                <td><em>In re Crimson Investment Group, LLC</em> (Ch. 11)</td>
+                <td><strong>First Portfolio Chapter 11 Petition:</strong> Filed by Tracey Baron affiliate <code>Crimson Investment Group, LLC</code> to stay foreclosures across distressed portfolio properties; dismissed after U.S. Trustee and secured-creditor objections.</td>
+              </tr>
+              <tr data-tags="BANKRUPTCY PORTFOLIO">
+                <td class="mono"><strong>17-30353-tmb11</strong> &amp; <strong>17-31944-tmb11</strong></td>
+                <td>U.S. Bankruptcy Court, District of Oregon</td>
+                <td>Multi-Property Portfolio (Metro Region)</td>
+                <td><em>In re Turning Leaf Homes IV, LLC</em> &amp; <em>In re Turning Leaf Homes V, LLC</em> (Ch. 11)</td>
+                <td><strong>Sequential Subsidiary Chapter 11 Filings (2017):</strong> Filed to stay pending sheriff&rsquo;s sales and judicial foreclosures on fractional/distressed properties; both entities were subsequently merged into <code>Fite, LLC</code> on Jan. 3, 2018.</td>
+              </tr>
+              <tr data-tags="BANKRUPTCY PORTFOLIO">
+                <td class="mono"><strong>17-33139-tmb11</strong><br>(2017&ndash;2018)</td>
+                <td>U.S. Bankruptcy Court, District of Oregon</td>
+                <td>Washington &amp; Clackamas County Parcels</td>
+                <td><em>In re RenX Group II, LLC</em> (Ch. 11)</td>
+                <td><strong>Companion RenX Chapter 11 Proceeding:</strong> Parallel reorganization attempt by Baron-managed <code>RenX Group II, LLC</code>; dismissed amid U.S. Trustee scrutiny of portfolio cash management.</td>
+              </tr>
+              <tr data-tags="BANKRUPTCY PORTFOLIO">
+                <td class="mono"><strong>18-30038-tmb11</strong><br>(Jan.&ndash;Apr. 2018)</td>
+                <td>U.S. Bankruptcy Court, District of Oregon</td>
+                <td>~20 Consolidated Portfolio Properties</td>
+                <td><em>In re Fite, LLC</em> (Merger of <code>TLH</code>, <code>TLH IV</code> &amp; <code>TLH V</code>)</td>
+                <td><strong>Terminal Portfolio Collapse &amp; Refiling Bar:</strong> Filed Jan. 5, 2018, two days after merging <code>TLH</code> entities into <code>Fite, LLC</code>. Following U.S. Trustee Carla McClurg&rsquo;s Feb.&ndash;Mar. 2018 audit demands (Sheet 5), the court dismissed the case <strong>with prejudice and a refiling bar</strong> on Apr. 30, 2018; <code>Fite, LLC</code> was administratively dissolved Oct. 11, 2018.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CROSS-WALK TO DLCD DIVISION 47 & OREGON CITY ACCOUNTABILITY -->
+    <section class="section-block" id="policy-bridge">
+      <div class="section-header">
+        <div>
+          <div class="section-num">Section 04 &bull; Structural Synthesis &amp; Policy Bridge</div>
+          <h2 class="section-title">How Foreclosure Aftermath &amp; Title Clouds Connect to DLCD Division 47 &amp; Municipal Accountability</h2>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card teal-top">
+          <span class="badge teal">STAGE 01 &bull; SECONDARY MARKET &amp; PORTFOLIO FRACTURE</span>
+          <h3>1. Securitization &amp; Portfolio Wreckage</h3>
+          <p>
+            A residential loan is securitized into a private-label trust (<code>CWALT</code>) with a mismatched MERS assignment (<code>OC11</code> vs. <code>OC10</code>). After the original borrower files Chapter 7 bankruptcy, a distressed-investor LLC (<code>Turning Leaf Homes</code>) acquires the title, only to collapse in Chapter 11 bankruptcy while its former defense counsel switches sides to prosecute the foreclosure.
+          </p>
+          <div class="btn-row">
+            <a class="dl-btn secondary" href="privity-paradox.html">Inspect Privity Paradox &rarr;</a>
+          </div>
+        </div>
+
+        <div class="card amber-top">
+          <span class="badge amber">STAGE 02 &bull; ZOMBIE TITLE &amp; PERMIT LOCKOUT</span>
+          <h3>2. Unrecorded Deed &amp; Servicer Limbo</h3>
+          <p>
+            A successor occupant acquires the property by Bargain and Sale Deed after a title search shows no completed foreclosure transfer. Even after a subsequent credit-bid auction, no Sheriff&rsquo;s Deed is recorded (<code>ORS 18.960</code>) while the servicer (<code>Shellpoint</code>) continues billing monthly principal and interest. The resulting title cloud blocks routine repair permits and weatherization grants.
+          </p>
+          <div class="btn-row">
+            <a class="dl-btn secondary" href="paladin.html#evidence-gate">View Evidence Gate &rarr;</a>
+          </div>
+        </div>
+
+        <div class="card rose-top">
+          <span class="badge rose">STAGE 03 &bull; MUNICIPAL SHUTOFF &amp; VACANCY PARADOX</span>
+          <h3>3. Utility Termination &amp; DLCD Housing Loss</h3>
+          <p>
+            When a private service line leaks on the hillside parcel, the municipality refuses temporary stabilization, shuts off water service (June 2024), and dispatches five police officers to post a backdated red placard (July 2025)&mdash;converting an occupied dwelling into an &ldquo;involuntary vacancy&rdquo; while reporting regional housing-production deficits to DLCD under <code>OAR 660-047</code>.
+          </p>
+          <div class="btn-row">
+            <a class="dl-btn" href="dlcd-division47-rulemaking.html">Open DLCD Div. 47 Archive &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <strong>Executive Function OS &bull; Retrospective Justice Engine &amp; Foreclosure Forensics Compendium</strong><br>
+        Compiled from public court dockets (Clackamas, Multnomah, Washington &amp; Yamhill Circuit Courts; USBC District of Oregon), Oregon Secretary of State records, and published legal scholarship.
+      </div>
+      <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+        <a href="oregon-city-accountability-research.html">Oregon City Research</a>
+        <a href="dlcd-division47-rulemaking.html">DLCD Div. 47 Archive</a>
+        <a href="paladin.html">PALADIN Suite</a>
+        <a href="why-paladin.html">Why PALADIN</a>
+        <a href="library.html">Research Library (3,295)</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    (function() {
+      const searchInput = document.getElementById('docketSearch');
+      const chips = document.querySelectorAll('#docketChips .chip');
+      const rows = Array.from(document.querySelectorAll('#docketTableBody tr'));
+      const badge = document.getElementById('docketCountBadge');
+      let currentFilter = 'ALL';
+
+      function filterRows() {
+        const q = (searchInput.value || '').toLowerCase().trim();
+        let visible = 0;
+        rows.forEach(row => {
+          const tags = row.getAttribute('data-tags') || '';
+          const text = row.innerText.toLowerCase();
+          const matchChip = (currentFilter === 'ALL') || tags.includes(currentFilter);
+          const matchQuery = !q || text.includes(q);
+          if (matchChip && matchQuery) {
+            row.style.display = '';
+            visible++;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+        badge.textContent = `Showing ${visible} of ${rows.length} representative dockets`;
+      }
+
+      searchInput.addEventListener('input', filterRows);
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          currentFilter = chip.getAttribute('data-filter');
+          filterRows();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

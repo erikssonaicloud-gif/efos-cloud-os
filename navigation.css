@@ -1,0 +1,613 @@
+/**
+ * Looking-Glass Cohesive Navigation & Interrelation System
+ * Master Navigation Architecture for Executive Function OS Hub & Tool Suite
+ *
+ * Principle: Utility over ornament. Carroll's wit in structure, naming and typography.
+ */
+
+/* ==========================================================================
+   1. Global Header Navigation
+   ========================================================================== */
+
+.lg-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 3px double var(--color-brass-hairline, #B08D3C);
+  color: var(--color-vellum, #F5EFE0);
+  width: 100%;
+}
+
+.lg-nav-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0.65rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Brand Link */
+.lg-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--color-vellum, #F5EFE0);
+  flex-shrink: 0;
+}
+
+.lg-brand-logo {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-brass-hairline, #B08D3C);
+  border-radius: 4px;
+  padding: 2px;
+  background: var(--color-board-slate, #1B2540);
+  transition: transform 150ms ease, border-color 150ms ease;
+}
+
+.lg-brand:hover .lg-brand-logo {
+  transform: scale(1.04);
+  border-color: var(--color-cheshire-teal, #2DD4BF);
+}
+
+.lg-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.lg-brand-title {
+  font-family: var(--font-display, 'EB Garamond', Georgia, serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-vellum, #F5EFE0);
+  line-height: 1.15;
+}
+
+.lg-brand-sub {
+  font-family: var(--font-technical, 'JetBrains Mono', monospace);
+  font-size: 0.65rem;
+  color: var(--color-cheshire-teal, #2DD4BF);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Navigation Menu */
+.lg-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Dropdown Container */
+.lg-nav-item {
+  position: relative;
+}
+
+.lg-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.75rem;
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-vellum, #F5EFE0);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 150ms ease;
+  white-space: nowrap;
+}
+
+.lg-nav-btn:hover,
+.lg-nav-btn:focus-visible,
+.lg-nav-item:hover > .lg-nav-btn {
+  background: rgba(27, 37, 64, 0.85);
+  border-color: var(--color-brass-hairline, #B08D3C);
+  color: var(--color-cheshire-teal, #2DD4BF);
+  transform: scale(1.02);
+}
+
+.lg-nav-btn.active {
+  background: rgba(45, 212, 191, 0.12);
+  border-color: var(--color-cheshire-teal, #2DD4BF);
+  color: var(--color-cheshire-teal, #2DD4BF);
+}
+
+.lg-chevron {
+  font-size: 0.65rem;
+  transition: transform 150ms ease;
+  color: var(--color-white-rabbit-gold, #F59E0B);
+}
+
+.lg-nav-item:hover .lg-chevron {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu Flyout */
+.lg-dropdown {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  min-width: 290px;
+  background: rgba(15, 23, 42, 0.98);
+  border: 3px double var(--color-brass-hairline, #B08D3C);
+  border-radius: 4px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65);
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity 150ms ease, transform 150ms ease, visibility 150ms;
+}
+
+.lg-dropdown.align-right {
+  left: auto;
+  right: 0;
+}
+
+.lg-nav-item:hover .lg-dropdown,
+.lg-nav-item:focus-within .lg-dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.lg-dropdown-header {
+  font-family: var(--font-display, 'EB Garamond', Georgia, serif);
+  font-variant: small-caps;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--color-white-rabbit-gold, #F59E0B);
+  padding: 0.3rem 0.6rem;
+  border-bottom: 1px solid rgba(176, 141, 60, 0.25);
+  margin-bottom: 0.25rem;
+}
+
+.lg-dropdown-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.45rem 0.6rem;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: all 150ms ease;
+}
+
+.lg-dropdown-link:hover {
+  background: rgba(27, 37, 64, 0.9);
+  transform: scale(1.01);
+}
+
+.lg-dropdown-icon {
+  font-size: 0.9rem;
+  line-height: 1.2;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.lg-dropdown-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.lg-dropdown-name {
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-vellum, #F5EFE0);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.lg-dropdown-link:hover .lg-dropdown-name {
+  color: var(--color-cheshire-teal, #2DD4BF);
+}
+
+.lg-dropdown-desc {
+  font-size: 0.72rem;
+  color: #94A3B8;
+  line-height: 1.35;
+}
+
+.lg-pill {
+  font-family: var(--font-technical, monospace);
+  font-size: 0.62rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.lg-pill-teal {
+  background: rgba(45, 212, 191, 0.15);
+  color: var(--color-cheshire-teal, #2DD4BF);
+  border: 1px solid rgba(45, 212, 191, 0.4);
+}
+
+.lg-pill-gold {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-white-rabbit-gold, #F59E0B);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.lg-pill-rose {
+  background: rgba(253, 164, 175, 0.15);
+  color: var(--color-red-queen, #FDA4AF);
+  border: 1px solid rgba(253, 164, 175, 0.4);
+}
+
+/* Right Quick Action */
+.lg-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.lg-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border-radius: 3px;
+  border: 1px solid var(--color-cheshire-teal, #2DD4BF);
+  background: rgba(45, 212, 191, 0.12);
+  color: var(--color-cheshire-teal, #2DD4BF);
+  transition: all 150ms ease;
+  white-space: nowrap;
+}
+
+.lg-cta-btn:hover {
+  background: var(--color-cheshire-teal, #2DD4BF);
+  color: #0F172A;
+  transform: scale(1.02);
+}
+
+/* ==========================================================================
+   2. Contextual Breadcrumb & Interrelation Sub-Bar
+   ========================================================================== */
+
+.lg-breadcrumb-strip {
+  background: rgba(27, 37, 64, 0.75);
+  border-bottom: 1px solid rgba(176, 141, 60, 0.35);
+  padding: 0.45rem 1.5rem;
+  font-family: var(--font-technical, monospace);
+  font-size: 0.74rem;
+  color: #94A3B8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.lg-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.lg-breadcrumbs a {
+  color: #CBD5E1;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.lg-breadcrumbs a:hover {
+  color: var(--color-cheshire-teal, #2DD4BF);
+}
+
+.lg-crumb-sep {
+  color: var(--color-brass-hairline, #B08D3C);
+  opacity: 0.6;
+}
+
+.lg-crumb-current {
+  color: var(--color-vellum, #F5EFE0);
+  font-weight: 600;
+}
+
+.lg-interrelations-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.lg-interrelation-label {
+  font-family: var(--font-display, 'EB Garamond', Georgia, serif);
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  color: var(--color-white-rabbit-gold, #F59E0B);
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.lg-node-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(176, 141, 60, 0.4);
+  border-radius: 2px;
+  color: var(--color-vellum, #F5EFE0);
+  text-decoration: none;
+  font-size: 0.7rem;
+  transition: all 150ms ease;
+}
+
+.lg-node-pill:hover {
+  border-color: var(--color-cheshire-teal, #2DD4BF);
+  color: var(--color-cheshire-teal, #2DD4BF);
+  transform: scale(1.02);
+}
+
+/* ==========================================================================
+   3. System Interrelation Matrix & Provenance Atlas Component
+   ========================================================================== */
+
+.lg-atlas-section {
+  background: var(--color-canvas, #0F172A);
+  border: 3px double var(--color-brass-hairline, #B08D3C);
+  border-radius: 4px;
+  padding: 2.5rem;
+  margin: 3.5rem 0;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+}
+
+.lg-atlas-head {
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto 2.5rem;
+}
+
+.lg-atlas-numeral {
+  font-family: var(--font-display, 'EB Garamond', serif);
+  color: var(--color-white-rabbit-gold, #F59E0B);
+  font-size: 1rem;
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+
+.lg-atlas-title {
+  font-family: var(--font-display, 'EB Garamond', serif);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-vellum, #F5EFE0);
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.lg-atlas-lede {
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 1.05rem;
+  color: #94A3B8;
+  line-height: 1.6;
+}
+
+/* Dual Engine Grid */
+.lg-atlas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 960px) {
+  .lg-atlas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lg-atlas-column {
+  background: var(--color-board-slate, #1B2540);
+  border: 1px solid rgba(176, 141, 60, 0.4);
+  border-radius: 4px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.lg-column-header {
+  border-bottom: 1px solid rgba(176, 141, 60, 0.35);
+  padding-bottom: 0.85rem;
+}
+
+.lg-column-tag {
+  font-family: var(--font-technical, monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.lg-column-title {
+  font-family: var(--font-display, 'EB Garamond', serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-vellum, #F5EFE0);
+}
+
+.lg-column-desc {
+  font-size: 0.88rem;
+  color: #CBD5E1;
+  margin-top: 0.35rem;
+  line-height: 1.5;
+}
+
+/* Interrelation Cards */
+.lg-interrelation-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(176, 141, 60, 0.3);
+  border-radius: 3px;
+  padding: 1.25rem;
+  transition: all 150ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.lg-interrelation-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-cheshire-teal, #2DD4BF);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.lg-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.lg-card-name {
+  font-family: var(--font-display, 'EB Garamond', serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-vellum, #F5EFE0);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 150ms ease;
+}
+
+.lg-card-name:hover {
+  color: var(--color-cheshire-teal, #2DD4BF);
+}
+
+.lg-card-role {
+  font-size: 0.84rem;
+  color: #CBD5E1;
+  line-height: 1.45;
+}
+
+.lg-card-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  background: rgba(27, 37, 64, 0.4);
+  padding: 0.6rem 0.8rem;
+  border-radius: 2px;
+  font-family: var(--font-technical, monospace);
+  font-size: 0.72rem;
+  border: 1px solid rgba(176, 141, 60, 0.2);
+}
+
+.lg-meta-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.lg-meta-title {
+  color: #94A3B8;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.15rem;
+}
+
+.lg-meta-val {
+  color: var(--color-vellum, #F5EFE0);
+  font-weight: 600;
+}
+
+.lg-connected-nodes {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+}
+
+.lg-connected-nodes span {
+  font-family: var(--font-display, 'EB Garamond', serif);
+  font-variant: small-caps;
+  color: var(--color-white-rabbit-gold, #F59E0B);
+}
+
+/* Synthesis Bridge Box */
+.lg-synthesis-bridge {
+  background: linear-gradient(135deg, rgba(27, 37, 64, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 3px double var(--color-white-rabbit-gold, #F59E0B);
+  border-radius: 4px;
+  padding: 1.75rem;
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 1.75rem;
+  align-items: center;
+}
+
+@media (max-width: 960px) {
+  .lg-synthesis-bridge {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lg-bridge-title {
+  font-family: var(--font-display, 'EB Garamond', serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-white-rabbit-gold, #F59E0B);
+  margin-bottom: 0.5rem;
+}
+
+.lg-bridge-body {
+  font-size: 0.9rem;
+  color: var(--color-vellum, #F5EFE0);
+  line-height: 1.6;
+}
+
+.lg-bridge-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .lg-nav-menu {
+    display: none; /* Mobile menu can toggle */
+  }
+  .lg-mobile-menu-btn {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1025px) {
+  .lg-mobile-menu-btn {
+    display: none;
+  }
+}

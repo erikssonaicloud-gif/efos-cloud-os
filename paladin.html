@@ -1,0 +1,2291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P.A.L.A.D.I.N. | Pro Se Document &amp; Record-Organization Tools</title>
+  <meta name="description" content="Make the record readable before you make an argument. PALADIN helps people organize complex court records into source-linked timelines, citation-checked drafts, exhibit packages, and filing-ready document structures.">
+  <link rel="icon" type="image/svg+xml" href="favicon-paladin.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charter:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="navigation.css">
+  <link rel="stylesheet" href="kinetic_clarity_buttons.css">
+
+  <!-- OpenGraph & Twitter Cards -->
+  <meta property="og:title" content="P.A.L.A.D.I.N. | Pro Se Document &amp; Record-Organization Tools">
+  <meta property="og:description" content="Make the record readable before you make an argument. PALADIN helps people organize complex court records into source-linked timelines, citation-checked drafts, exhibit packages, and filing-ready document structures.">
+  <meta property="og:image" content="https://executive-function-os.github.io/executivefunctionos.com/paladin-knight-mark.svg">
+  <meta property="og:url" content="https://executive-function-os.github.io/executivefunctionos.com/paladin.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@AnniEriksson1">
+
+  <style>
+    /* JudgeSmoke Juridical Theme Overrides */
+    :root {
+      --paladin-paper: #F3EADC;
+      --paladin-paper-subtle: #FAF6EE;
+      --paladin-ink: #1C1710;
+      --paladin-ink-muted: #574F44;
+      --paladin-teal: #1F5F58;
+      --paladin-teal-light: #EBF4F3;
+      --paladin-terracotta: #C45C3E;
+      --paladin-terracotta-light: #FBF0ED;
+      --paladin-rule: rgba(28, 23, 16, 0.16);
+      --paladin-rule-strong: rgba(31, 95, 88, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5.5rem;
+      background-color: var(--paladin-paper);
+    }
+
+    [id] {
+      scroll-margin-top: 5.5rem;
+    }
+
+    body {
+      background-color: var(--paladin-paper);
+      color: var(--paladin-ink);
+      font-family: var(--font-editorial);
+      line-height: 1.65;
+      font-size: 1.05rem;
+      position: relative;
+    }
+
+    /* Subtle Pleading Paper Background Grid Texture */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(to right, rgba(31, 95, 88, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(28, 23, 16, 0.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(243, 234, 220, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--paladin-teal);
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(28, 23, 16, 0.05);
+    }
+
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: var(--paladin-ink);
+    }
+
+    .brand-logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(28, 23, 16, 0.2);
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--paladin-ink);
+      line-height: 1;
+    }
+
+    .brand-sub {
+      font-family: var(--font-technical);
+      font-size: 0.68rem;
+      color: var(--paladin-teal);
+      letter-spacing: 0.06em;
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .paladin-nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-family: var(--font-technical);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .paladin-nav-links a {
+      color: var(--paladin-ink);
+      text-decoration: none;
+      transition: color 0.15s ease;
+      padding: 0.25rem 0.2rem;
+    }
+
+    .paladin-nav-links a:hover {
+      color: var(--paladin-terracotta);
+      border-bottom: 1.5px solid var(--paladin-terracotta);
+    }
+
+    /* Badges & Tags */
+    .p-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 2px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .p-badge-teal {
+      background: var(--paladin-teal-light);
+      color: var(--paladin-teal);
+      border: 1px solid var(--paladin-teal);
+    }
+
+    .p-badge-terracotta {
+      background: var(--paladin-terracotta-light);
+      color: var(--paladin-terracotta);
+      border: 1px solid var(--paladin-terracotta);
+    }
+
+    .p-badge-ink {
+      background: rgba(28, 23, 16, 0.08);
+      color: var(--paladin-ink);
+      border: 1px solid rgba(28, 23, 16, 0.25);
+    }
+
+    /* Hero Section */
+    .paladin-hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3rem;
+      align-items: center;
+      padding: 4.5rem 0 3.5rem;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-technical);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--paladin-terracotta);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .hero-tagline::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 2px;
+      background: var(--paladin-terracotta);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 3.25rem;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--paladin-ink);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-lead {
+      font-size: 1.22rem;
+      color: var(--paladin-ink-muted);
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Pleading Paper Hero Specimen */
+    .pleading-sheet {
+      background: #FFFDF9;
+      border: 1px solid rgba(28, 23, 16, 0.25);
+      box-shadow: 0 16px 36px -12px rgba(28, 23, 16, 0.25), 0 0 0 1px rgba(243, 234, 220, 0.5);
+      border-radius: 2px;
+      padding: 1.75rem 1.75rem 2rem 3.5rem;
+      position: relative;
+      font-family: var(--font-editorial);
+      color: var(--paladin-ink);
+      font-size: 0.88rem;
+      line-height: 1.75;
+      user-select: none;
+    }
+
+    /* 28-Line Pleading Numbered Left Margin */
+    .pleading-sheet::before {
+      content: "1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9\A 10\A 11\A 12\A 13\A 14\A 15\A 16\A 17\A 18\A 19\A 20\A 21\A 22\A 23\A 24\A 25\A 26\A 27\A 28";
+      white-space: pre-line;
+      position: absolute;
+      top: 1.75rem;
+      left: 1.25rem;
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      color: rgba(28, 23, 16, 0.4);
+      line-height: 1.75;
+      text-align: right;
+      width: 1.5rem;
+    }
+
+    /* Double Left Rule */
+    .pleading-sheet::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 3rem;
+      width: 3px;
+      border-left: 1px solid var(--paladin-teal);
+      border-right: 1px solid var(--paladin-teal);
+      opacity: 0.55;
+    }
+
+    .caption-box {
+      border: 1px solid var(--paladin-ink);
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      font-family: var(--font-technical);
+      font-size: 0.75rem;
+      line-height: 1.4;
+      background: var(--paladin-paper-subtle);
+    }
+
+    .caption-header {
+      text-align: center;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+      color: var(--paladin-teal);
+    }
+
+    .caption-columns {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 0.5rem;
+      border-top: 1px solid var(--paladin-rule);
+      padding-top: 0.5rem;
+    }
+
+    .caption-divider {
+      border-left: 1px solid var(--paladin-rule);
+      padding-left: 0.5rem;
+    }
+
+    /* Paladin Calling Card Specimen */
+    .calling-card {
+      background: var(--paladin-terracotta);
+      color: #FFFDF9;
+      padding: 1.25rem 1.5rem;
+      border-radius: 2px;
+      box-shadow: 0 10px 20px -5px rgba(196, 92, 62, 0.4);
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calling-card::after {
+      content: "";
+      position: absolute;
+      right: -10px; bottom: -15px;
+      width: 80px; height: 80px;
+      background-image: url('favicon-paladin.svg');
+      background-size: cover;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-subtitle {
+      font-family: var(--font-editorial);
+      font-style: italic;
+      font-size: 0.95rem;
+      opacity: 0.92;
+      margin: 0.25rem 0 0.75rem;
+    }
+
+    .card-rule {
+      height: 1px;
+      background: rgba(255, 253, 249, 0.3);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-body {
+      font-family: var(--font-technical);
+      font-size: 0.76rem;
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+    }
+
+    /* Section Styling */
+    section {
+      padding: 4rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 2.5rem;
+      border-bottom: 2px solid var(--paladin-rule);
+      padding-bottom: 1rem;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--paladin-teal);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--paladin-ink);
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      font-size: 1.12rem;
+      color: var(--paladin-ink-muted);
+      max-width: 820px;
+      margin-top: 0.5rem;
+    }
+
+    /* Manifesto Box */
+    .manifesto-panel {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      border-left: 6px solid var(--paladin-teal);
+      padding: 2.5rem;
+      box-shadow: 0 4px 12px rgba(28, 23, 16, 0.04);
+      margin-bottom: 2rem;
+    }
+
+    .manifesto-quote {
+      font-family: var(--font-editorial);
+      font-size: 1.45rem;
+      font-style: italic;
+      color: var(--paladin-ink);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .manifesto-body {
+      font-size: 1.08rem;
+      color: var(--paladin-ink-muted);
+      line-height: 1.75;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .manifesto-subpanel {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      border-left: 4px solid var(--paladin-terracotta);
+      padding: 2rem 2.25rem;
+      box-shadow: 0 2px 8px rgba(28, 23, 16, 0.03);
+      margin-bottom: 1.75rem;
+    }
+
+    .manifesto-subpanel-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--paladin-ink);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .manifesto-scholarship {
+      background: var(--paladin-paper-subtle);
+      border: 1px solid var(--paladin-rule);
+      border-left: 3px solid var(--paladin-teal);
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .scholar-attribution {
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--paladin-teal);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.6rem;
+      display: block;
+    }
+
+    .manifesto-correspondence {
+      background: #FFFDF8;
+      border: 1px solid var(--paladin-rule);
+      border-left: 3px solid var(--paladin-terracotta);
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .correspondence-header {
+      font-family: var(--font-technical);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--paladin-terracotta);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .authorities-block {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      padding: 2rem 2.25rem;
+      margin-top: 2rem;
+      border-radius: 2px;
+    }
+
+    .authorities-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--paladin-ink);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--paladin-rule);
+      padding-bottom: 0.5rem;
+    }
+
+    .authorities-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .authorities-list li {
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      color: var(--paladin-ink-muted);
+      line-height: 1.5;
+    }
+
+    .authorities-list li strong {
+      color: var(--paladin-ink);
+    }
+
+    .authority-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--paladin-teal);
+      font-weight: 700;
+      text-decoration: none;
+      margin-left: 0.5rem;
+      font-size: 0.72rem;
+      border: 1px solid rgba(31, 95, 88, 0.25);
+      padding: 0.1rem 0.45rem;
+      border-radius: 2px;
+      background: var(--paladin-teal-light);
+      transition: all 0.15s ease;
+      vertical-align: middle;
+    }
+
+    .authority-link:hover {
+      background: var(--paladin-teal);
+      color: #FFFDF9;
+      border-color: var(--paladin-teal);
+    }
+
+    .tool-library-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--paladin-teal);
+      text-decoration: none;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid var(--paladin-rule-strong);
+      background: var(--paladin-paper-subtle);
+      border-radius: 2px;
+      margin-top: 0.75rem;
+      width: fit-content;
+      transition: all 0.15s ease;
+    }
+
+    .tool-library-link:hover {
+      background: var(--paladin-teal);
+      color: #FFFDF9;
+    }
+
+    .intake-crisis-box {
+      background: var(--paladin-paper-subtle);
+      border: 1px solid var(--paladin-rule);
+      border-left: 3px solid var(--paladin-terracotta);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .intake-crisis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .intake-crisis-card {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      padding: 1rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .intake-crisis-badge {
+      font-family: var(--font-technical);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--paladin-terracotta);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    /* The Comparison Matrix Table */
+    .matrix-wrapper {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      box-shadow: 0 4px 16px rgba(28, 23, 16, 0.05);
+      border-radius: 2px;
+      overflow-x: auto;
+      margin-bottom: 3rem;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .matrix-table th {
+      background: var(--paladin-teal);
+      color: #FFFDF9;
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 1.25rem;
+      border-right: 1px solid rgba(255, 253, 249, 0.2);
+    }
+
+    .matrix-table th:last-child { border-right: none; }
+
+    .matrix-table td {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--paladin-rule);
+      border-right: 1px solid var(--paladin-rule);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+
+    .matrix-table td:last-child { border-right: none; }
+
+    .matrix-table tr:last-child td { border-bottom: none; }
+
+    .matrix-table tr:hover td {
+      background-color: var(--paladin-paper-subtle);
+    }
+
+    .pattern-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--paladin-ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .pattern-sub {
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      color: var(--paladin-terracotta);
+      font-weight: 600;
+    }
+
+    .principle-tag {
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--paladin-teal);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    /* Suite Summary Table */
+    .suite-summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0 2.5rem;
+      background: #FFFFFF;
+      border: 1px solid var(--paladin-rule);
+      border-radius: 2px;
+      font-size: 0.92rem;
+    }
+    .suite-summary-table th {
+      background: var(--paladin-teal);
+      color: #FFFDF9;
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.15rem;
+      text-align: left;
+    }
+    .suite-summary-table td {
+      padding: 1rem 1.15rem;
+      border-bottom: 1px solid var(--paladin-rule);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .suite-summary-table tr:last-child td { border-bottom: none; }
+    .suite-summary-table tr:nth-child(even) td { background: var(--paladin-paper-subtle); }
+
+    /* Legal Tools Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .tool-card {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(28, 23, 16, 0.08);
+      border-color: var(--paladin-teal);
+    }
+
+    .tool-num {
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--paladin-terracotta);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tool-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--paladin-ink);
+      margin-bottom: 0.75rem;
+      line-height: 1.25;
+    }
+
+    .tool-desc {
+      font-size: 0.98rem;
+      color: var(--paladin-ink-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .tool-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      color: var(--paladin-ink);
+      border-top: 1px solid var(--paladin-rule);
+      padding-top: 1rem;
+    }
+
+    .tool-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    .tool-features li::before {
+      content: "§";
+      color: var(--paladin-teal);
+      font-weight: bold;
+    }
+
+    /* Document Rescue Specimen Section */
+    .rescue-panel {
+      background: #FFFDF9;
+      border: 2px solid var(--paladin-teal);
+      padding: 3rem;
+      box-shadow: 0 12px 32px rgba(31, 95, 88, 0.1);
+      margin-bottom: 4rem;
+    }
+
+    .rescue-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .rescue-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .rescue-step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .rescue-step-num {
+      background: var(--paladin-teal);
+      color: #FFFDF9;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-technical);
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .rescue-step-content h4 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--paladin-ink);
+      margin-bottom: 0.2rem;
+    }
+
+    .rescue-step-content p {
+      font-size: 0.92rem;
+      color: var(--paladin-ink-muted);
+      line-height: 1.5;
+    }
+
+    .rescue-intake-card {
+      background: var(--paladin-paper-subtle);
+      border: 1px solid var(--paladin-rule);
+      padding: 2rem;
+      border-radius: 2px;
+    }
+
+    .intake-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--paladin-ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .intake-sub {
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      color: var(--paladin-ink-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .intake-row {
+      margin-bottom: 1.15rem;
+    }
+
+    .intake-label {
+      display: block;
+      font-family: var(--font-technical);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--paladin-ink);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .intake-select, .intake-input {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      font-family: var(--font-technical);
+      font-size: 0.85rem;
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      color: var(--paladin-ink);
+      border-radius: 2px;
+    }
+
+    .intake-select:focus, .intake-input:focus {
+      outline: none;
+      border-color: var(--paladin-teal);
+      box-shadow: 0 0 0 2px rgba(31, 95, 88, 0.2);
+    }
+
+    /* A2J Non-Profit Pledge */
+    .a2j-pledge {
+      background: var(--paladin-ink);
+      color: var(--paladin-paper);
+      padding: 3rem;
+      margin-bottom: 4rem;
+      border-radius: 2px;
+      box-shadow: 0 16px 36px rgba(28, 23, 16, 0.3);
+    }
+
+    .a2j-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .a2j-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--paladin-paper);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .a2j-lead {
+      font-size: 1.05rem;
+      color: #D1C5B4;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .a2j-specs {
+      border-left: 2px solid var(--paladin-terracotta);
+      padding-left: 1.5rem;
+      font-family: var(--font-technical);
+      font-size: 0.82rem;
+      color: #D1C5B4;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 2px solid var(--paladin-teal);
+      background: var(--paladin-paper-subtle);
+      padding: 3.5rem 0;
+      font-size: 0.88rem;
+      color: var(--paladin-ink-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--paladin-ink);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--paladin-ink);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+    }
+
+    .footer-list a {
+      color: var(--paladin-ink-muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .footer-list a:hover {
+      color: var(--paladin-terracotta);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--paladin-rule);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-technical);
+      font-size: 0.75rem;
+      color: var(--paladin-ink-muted);
+    }
+
+    /* Section 05: Rates & Commercial Tiers */
+    .rates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .rate-card {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      padding: 2.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border-radius: 2px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .rate-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(28, 23, 16, 0.08);
+    }
+
+    .rate-card--featured {
+      border: 2px solid var(--paladin-teal);
+      box-shadow: 0 8px 28px rgba(31, 95, 88, 0.12);
+      background: #FFFFFF;
+    }
+
+    .rate-eyebrow {
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--paladin-terracotta);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .rate-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--paladin-ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .rate-price {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--paladin-ink);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+    }
+
+    .rate-period {
+      font-family: var(--font-technical);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--paladin-ink-muted);
+    }
+
+    .rate-desc {
+      font-size: 0.92rem;
+      color: var(--paladin-ink-muted);
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+      min-height: 2.8rem;
+    }
+
+    .rate-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+      color: var(--paladin-ink);
+      border-top: 1px solid var(--paladin-rule);
+      padding-top: 1.25rem;
+      margin-bottom: 1.75rem;
+      flex-grow: 1;
+    }
+
+    .rate-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.45;
+    }
+
+    .rate-features li::before {
+      content: "✓";
+      color: var(--paladin-teal);
+      font-weight: 800;
+    }
+
+    /* Digital Frontier Posse Feedback Block */
+    .posse-feedback-section {
+      background: var(--paladin-paper-subtle);
+      border: 1px solid var(--paladin-rule);
+      border-left: 4px solid var(--paladin-terracotta);
+      padding: 2.5rem 2rem;
+      margin-top: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .posse-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .posse-card {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 2px;
+    }
+
+    .posse-quote {
+      font-size: 0.92rem;
+      font-style: italic;
+      color: var(--paladin-ink);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .posse-author {
+      font-family: var(--font-technical);
+      font-size: 0.76rem;
+      color: var(--paladin-ink-muted);
+      border-top: 1px solid var(--paladin-rule);
+      padding-top: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .paladin-hero { grid-template-columns: 1fr; }
+      .rescue-grid { grid-template-columns: 1fr; }
+      .a2j-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .paladin-nav-links { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title { font-size: 2.4rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .pleading-sheet { padding-left: 2.75rem; }
+      .pleading-sheet::after { left: 2.25rem; }
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand-link" title="Return to EFOS Hub">
+        <img src="paladin-knight-mark.svg" alt="Paladin Mark" class="brand-logo-img">
+        <div>
+          <div class="brand-title">P.A.L.A.D.I.N.</div>
+          <div class="brand-sub">Pro se document and record-organization tools</div>
+        </div>
+      </a>
+
+      <div style="display:flex; gap:1.25rem; align-items:center;">
+        <nav class="paladin-nav-links">
+          <a href="#the-suite" style="color:var(--paladin-teal); font-weight:700;">The Suite</a>
+          <a href="presentation.html" style="color:var(--paladin-teal); font-weight:700;">Deck (10)</a>
+          <a href="privity.html" style="color:var(--paladin-terracotta); font-weight:700;">Privity Paradox</a>
+          <a href="timeline.html" style="color:var(--paladin-terracotta); font-weight:700;">Timeline (162)</a>
+          <a href="#proving-ground">The Proving Ground</a>
+          <a href="#method">Principles</a>
+          <a href="#evidence-gate">Evidence Gate</a>
+          <a href="#rescue">Document Rescue</a>
+          <a href="#rates">Pricing</a>
+          <a href="#a2j-charter">Public Charter</a>
+          <a href="why-paladin.html">Why PALADIN</a>
+        </nav>
+        <a href="#rescue" class="sc-btn sc-3d-slate sc-btn--sm">Start Document Rescue</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contextual Breadcrumb & Interrelation Sub-Bar -->
+  <div class="lg-breadcrumb-strip">
+    <div class="lg-breadcrumbs">
+      <a href="index.html">EFOS Hub</a>
+      <span class="lg-crumb-sep">&rsaquo;</span>
+      <a href="index.html#pillars">Legal Provenance (A2J)</a>
+      <span class="lg-crumb-sep">&rsaquo;</span>
+      <span class="lg-crumb-current">PALADIN Pro Se Suite</span>
+    </div>
+    <div class="lg-interrelations-strip">
+      <span class="lg-interrelation-label">Interrelated Nodes:</span>
+      <a href="retrospective-justice-foreclosure-forensics.html" class="lg-node-pill" style="border-color:#D97706; color:#D97706; font-weight:700;">⚖ Baron Portfolio &amp; Foreclosure Aftermath</a>
+      <a href="dlcd-division47-rulemaking.html" class="lg-node-pill">🏛 DLCD Div. 47 Archive</a>
+      <a href="oregon-city-accountability-research.html" class="lg-node-pill">📊 OC Accountability Study</a>
+
+      <a href="timeline.html" class="lg-node-pill">📜 Master Timeline (162)</a>
+      <a href="library.html" class="lg-node-pill">📚 Evidence Library (3,295)</a>
+      <a href="privity.html" class="lg-node-pill">🔍 Privity Paradox</a>
+      <a href="forensic-microclimate.html" class="lg-node-pill">🛰 Forensic Microclimate</a>
+      <a href="why-paladin.html" class="lg-node-pill">🏛 Why PALADIN</a>
+      <a href="cognitive_fragmentation_lab.html" class="lg-node-pill">⚡ Engine A: Cognitive Lab</a>
+      <a href="index.html#interrelations" class="lg-node-pill" style="border-color:var(--color-white-rabbit-gold); color:var(--color-white-rabbit-gold);">🧭 System Atlas &rarr;</a>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- Hero Section -->
+    <div class="paladin-hero">
+      <div>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+          <span class="p-badge p-badge-ink" style="letter-spacing:0.1em;">P.A.L.A.D.I.N.</span>
+          <span class="p-badge p-badge-teal">RECORD-FIRST WORKFLOW</span>
+          <span class="p-badge p-badge-terracotta">ACTIVE DOGFOOD MODE</span>
+        </div>
+        <div style="font-family:var(--font-technical); font-size:0.88rem; font-weight:600; color:var(--paladin-teal); margin-bottom:1rem; letter-spacing:0.02em;">
+          Pro se document and record-organization tools<br>
+          <span style="font-size:0.8rem; color:var(--paladin-ink-muted);">For self-represented litigants, legal-aid clinics, and community advocates across civil dockets.</span>
+        </div>
+        <h1 class="hero-title">
+          Make the record readable before you make an argument.
+        </h1>
+        <p class="hero-lead">
+          PALADIN helps people organize complex court records into source-linked timelines, citation-checked drafts, exhibit packages, and filing-ready document structures.
+        </p>
+        <p style="font-size:0.98rem; color:var(--paladin-ink-muted); line-height:1.6; margin-bottom:1rem;">
+          It is built for the difficult work that comes before legal argument: locating documents, tracing dates, checking citations, assembling exhibits, and identifying questions that require qualified legal review.
+        </p>
+        <p style="font-size:0.95rem; font-weight:600; color:var(--paladin-ink); margin-bottom:1.5rem;">
+          PALADIN does not provide legal advice, predict case outcomes, or replace a lawyer.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#the-suite" class="sc-btn sc-btn-active">Explore the suite</a>
+          <a href="#proving-ground" class="sc-btn sc-btn-default">The Proving Ground &sect;</a>
+        </div>
+
+        <div style="margin-top:1.25rem; font-family:var(--font-technical); font-size:0.78rem; color:var(--paladin-ink-muted); display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; background:rgba(31,95,88,0.06); padding:0.6rem 0.85rem; border-radius:3px; border:1px solid var(--paladin-rule);">
+          <span style="color:var(--paladin-teal); font-weight:700;">Educational tool.</span>
+          <span>&bull;</span>
+          <span>Not legal advice.</span>
+          <span>&bull;</span>
+          <span style="color:var(--paladin-terracotta); font-weight:700;">Active Dogfood Mode: Oregon &amp; Real Property.</span>
+          <span>&bull;</span>
+          <span>Universal civil record architecture.</span>
+          <span>&bull;</span>
+          <span>User review required.</span>
+        </div>
+      </div>
+
+      <!-- Live Pleading Sheet Specimen -->
+      <div class="pleading-sheet">
+        <div class="caption-box">
+          <div class="caption-header">In the Circuit Court of the State of Oregon<br>For the County of Clackamas</div>
+          <div class="caption-columns">
+            <div>
+              SELF-REPRESENTED LITIGANT,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Defendant / Property Occupant,<br>
+              &nbsp;&nbsp;v.<br>
+              MORTGAGE SERVICING ENTITY,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Plaintiff.
+            </div>
+            <div class="caption-divider">
+              Case No. YY-CV-XXXXX<br>
+              <strong>DEFENDANT'S MOTION AND SUPPORTING RECORD REVIEW: EVIDENTIARY FOUNDATION AND ENFORCEMENT-STATUS QUESTIONS</strong><br>
+              (Active Dogfood Specimen &bull; UCC § 3-301 / ORS 73.0301; ORS 73.0309)
+            </div>
+          </div>
+        </div>
+
+        <p style="text-indent: 2rem; margin-bottom: 0.75rem;">
+          <strong>COME NOW</strong> the self-represented defendant, submitting this motion and source-linked record audit regarding the evidentiary foundation of plaintiff's enforcement standing and compliance with applicable procedural rules.
+        </p>
+        <p style="text-indent: 2rem; margin-bottom: 0.75rem;">
+          Under Oregon judicial foreclosure procedure and UCC § 3-301 (ORS 73.0301), enforcement of a negotiable instrument requires competent evidentiary foundation establishing holder status or entitlement to enforce at the time the action commenced. Where an instrument is asserted lost under ORS 73.0309, the statutory criteria require documented possession history and competent witness authentication under Evidence Rule 803(6), subject to judicial review of the underlying documentary record.
+        </p>
+
+        <!-- Terracotta Knight Calling Card -->
+        <div class="calling-card">
+          <div class="card-title">
+            <span>P.A.L.A.D.I.N.</span>
+            <span style="font-size:0.75rem; letter-spacing:0.04em;">REFERENCE DOGFOOD SPECIMEN</span>
+          </div>
+          <div class="card-subtitle">Have brief. Will gavel.</div>
+          <div class="card-rule"></div>
+          <div class="card-body">
+            THE HOMESTEAD CRUCIBLE &bull; ACTIVE OREGON UTCR DOGFOODING<br>
+            APPLICABLE ACROSS HOUSING, ADMINISTRATIVE &amp; COMPLEX CIVIL DOCKETS
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- A Record-First Legal-Information Workflow -->
+    <section id="workflow" style="margin: 2rem 0 3.5rem; padding: 2.25rem 2.5rem; background:#FFFFFF; border:1px solid var(--paladin-rule); border-left:4px solid var(--paladin-teal); border-radius:2px; box-shadow:0 4px 16px rgba(28,23,16,0.04);">
+      <div style="font-family:var(--font-technical); font-size:0.78rem; font-weight:700; color:var(--paladin-terracotta); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.35rem;">
+        Core Operational Foundation
+      </div>
+      <h2 style="font-family:var(--font-display); font-size:1.85rem; font-weight:800; color:var(--paladin-ink); margin-bottom:0.75rem;">
+        A record-first legal-information workflow
+      </h2>
+      <p style="font-size:1.05rem; color:var(--paladin-ink); line-height:1.65; margin-bottom:1.25rem; max-width:840px;">
+        Courts decide matters through records, procedure, and admissible evidence—not slogans, assumptions, or generic internet theories.
+      </p>
+      <p style="font-size:0.95rem; font-weight:600; color:var(--paladin-ink-muted); margin-bottom:1rem;">
+        PALADIN is designed to help users make the underlying record more legible and reviewable:
+      </p>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:0.75rem; margin-bottom:1.75rem; font-size:0.95rem; color:var(--paladin-ink);">
+        <li style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--paladin-teal); font-weight:800; line-height:1.4;">✓</span>
+          <span><strong>Build chronologies</strong> tied to source documents, pages, and dates.</span>
+        </li>
+        <li style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--paladin-teal); font-weight:800; line-height:1.4;">✓</span>
+          <span><strong>Separate document contents</strong> from inferences, disputes, and unresolved questions.</span>
+        </li>
+        <li style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--paladin-teal); font-weight:800; line-height:1.4;">✓</span>
+          <span><strong>Check citations</strong> for completeness, jurisdiction, and basic technical accuracy.</span>
+        </li>
+        <li style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--paladin-teal); font-weight:800; line-height:1.4;">✓</span>
+          <span><strong>Assemble organized, readable filings</strong> and exhibit packages.</span>
+        </li>
+        <li style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--paladin-teal); font-weight:800; line-height:1.4;">✓</span>
+          <span><strong>Prepare work</strong> for attorney, clinic, or court self-help review.</span>
+        </li>
+      </ul>
+
+      <div style="background:var(--paladin-paper-subtle); border-top:1px solid var(--paladin-rule); padding:1rem 1.25rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <span style="font-family:var(--font-display); font-size:1.15rem; font-weight:800; color:var(--paladin-ink);">Have brief. Will gavel.</span>
+          <span style="font-family:var(--font-technical); font-size:0.85rem; color:var(--paladin-terracotta); font-weight:600; margin-left:0.75rem;">A disciplined record comes first.</span>
+        </div>
+        <a href="#the-suite" class="sc-btn sc-btn-default sc-btn--sm">Explore The Six Tools &rarr;</a>
+      </div>
+    </section>
+
+    <!-- The Suite: Six Tools for Record-First Preparation -->
+    <section id="the-suite" style="margin-bottom: 4rem;">
+      <span id="legal-tools" style="display:block; position:relative; top:-80px; visibility:hidden;"></span>
+      <div class="section-header">
+        <div class="section-eyebrow">The Suite</div>
+        <h2 class="section-heading">Six tools for record-first preparation</h2>
+        <p class="section-desc">
+          PALADIN is a suite, not a generic legal chatbot. Each component supports a distinct part of the document workflow. None determines what a court will decide.
+        </p>
+      </div>
+
+      <!-- Suite Summary Table -->
+      <div style="overflow-x:auto;">
+        <table class="suite-summary-table">
+          <thead>
+            <tr>
+              <th style="width: 22%;">Tool</th>
+              <th style="width: 32%;">Function</th>
+              <th style="width: 46%;">What it helps produce</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>The Briefman</strong></td>
+              <td>Pleading and document assembly</td>
+              <td>Oregon-oriented captioning, numbered-line layouts, service-certificate blocks, and export-ready drafts</td>
+            </tr>
+            <tr>
+              <td><strong>Tonto</strong></td>
+              <td>Citation audit</td>
+              <td>Citation completeness checks, reporter and court matching, pincite prompts, and jurisdictional flags</td>
+            </tr>
+            <tr>
+              <td><strong>P.A.L.A.D.I.N.</strong></td>
+              <td>Exhibit packaging</td>
+              <td>Bates labels, exhibit indexes, cover sheets, bookmarks, and document inventories</td>
+            </tr>
+            <tr>
+              <td><strong>The Lone Filer</strong></td>
+              <td>Record workspace</td>
+              <td>Source-linked chronology, issue tracking, missing-record flags, and document-to-fact tracing</td>
+            </tr>
+            <tr>
+              <td><strong>Bot Masterson</strong></td>
+              <td>hyperRAG retrieval</td>
+              <td>Search and comparison across uploaded documents and selected legal sources, with passage-level context</td>
+            </tr>
+            <tr>
+              <td><strong>Scout’s Gate</strong></td>
+              <td>Access-to-justice support</td>
+              <td>Procedural checklists, document-organization prompts, and referrals to relevant self-help resources</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Detailed Tool Cards -->
+      <div class="tools-grid">
+        <!-- Tool 1: The Briefman -->
+        <div class="tool-card">
+          <div class="tool-num">
+            <span>TOOL 01</span>
+            <span class="p-badge p-badge-teal">PLEADING ASSEMBLY</span>
+          </div>
+          <h3 class="tool-title">The Briefman</h3>
+          <div style="font-family:var(--font-technical); font-size:0.8rem; font-weight:700; color:var(--paladin-teal); margin-bottom:0.5rem;">
+            Pleading and document assembly
+          </div>
+          <p class="tool-desc">
+            Create structured, editable filing drafts with Oregon-oriented formatting support. The Briefman helps users produce documents that are easier to review, revise, and adapt to the applicable court’s requirements.
+          </p>
+          <ul class="tool-features">
+            <li>Numbered-line pleading layouts and caption templates.</li>
+            <li>Draft declaration, signature, and certificate-of-service blocks.</li>
+            <li>Export-oriented document assembly.</li>
+            <li>Mechanical checks for common formatting problems.</li>
+            <li>Clear prompts where local rules or court-specific requirements may apply.</li>
+          </ul>
+          <div style="background:var(--paladin-paper-subtle); border:1px solid var(--paladin-rule); padding:0.75rem 0.85rem; margin-top:1rem; font-size:0.76rem; color:var(--paladin-ink-muted); line-height:1.45; font-family:var(--font-technical);">
+            <strong>UTCR Rule Note:</strong> Oregon’s statewide UTCR rules require pleadings, motions, and requested instructions to be double-spaced and prepared with numbered lines; the first page also requires a two-inch top blank area. PALADIN can help prepare to those mechanical requirements, but users remain responsible for checking the current rules, local supplemental rules, and clerk instructions.
+          </div>
+          <div style="margin-top:0.75rem; font-size:0.74rem; color:var(--paladin-terracotta); font-family:var(--font-technical); font-weight:600;">
+            Important: PALADIN does not guarantee clerk acceptance, compliance, timeliness, or procedural sufficiency.
+          </div>
+        </div>
+
+        <!-- Tool 2: Tonto -->
+        <div class="tool-card">
+          <div class="tool-num">
+            <span>TOOL 02</span>
+            <span class="p-badge p-badge-terracotta">CITATION INTEGRITY</span>
+          </div>
+          <h3 class="tool-title">Tonto</h3>
+          <div style="font-family:var(--font-technical); font-size:0.8rem; font-weight:700; color:var(--paladin-terracotta); margin-bottom:0.5rem;">
+            Citation audit and source integrity
+          </div>
+          <p class="tool-desc">
+            Tonto checks whether a citation is complete, internally consistent, and traceable to an available authority. It is designed to find technical problems before a citation becomes part of a filing.
+          </p>
+          <ul class="tool-features">
+            <li>Flags missing reporters, courts, dates, and pincites.</li>
+            <li>Identifies mismatches among citation elements.</li>
+            <li>Prompts users to review jurisdiction and authority dates.</li>
+            <li>Helps surface potentially adverse or limited authority.</li>
+            <li>Preserves a review trail for each citation check.</li>
+          </ul>
+          <div style="margin-top:auto; padding-top:1rem; font-size:0.74rem; color:var(--paladin-ink-muted); font-family:var(--font-technical); line-height:1.45; border-top:1px solid var(--paladin-rule);">
+            <strong>Notice:</strong> Verified citation metadata is not the same as legal relevance, controlling authority, or a winning argument. Users and qualified counsel must make those judgments.
+          </div>
+        </div>
+
+        <!-- Tool 3: P.A.L.A.D.I.N. -->
+        <div class="tool-card">
+          <div class="tool-num">
+            <span>TOOL 03</span>
+            <span class="p-badge p-badge-teal">EXHIBIT PACKAGING</span>
+          </div>
+          <h3 class="tool-title">P.A.L.A.D.I.N.</h3>
+          <div style="font-family:var(--font-technical); font-size:0.8rem; font-weight:700; color:var(--paladin-teal); margin-bottom:0.5rem;">
+            Exhibit packaging and record assembly
+          </div>
+          <p class="tool-desc">
+            Build a coherent exhibit package from disordered PDFs, correspondence, docket materials, and public records.
+          </p>
+          <ul class="tool-features">
+            <li>Bates numbering and configurable exhibit labels.</li>
+            <li>Cover sheets, exhibit lists, and document inventories.</li>
+            <li>Bookmark and navigation support for reviewable PDFs.</li>
+            <li>Source, page, and date references attached to each item.</li>
+            <li>Export controls intended to preserve readability.</li>
+          </ul>
+          <div style="margin-top:auto; padding-top:1rem; font-size:0.74rem; color:var(--paladin-ink-muted); font-family:var(--font-technical); line-height:1.45; border-top:1px solid var(--paladin-rule);">
+            <strong>Notice:</strong> Users remain responsible for completeness, confidentiality review, redaction, admissibility, and court-specific exhibit rules.
+          </div>
+        </div>
+
+        <!-- Tool 4: The Lone Filer -->
+        <div class="tool-card">
+          <div class="tool-num">
+            <span>TOOL 04</span>
+            <span class="p-badge p-badge-ink">RECORD WORKSPACE</span>
+          </div>
+          <h3 class="tool-title">The Lone Filer</h3>
+          <div style="font-family:var(--font-technical); font-size:0.8rem; font-weight:700; color:var(--paladin-ink); margin-bottom:0.5rem;">
+            Ground-truth record workspace
+          </div>
+          <p class="tool-desc">
+            A chronology is only useful if a reviewer can trace it back to the source. The Lone Filer connects timeline entries to the document, page, date, and status from which they arise.
+          </p>
+          <ul class="tool-features">
+            <li>Links factual entries to specific underlying records.</li>
+            <li>Separates direct document content from inference and dispute.</li>
+            <li>Tracks contradictory sources and missing time periods.</li>
+            <li>Produces chronology and issue-list views for revision.</li>
+            <li>Preserves questions that require attorney or human review.</li>
+          </ul>
+          <div style="margin-top:auto; padding-top:1rem; font-size:0.74rem; color:var(--paladin-ink-muted); font-family:var(--font-technical); line-height:1.45; border-top:1px solid var(--paladin-rule);">
+            <strong>Notice:</strong> PALADIN does not decide which version of a disputed fact is true.
+          </div>
+        </div>
+
+        <!-- Tool 5: Bot Masterson -->
+        <div class="tool-card">
+          <div class="tool-num">
+            <span>TOOL 05</span>
+            <span class="p-badge p-badge-teal">DOCUMENT RETRIEVAL</span>
+          </div>
+          <h3 class="tool-title">Bot Masterson</h3>
+          <div style="font-family:var(--font-technical); font-size:0.8rem; font-weight:700; color:var(--paladin-teal); margin-bottom:0.5rem;">
+            Forensic memory and document retrieval
+          </div>
+          <p class="tool-desc">
+            Bot Masterson helps users find relevant passages across uploaded records and selected legal sources. It is designed for retrieval, comparison, and issue spotting—not autonomous legal analysis.
+          </p>
+          <ul class="tool-features">
+            <li>Hybrid search across uploaded records and curated sources.</li>
+            <li>Entity linking for people, servicers, instruments, dates, and docket entries.</li>
+            <li>Passage-level results with source context.</li>
+            <li>Terminology comparison across records.</li>
+            <li>Prompts that identify areas for further factual or legal review.</li>
+          </ul>
+          <div style="margin-top:auto; padding-top:1rem; font-size:0.74rem; color:var(--paladin-ink-muted); font-family:var(--font-technical); line-height:1.45; border-top:1px solid var(--paladin-rule);">
+            <strong>Notice:</strong> No outcome prediction. No autonomous filing. No legal conclusions presented as legal advice.
+          </div>
+        </div>
+
+        <!-- Tool 6: Scout’s Gate -->
+        <div class="tool-card">
+          <div class="tool-num">
+            <span>TOOL 06</span>
+            <span class="p-badge p-badge-terracotta">ACCESS TO JUSTICE</span>
+          </div>
+          <h3 class="tool-title">Scout’s Gate</h3>
+          <div style="font-family:var(--font-technical); font-size:0.8rem; font-weight:700; color:var(--paladin-terracotta); margin-bottom:0.5rem;">
+            Access-to-justice workflow support
+          </div>
+          <p class="tool-desc">
+            Scout’s Gate provides plain-language organizational support for people navigating civil-court paperwork, fee-waiver materials, and procedural information.
+          </p>
+          <ul class="tool-features">
+            <li>Filing-preparation and document-collection checklists.</li>
+            <li>Plain-language explanations of common process steps.</li>
+            <li>Deadline-tracking prompts and calendar reminders.</li>
+            <li>Referral pathways to court self-help, legal aid, and emergency resources.</li>
+            <li>Support for organizing—not deciding—fee-waiver or indigency materials.</li>
+          </ul>
+          <div style="margin-top:auto; padding-top:1rem; font-size:0.74rem; color:var(--paladin-ink-muted); font-family:var(--font-technical); line-height:1.45; border-top:1px solid var(--paladin-rule);">
+            <strong>Notice:</strong> Eligibility determinations, deadline calculations, and legal sufficiency remain matters for the court and qualified counsel.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: The Proving Ground (Homestead & Oregon Dogfood Mode) -->
+    <section id="proving-ground" style="margin-bottom: 4rem;">
+      <div class="section-header">
+        <div class="section-eyebrow">03 &mdash; Reference Architecture &bull; Active Dogfood Mode</div>
+        <h2 class="section-heading">The Proving Ground: Homestead Records &amp; Oregon Dogfood Mode</h2>
+        <p class="section-desc">
+          PALADIN is built as a general record-integrity and procedural-readiness platform for civil litigation and administrative dockets. We selected real property defense and Oregon civil procedure as our active &ldquo;dogfooding&rdquo; reference implementation because no domain presents a more brutal documentary stress test.
+        </p>
+      </div>
+
+      <!-- Dogfooding Architecture Banner -->
+      <div style="background:var(--paladin-paper-subtle); border:1px solid var(--paladin-rule); border-left:4px solid var(--paladin-terracotta); padding:2rem 2.25rem; margin-bottom:2.5rem; border-radius:2px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem;">
+          <div>
+            <span class="p-badge p-badge-terracotta" style="margin-bottom:0.5rem;">THE REFERENCE IMPLEMENTATION PRINCIPLE</span>
+            <h3 style="font-family:var(--font-display); font-size:1.45rem; font-weight:800; color:var(--paladin-ink); margin-top:0.25rem;">
+              One Universal Record Engine. One Rigorous Living Proving Ground.
+            </h3>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span class="p-badge p-badge-teal">ACTIVE DOGFOOD MODE</span>
+            <span class="p-badge p-badge-ink">DOMAIN-AGNOSTIC CORE</span>
+          </div>
+        </div>
+
+        <p style="font-size:1rem; color:var(--paladin-ink); line-height:1.65; margin-bottom:1rem;">
+          Just as <strong>Oregon civil procedure</strong> is our active reference jurisdiction (where UTCR 28-line grids, caption geometry, and Oregon Appellate Style rules are tested against live court requirements), <strong>real property and homestead defense</strong> is our active reference domain.
+        </p>
+
+        <p style="font-size:0.95rem; color:var(--paladin-ink-muted); line-height:1.6; margin-bottom:1.5rem;">
+          We chose real property not because PALADIN is exclusively a foreclosure tool, but because the residential mortgage record represents the ultimate torture test for documentary integrity: three decades of promissory note indorsements, unrecorded assignments, electronic database bypasses, robotic corporate affidavits, and life-altering human stakes.
+        </p>
+
+        <!-- Two Column Architecture Comparison -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.5rem; margin-top:1.5rem;">
+          <!-- Left: Active Dogfood Crucible -->
+          <div style="background:#FFFDF9; border:1px solid var(--paladin-rule); padding:1.5rem; border-top:3px solid var(--paladin-terracotta);">
+            <div style="font-family:var(--font-technical); font-size:0.75rem; font-weight:700; color:var(--paladin-terracotta); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.35rem;">
+              Active Proving Ground &bull; Dogfood Mode
+            </div>
+            <h4 style="font-family:var(--font-display); font-size:1.15rem; font-weight:800; color:var(--paladin-ink); margin-bottom:0.75rem;">
+              Homestead Defense &amp; Oregon UTCR
+            </h4>
+            <p style="font-size:0.88rem; color:var(--paladin-ink-muted); line-height:1.5; margin-bottom:0.85rem;">
+              Where the engine is continuously stress-tested against the most complex paper trails in American law:
+            </p>
+            <ul style="font-size:0.84rem; color:var(--paladin-ink); display:flex; flex-direction:column; gap:0.5rem; padding-left:1.15rem; margin-bottom:0.85rem;">
+              <li><strong>30-Year Chain of Custody:</strong> Tracking notes, allonges, deeds of trust, and servicer transfer notices across decades.</li>
+              <li><strong>Physical Possession vs. MERS:</strong> Auditing electronic registry transfers against local county recording acts (ORS 86.735 / <em>Brandrup</em>).</li>
+              <li><strong>Lost-Note Statutory Proof:</strong> Enforcing strict statutory requirements for lost negotiable instruments under UCC § 3-309 / ORS 73.0309.</li>
+              <li><strong>OEC 803(6) Foundation:</strong> Flagging unauthenticated successor servicer &ldquo;boarding&rdquo; affidavits lacking personal knowledge.</li>
+              <li><strong>UTCR 2.010 Pleading Compliance:</strong> 28-line numbered grids, two-column caption geometry, and proof of service blocks.</li>
+            </ul>
+          </div>
+
+          <!-- Right: General Platform Applications -->
+          <div style="background:#FFFDF9; border:1px solid var(--paladin-rule); padding:1.5rem; border-top:3px solid var(--paladin-teal);">
+            <div style="font-family:var(--font-technical); font-size:0.75rem; font-weight:700; color:var(--paladin-teal); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.35rem;">
+              The Broad Horizon &bull; Universal Platform
+            </div>
+            <h4 style="font-family:var(--font-display); font-size:1.15rem; font-weight:800; color:var(--paladin-ink); margin-bottom:0.75rem;">
+              Complex Civil &amp; Administrative Dockets
+            </h4>
+            <p style="font-size:0.88rem; color:var(--paladin-ink-muted); line-height:1.5; margin-bottom:0.85rem;">
+              The exact same six-tool workflow applies wherever high-volume records meet strict procedural rules:
+            </p>
+            <ul style="font-size:0.84rem; color:var(--paladin-ink); display:flex; flex-direction:column; gap:0.5rem; padding-left:1.15rem; margin-bottom:0.85rem;">
+              <li><strong>Residential Tenancy &amp; Eviction Defense:</strong> Reconciling repair requests, rent ledgers, 72-hour notices, and habitability chronologies.</li>
+              <li><strong>Municipal &amp; Code Enforcement:</strong> Assembling administrative appeal records, due process chronologies, and building inspector logs.</li>
+              <li><strong>Consumer &amp; Medical Debt Defense:</strong> Auditing debt-buyer chain-of-title assignments, account-stated claims, and FDCPA notices.</li>
+              <li><strong>Public Records &amp; Agency Appeals:</strong> Tracking FOIA/public records timelines, exemptions, and administrative record indexing.</li>
+              <li><strong>Civil Rights &amp; Pro Se Litigation:</strong> Formatting federal § 1983 pleadings, Bates-stamping evidence, and verifying circuit precedent.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scholarly Grounding: The Tension Between Place and Abstraction -->
+      <div style="background:#FFFDF9; border:1px solid var(--paladin-rule); padding:2rem 2.25rem; border-radius:2px; margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-technical); font-size:0.78rem; font-weight:700; color:var(--paladin-teal); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">
+          Scholarly &amp; Doctrinal Grounding
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.35rem; font-weight:800; color:var(--paladin-ink); margin-bottom:0.75rem;">
+          The Structural Tension: Physical Place vs. Abstracted Capital
+        </h3>
+        <p style="font-size:0.95rem; color:var(--paladin-ink-muted); line-height:1.6; margin-bottom:1.25rem;">
+          The choice to dogfood PALADIN in real property law is anchored in recognized academic scholarship documenting the systemic breakdown between physical land governance and national financial abstraction:
+        </p>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
+          <div style="border-left:3px solid var(--paladin-teal); padding-left:1rem;">
+            <p style="font-size:0.88rem; font-style:italic; color:var(--paladin-ink); line-height:1.5; margin-bottom:0.5rem;">
+              &ldquo;Property law rules that once balanced the rights of mortgagors and mortgagees now completely fail to furnish aggrieved homeowners with meaningful relief when faced with wrongs that stem from the complexities of the securitization of mortgage loans and the acts of intermediaries...&rdquo;
+            </p>
+            <span style="font-family:var(--font-technical); font-size:0.78rem; color:var(--paladin-teal); font-weight:700;">
+              Prof. Christopher K. Odinet, <em>Modernizing Mortgage Law</em>, 100 N.C. L. Rev. 89 (2021)
+            </span>
+          </div>
+
+          <div style="border-left:3px solid var(--paladin-terracotta); padding-left:1rem;">
+            <p style="font-size:0.88rem; font-style:italic; color:var(--paladin-ink); line-height:1.5; margin-bottom:0.5rem;">
+              &ldquo;Modern property rules increasingly turn land into an asset class for monetization, capitalization, and exploitation—encompassing absenteeism, concentration, commodification, financialization, and even dispossession.&rdquo;
+            </p>
+            <span style="font-family:var(--font-technical); font-size:0.78rem; color:var(--paladin-terracotta); font-weight:700;">
+              Prof. Jessica A. Shoemaker, <em>Papering Over Place: When Land Becomes Asset Class</em> (2024)
+            </span>
+          </div>
+
+          <div style="border-left:3px solid var(--paladin-ink); padding-left:1rem;">
+            <p style="font-size:0.88rem; font-style:italic; color:var(--paladin-ink); line-height:1.5; margin-bottom:0.5rem;">
+              &ldquo;The absentee owner... is enabled to make natural resources a source of free income... by the power legally conferred on him to withhold them from use until his charge for their use is allowed him.&rdquo;
+            </p>
+            <span style="font-family:var(--font-technical); font-size:0.78rem; color:var(--paladin-ink-muted); font-weight:700;">
+              Thorstein Veblen, <em>Absentee Ownership and Business Enterprise in Recent Times</em> (1923)
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--paladin-rule); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <p style="font-size:0.85rem; color:var(--paladin-ink-muted); margin-bottom:0; max-width:700px; line-height:1.5;">
+            <strong>The Dogfooding Rule:</strong> If a record-integrity engine can successfully organize 30 years of fragmented servicer records, verify every citation under Oregon style standards, and assemble an audit-proof exhibit package that survives judicial review, it can bring clarity to any civil courtroom in America.
+          </p>
+          <a href="why-paladin.html" class="sc-btn sc-btn-default sc-btn--sm">Read The Full Manifesto &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Operating Principles: Six Rules for Responsible Record Work -->
+    <section id="method" style="margin: 2rem 0 3.5rem; padding: 0; border-bottom: none;">
+      <div style="background:#FFFFFF; border:2px solid var(--paladin-teal); border-radius:2px; padding:2.25rem 2.5rem; box-shadow:0 8px 24px rgba(31,95,88,0.08);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; margin-bottom:1rem; border-bottom:1px solid var(--paladin-rule); padding-bottom:1rem;">
+          <div>
+            <div style="font-family:var(--font-technical); font-size:0.78rem; font-weight:700; color:var(--paladin-terracotta); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.25rem;">
+              Operating Principles
+            </div>
+            <h2 style="font-family:var(--font-display); font-size:1.75rem; color:var(--paladin-ink); font-weight:800; margin:0;">
+              Six rules for responsible record work
+            </h2>
+          </div>
+          <span class="p-badge p-badge-teal" style="font-size:0.75rem;">RECORD-FIRST DISCIPLINE</span>
+        </div>
+
+        <p style="font-size:1.05rem; color:var(--paladin-ink); line-height:1.6; margin-bottom:1.5rem; font-weight:600;">
+          PALADIN is not a system for manufacturing defenses. It is a system for organizing, testing, and presenting questions that the actual record may support.
+        </p>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
+          <div style="background:var(--paladin-paper-subtle); border-left:3px solid var(--paladin-teal); padding:1rem 1.15rem;">
+            <div style="font-family:var(--font-technical); font-weight:700; color:var(--paladin-teal); font-size:0.8rem; margin-bottom:0.35rem;">01</div>
+            <div style="font-weight:700; font-size:0.95rem; color:var(--paladin-ink); margin-bottom:0.25rem;">Start with the record</div>
+            <div style="font-size:0.85rem; color:var(--paladin-ink-muted); line-height:1.45;">
+              Begin with the instruments, recorded documents, notices, docket entries, correspondence, and filed evidence—not a theory found online. If a proposition is not supported by a document, testimony, rule, or authority, it is not yet ready to be asserted.
+            </div>
+          </div>
+
+          <div style="background:var(--paladin-paper-subtle); border-left:3px solid var(--paladin-terracotta); padding:1rem 1.15rem;">
+            <div style="font-family:var(--font-technical); font-weight:700; color:var(--paladin-terracotta); font-size:0.8rem; margin-bottom:0.35rem;">02</div>
+            <div style="font-weight:700; font-size:0.95rem; color:var(--paladin-ink); margin-bottom:0.25rem;">Identify the procedural path</div>
+            <div style="font-size:0.85rem; color:var(--paladin-ink-muted); line-height:1.45;">
+              Determine the court, case posture, deadlines, governing statutes, rules, and binding authority before drafting a theory. In Oregon foreclosure matters, for example, the distinction between judicial and nonjudicial foreclosure matters. <em>Brandrup</em> and <em>Niday</em> address Oregon Trust Deed Act issues involving MERS and nonjudicial foreclosure, while <em>Nationstar Mortgage, LLC v. Peper</em> addresses standing in a judicial foreclosure setting. A tool should help users identify that distinction—not erase it.
+            </div>
+          </div>
+
+          <div style="background:var(--paladin-paper-subtle); border-left:3px solid var(--paladin-teal); padding:1rem 1.15rem;">
+            <div style="font-family:var(--font-technical); font-weight:700; color:var(--paladin-teal); font-size:0.8rem; margin-bottom:0.35rem;">03</div>
+            <div style="font-weight:700; font-size:0.95rem; color:var(--paladin-ink); margin-bottom:0.25rem;">Tie every factual statement to a source</div>
+            <div style="font-size:0.85rem; color:var(--paladin-ink-muted); line-height:1.45;">
+              Each material factual statement should lead a reviewer to a document, page, date, and, where relevant, docket location. No source link, no reliable record trail.
+            </div>
+          </div>
+
+          <div style="background:var(--paladin-paper-subtle); border-left:3px solid var(--paladin-ink); padding:1rem 1.15rem;">
+            <div style="font-family:var(--font-technical); font-weight:700; color:var(--paladin-ink); font-size:0.8rem; margin-bottom:0.35rem;">04</div>
+            <div style="font-weight:700; font-size:0.95rem; color:var(--paladin-ink); margin-bottom:0.25rem;">Separate evidence from inference</div>
+            <div style="font-size:0.85rem; color:var(--paladin-ink-muted); line-height:1.45;">
+              A document may establish what it says. It may support an inference. It may also leave a gap. Those are different things. PALADIN keeps direct document content, user interpretation, disputes, and unresolved questions distinct.
+            </div>
+          </div>
+
+          <div style="background:var(--paladin-paper-subtle); border-left:3px solid var(--paladin-terracotta); padding:1rem 1.15rem;">
+            <div style="font-family:var(--font-technical); font-weight:700; color:var(--paladin-terracotta); font-size:0.8rem; margin-bottom:0.35rem;">05</div>
+            <div style="font-weight:700; font-size:0.95rem; color:var(--paladin-ink); margin-bottom:0.25rem;">Treat missing records as questions</div>
+            <div style="font-size:0.85rem; color:var(--paladin-ink-muted); line-height:1.45;">
+              A missing assignment, incomplete archive, or unclear possession history may warrant investigation. It is not automatic proof of fraud, invalidity, or entitlement to relief. The relevant question is whether the gap is legally material, timely raised, and supportable through admissible evidence.
+            </div>
+          </div>
+
+          <div style="background:var(--paladin-paper-subtle); border-left:3px solid var(--paladin-teal); padding:1rem 1.15rem;">
+            <div style="font-family:var(--font-technical); font-weight:700; color:var(--paladin-teal); font-size:0.8rem; margin-bottom:0.35rem;">06</div>
+            <div style="font-weight:700; font-size:0.95rem; color:var(--paladin-ink); margin-bottom:0.25rem;">File cleanly; seek counsel when possible</div>
+            <div style="font-size:0.85rem; color:var(--paladin-ink-muted); line-height:1.45;">
+              Meet deadlines. Check the current rules. Protect confidential information. Obtain qualified legal advice whenever it is available. PALADIN helps organize the work. It does not represent a party, sign a filing, or appear in court.
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--paladin-paper-subtle); border:1px solid var(--paladin-rule); padding:1rem 1.25rem; font-family:var(--font-technical); font-size:0.8rem; color:var(--paladin-ink-muted); line-height:1.5;">
+          <strong>Scope &amp; Limitations Notice:</strong> PALADIN is an educational tool and does not constitute legal advice. It does not evaluate legal sufficiency, determine whether a defense will succeed, or represent parties in litigation. Users must confirm all deadlines, procedural rules, and filings.
+        </div>
+      </div>
+    </section>
+
+    <!-- Evidence Gate: Record-Specific Analysis, Not Foreclosure Folklore -->
+    <section id="evidence-gate" style="margin-bottom: 4rem;">
+      <div class="section-header">
+        <div class="section-eyebrow">Evidence Gate</div>
+        <h2 class="section-heading">Record-specific analysis, not foreclosure folklore</h2>
+        <p class="section-desc">
+          A missing assignment, MERS involvement, securitization, or a generalized demand to &ldquo;show the note&rdquo; does not automatically create a defense. PALADIN helps users distinguish broad theories from record-specific questions tied to governing procedure, admissible evidence, and controlling authority.
+        </p>
+      </div>
+
+      <div style="overflow-x:auto; margin:1.5rem 0 2rem;">
+        <table class="suite-summary-table" style="font-size:0.92rem;">
+          <thead>
+            <tr>
+              <th style="width: 40%;">Common shortcut</th>
+              <th style="width: 60%;">Record-first question</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--paladin-terracotta); font-weight:600;">
+                &ldquo;The loan was securitized, so the debt is invalid.&rdquo;
+              </td>
+              <td>
+                What governing law connects the transaction to a legally material consequence in this specific matter?
+              </td>
+            </tr>
+            <tr>
+              <td style="color:var(--paladin-terracotta); font-weight:600;">
+                &ldquo;MERS was involved, so the foreclosure is void.&rdquo;
+              </td>
+              <td>
+                Is the matter judicial or nonjudicial? Which statutes govern? What do the instrument and recorded documents show?
+              </td>
+            </tr>
+            <tr>
+              <td style="color:var(--paladin-terracotta); font-weight:600;">
+                &ldquo;They have to produce the original note.&rdquo;
+              </td>
+              <td>
+                What does the applicable law require, what evidence has been filed, and what specific deficiency appears in the record?
+              </td>
+            </tr>
+            <tr>
+              <td style="color:var(--paladin-terracotta); font-weight:600;">
+                &ldquo;The servicer is a stranger to the loan.&rdquo;
+              </td>
+              <td>
+                What role does the party claim, what records support that role, who can authenticate those records, and why does it matter procedurally?
+              </td>
+            </tr>
+            <tr>
+              <td style="color:var(--paladin-terracotta); font-weight:600;">
+                &ldquo;A chain-of-title gap wins the case.&rdquo;
+              </td>
+              <td>
+                Is there a legally recognized defect? Is it material, timely raised, and capable of proof through admissible evidence?
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Selected Authorities & References Block -->
+      <div class="authorities-block">
+        <div class="authorities-title">Selected Controlling Authority &amp; Statutory References</div>
+        <ul class="authorities-list">
+          <li>
+            <strong>Brandrup v. ReconTrust Co.</strong>, 353 Or 668, 303 P.3d 301 (2013) (clarifying MERS's status under the Oregon Trust Deed Act; holding MERS is not a statutory beneficiary and addressing recording requirements in nonjudicial foreclosure).
+            <a href="library.html?q=Brandrup" class="authority-link">View in Research Library &sect;</a>
+          </li>
+          <li>
+            <strong>Niday v. GMAC Mortgage, LLC</strong>, 353 Or 648, 302 P.3d 444 (2013) (analyzing recording of assignments under ORS 86.735(1) for nonjudicial trust deed foreclosures).
+            <a href="library.html?q=Niday" class="authority-link">View in Research Library &sect;</a>
+          </li>
+          <li>
+            <strong>Nationstar Mortgage LLC v. Peper</strong>, 278 Or App 594, 377 P.3d 668 (2016) (holding that in judicial foreclosure, a plaintiff possessing a note indorsed in blank when commencing the action has enforcement standing, and a subsequent transfer does not automatically defeat the action).
+            <a href="library.html?q=Peper" class="authority-link">View in Research Library &sect;</a>
+          </li>
+          <li>
+            <strong>Nationstar Mortgage LLC v. Clackamas Federal Credit Union</strong>, 285 Or App 204, 395 P.3d 938 (2017) (analyzing holder status and UCC Article 3 / ORS 73.0301 Person Entitled to Enforce standards).
+            <a href="library.html?q=Clackamas" class="authority-link">View in Research Library &sect;</a>
+          </li>
+          <li>
+            <strong>Uniform Commercial Code §§ 3-301 &amp; 3-309 / ORS 73.0301 &amp; 73.0309</strong> (statutory criteria for Person Entitled to Enforce and mandatory proof requirements for lost instruments).
+            <a href="library.html?q=UCC" class="authority-link">View in Research Library &sect;</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section 4: Document Rescue Specimen -->
+    <section id="rescue">
+      <div class="section-header">
+        <div class="section-eyebrow">04 — Evidentiary Triage &amp; Intake Forensics</div>
+        <h2 class="section-heading">The work before the argument</h2>
+        <p class="section-desc">
+          High-volume civil litigation often produces poorly indexed PDFs, incomplete service records, transfers among servicers, and documents that are difficult to compare across time. PALADIN helps turn that material into a reviewable working record.
+        </p>
+      </div>
+
+      <!-- The Real-World Source Material Crisis Callout -->
+      <div class="intake-crisis-box">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
+          <div>
+            <span class="intake-crisis-badge">The Real-World Evidentiary Crisis</span>
+            <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--paladin-ink); font-weight:700;">
+              What the Distressed Litigant Actually Receives: The Unmanifested Archive
+            </h3>
+          </div>
+          <a href="library.html" class="sc-btn sc-btn-default sc-btn--sm" style="font-size:0.75rem;">Explore 3,295 Evidence Records &sect;</a>
+        </div>
+        <p style="font-size:0.95rem; color:var(--paladin-ink-muted); margin-top:0.65rem; line-height:1.6;">
+          High-volume civil litigation—especially foreclosure and administrative enforcement—generates unindexed PDFs, multiple servicer transfers, fragmented payment histories, and disputed lost-note affidavits. Self-represented litigants and busy clinics struggle to turn this volume into a coherent, court-ready record.
+        </p>
+        <div class="intake-crisis-grid">
+          <div class="intake-crisis-card">
+            <span class="intake-crisis-badge">Symptom 01</span>
+            <strong>The Unindexed Export Trap</strong>
+            <p style="color:var(--paladin-ink-muted); margin-top:0.25rem;">
+              Servicers and agencies produce hundreds of pages of unorganized records. Key payment histories, notices, and correspondence are buried across disconnected attachments.
+            </p>
+          </div>
+          <div class="intake-crisis-card">
+            <span class="intake-crisis-badge">Symptom 02</span>
+            <strong>Evidentiary Gaps &amp; Transfer Gaps</strong>
+            <p style="color:var(--paladin-ink-muted); margin-top:0.25rem;">
+              Declarations frequently rely on records from prior entities without personal knowledge, creating hearsay and foundation questions under Oregon Evidence Code 803(6).
+            </p>
+          </div>
+          <div class="intake-crisis-card">
+            <span class="intake-crisis-badge">Symptom 03</span>
+            <strong>Procedural Rejection</strong>
+            <p style="color:var(--paladin-ink-muted); margin-top:0.25rem;">
+              Filings get bounced for simple rule violations—margins, line numbers, missing exhibit tabs, or unverified citations—before the substantive issues are ever reviewed.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rescue-panel">
+        <div class="rescue-grid">
+          <div>
+            <span class="p-badge p-badge-terracotta" style="margin-bottom:0.75rem;">RECORD RESCUE WORKFLOW</span>
+            <h3 style="font-family:var(--font-display); font-size:1.85rem; font-weight:800; color:var(--paladin-ink); margin-bottom:0.75rem;">
+              Turn Disorganized Records Into Organized, Court-Formatted Deliverables
+            </h3>
+            <p style="font-size:1.05rem; color:var(--paladin-ink-muted); line-height:1.65;">
+              Courts decide matters through records, procedure, and admissible evidence. PALADIN helps users turn disorganized paper trails into organized chronologies, verified citations, and formatted pleading structures ready for review.
+            </p>
+
+            <div class="rescue-steps">
+              <div class="rescue-step">
+                <div class="rescue-step-num">1</div>
+                <div class="rescue-step-content">
+                  <h4>1. Ingest</h4>
+                  <p>Disaggregate PDF bundles, run OCR, extract attachments, and build an inventory of every document in the record.</p>
+                </div>
+              </div>
+
+              <div class="rescue-step">
+                <div class="rescue-step-num">2</div>
+                <div class="rescue-step-content">
+                  <h4>2. Chronology</h4>
+                  <p>Assemble transactions, notices, transfers, and docket events into a date-sorted ground-truth timeline linked to specific page numbers.</p>
+                </div>
+              </div>
+
+              <div class="rescue-step">
+                <div class="rescue-step-num">3</div>
+                <div class="rescue-step-content">
+                  <h4>3. Trace</h4>
+                  <p>Match every factual statement to an underlying document. Identify unsupported claims, conflicting dates, and evidentiary gaps.</p>
+                </div>
+              </div>
+
+              <div class="rescue-step">
+                <div class="rescue-step-num">4</div>
+                <div class="rescue-step-content">
+                  <h4>4. Audit citations</h4>
+                  <p>Verify citations against CourtListener and controlling Oregon precedent; audit references to UCC provisions, court rules, and statutes.</p>
+                </div>
+              </div>
+
+              <div class="rescue-step">
+                <div class="rescue-step-num">5</div>
+                <div class="rescue-step-content">
+                  <h4>5. Package</h4>
+                  <p>Format pleadings to UTCR 28-line standards, pair with Bates-stamped exhibits and an exhibit list, and output a clean file ready for attorney or court review.</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+              <a href="mailto:annika@executivefunctionos.com?subject=Court%20Record%20Rescue%20Inquiry" class="sc-btn sc-btn-active">Request Document Rescue</a>
+              <a href="library.html?q=Pleading" class="sc-btn sc-btn-default">Sample Pleading Precedent &sect;</a>
+            </div>
+
+            <p style="margin-top:0.85rem; font-size:0.78rem; color:var(--paladin-ink-muted); line-height:1.5; font-family:var(--font-technical);">
+              <strong>Notice:</strong> PALADIN does not decide the case, provide legal advice, or replace qualified counsel. It organizes the record, checks procedural mechanics, and highlights evidentiary questions for qualified review.
+            </p>
+          </div>
+
+          <!-- Interactive Mock Intake Card -->
+          <div class="rescue-intake-card">
+            <div class="intake-title">Document Rescue Preflight</div>
+            <div class="intake-sub">ESTIMATE PROCEDURAL INTEGRITY &amp; REJECTION RISK</div>
+
+            <div class="intake-row">
+              <label class="intake-label">Court Jurisdiction</label>
+              <select class="intake-select" id="rescue-court">
+                <option>Oregon Circuit Court (Clackamas / Multnomah)</option>
+                <option>U.S. District Court for District of Oregon</option>
+                <option>Oregon Court of Appeals / Supreme Court</option>
+                <option>Other State Court (General Jurisdiction)</option>
+              </select>
+            </div>
+
+            <div class="intake-row">
+              <label class="intake-label">Pleading Document Type</label>
+              <select class="intake-select" id="rescue-type">
+                <option>Motion to Vacate Void Judgment (ORCP 71)</option>
+                <option>Emergency Motion for Stay of Enforcement</option>
+                <option>Objections to Proposed Order (UTCR 5.100)</option>
+                <option>Motion to Dismiss for Lack of Standing</option>
+                <option>Complaint / Amended Pleading</option>
+              </select>
+            </div>
+
+            <div class="intake-row">
+              <label class="intake-label">Current Exhibit Count</label>
+              <input type="number" class="intake-input" value="14" min="1" max="150" id="rescue-exhibits">
+            </div>
+
+            <div style="background:#FFFDF9; border:1px solid var(--paladin-rule); padding:1rem; margin:1.25rem 0; font-family:var(--font-technical); font-size:0.75rem;">
+              <div style="color:var(--paladin-teal); font-weight:700; margin-bottom:0.25rem;">PREFLIGHT DIAGNOSTIC:</div>
+              <div>&bull; UTCR 28-Line Pleading Paper: <span style="color:var(--paladin-terracotta); font-weight:700;">REQUIRED</span></div>
+              <div>&bull; Citation Audit: <span style="color:var(--paladin-teal); font-weight:700;">ENABLED</span></div>
+              <div>&bull; Exhibit Stamping &amp; Bookmarking: <span style="color:var(--paladin-teal); font-weight:700;">READY</span></div>
+            </div>
+
+            <button type="button" class="sc-btn sc-3d-amber sc-btn--block" onclick="alert('Document Rescue Preflight: Input registered. For live rescue triage, email annika@executivefunctionos.com with your draft document.')">
+              Run Preflight Rescue Audit
+            </button>
+            <p style="margin-top:0.75rem; font-size:0.72rem; color:var(--paladin-ink-muted); text-align:center; font-family:var(--font-technical); line-height:1.4;">
+              Educational simulation only &bull; Not legal advice &bull; Does not determine legal sufficiency
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Rates & Commercial Tiers -->
+    <section id="rates" style="margin-bottom: 4rem;">
+      <div class="section-header">
+        <div class="section-eyebrow">05 &mdash; Transparent Rates &amp; Commercial Tiers</div>
+        <h2 class="section-heading">Practical document infrastructure</h2>
+        <p class="section-desc">
+          Court-formatted document structures, citation checks, source-linked record organization, and exhibit packaging for individuals and organizations working without a dedicated document-production team.
+        </p>
+      </div>
+
+      <div class="rates-grid">
+        <!-- Tier 1: Scout -->
+        <div class="rate-card">
+          <div class="rate-eyebrow">
+            <span>SELF-REPRESENTED LITIGANT</span>
+            <span class="p-badge p-badge-ink">COMMUNITY</span>
+          </div>
+          <h3 class="rate-title">Scout</h3>
+          <div class="rate-price">
+            $0 <span class="rate-period">/ forever free</span>
+          </div>
+          <p class="rate-desc">
+            For individuals navigating initial notices and organizing their records.
+          </p>
+          <ul class="rate-features">
+            <li>Access to Research Archive (3,295 full-text records)</li>
+            <li>1 UTCR Preflight Inspection audit per month</li>
+            <li>Citation cross-referencing against verified precedent</li>
+            <li>UTCR 28-line blank margin grid &amp; caption templates</li>
+            <li>Community self-help guides &amp; procedural checklists</li>
+          </ul>
+          <a href="#rescue" class="sc-btn sc-btn-default sc-btn--block">Start Scout Free</a>
+        </div>
+
+        <!-- Tier 2: Paladin (Featured) -->
+        <div class="rate-card rate-card--featured">
+          <div class="rate-eyebrow">
+            <span>SOLO ADVOCATE / ACTIVE LITIGANT</span>
+            <span class="p-badge p-badge-teal">ACTIVE DOCKET</span>
+          </div>
+          <h3 class="rate-title">Paladin</h3>
+          <div class="rate-price">
+            $29 <span class="rate-period">/ month</span>
+          </div>
+          <p class="rate-desc">
+            For active self-represented civil litigators and solo advocates managing an ongoing case.
+          </p>
+          <ul class="rate-features">
+            <li>Unlimited UTCR 28-line pleading generation (lossless PDF)</li>
+            <li>Automated citation check against CourtListener &amp; Oregon precedent</li>
+            <li>Bates exhibit numbering, cover sheets &amp; bookmarking studio</li>
+            <li>Chronological Ground Truth timeline engine</li>
+            <li>Document rescue priority triage &amp; export</li>
+            <li>Complete local corpus privacy (zero AI training on case files)</li>
+          </ul>
+          <a href="mailto:annika@executivefunctionos.com?subject=Paladin%20Subscription%20Inquiry%20($29/mo)" class="sc-btn sc-btn-active sc-btn--block">Subscribe to Paladin &bull; $29/mo</a>
+        </div>
+
+        <!-- Tier 3: Posse -->
+        <div class="rate-card">
+          <div class="rate-eyebrow">
+            <span>CLINIC &amp; COMMUNITY ADVOCACY</span>
+            <span class="p-badge p-badge-terracotta">MULTI-SEAT</span>
+          </div>
+          <h3 class="rate-title">Posse</h3>
+          <div class="rate-price">
+            $99 <span class="rate-period">/ month</span>
+          </div>
+          <p class="rate-desc">
+            For legal aid clinics, housing coalitions, and pro bono networks handling multiple cases.
+          </p>
+          <ul class="rate-features">
+            <li>Multi-seat workspace (up to 5 clinic advocates or staff)</li>
+            <li>Full HyperRAG retrospective analysis on custom case corpora</li>
+            <li>Bulk exhibit compilation &amp; automated multi-doc indexing</li>
+            <li>Shared citation checks and collaborative audit logs</li>
+            <li>Multi-jurisdiction caption presets (Oregon Circuit &amp; Federal District)</li>
+            <li>Direct pipeline onboarding &amp; priority technical support</li>
+          </ul>
+          <a href="mailto:annika@executivefunctionos.com?subject=Posse%20Clinic%20Tier%20Inquiry%20($99/mo)" class="sc-btn sc-3d-slate sc-btn--block">Start Posse Workspace &bull; $99/mo</a>
+        </div>
+      </div>
+
+      <!-- Legal Boundary Notice for Rates -->
+      <p style="margin-top: -1rem; margin-bottom: 2rem; font-size: 0.76rem; color: var(--paladin-ink-muted); text-align: center; font-family: var(--font-technical); line-height: 1.45;">
+        <strong>Important notice:</strong> PALADIN provides educational document-organization and drafting tools, not legal representation or formal legal advice. Software subscriptions do not guarantee judicial outcomes, clerk acceptance, or procedural sufficiency. Litigants should seek licensed counsel where available.
+      </p>
+
+      <!-- Illustrative Workflow Scenarios -->
+      <div class="posse-feedback-section">
+        <div style="font-family: var(--font-technical); font-size: 0.76rem; font-weight: 700; color: var(--paladin-terracotta); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.35rem;">
+          Field Telemetry &bull; Workflow Studies
+        </div>
+        <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: var(--paladin-ink); font-weight: 700; margin-bottom: 0.5rem;">
+          Illustrative Workflow Scenarios
+        </h3>
+        <p style="font-size: 0.92rem; color: var(--paladin-ink-muted); line-height: 1.5; margin-bottom: 1.25rem;">
+          Illustrative scenarios based on common pro se litigation workflows; individual results depend entirely on case facts, applicable law, and court rulings.
+        </p>
+
+        <div class="posse-grid">
+          <!-- Scenario 1 -->
+          <div class="posse-card">
+            <div>
+              <span class="p-badge p-badge-terracotta" style="margin-bottom:0.75rem; display:inline-block;">FORECLOSURE DEFENSE &bull; OREGON</span>
+              <p class="posse-quote">
+                &ldquo;A litigant received a 90-page servicer filing containing a lost-note affidavit. PALADIN built a 14-point timeline from the servicer's own exhibits, highlighting that the affidavit did not state who possessed the note when it was lost. The litigant presented that record-based question in an organized response.&rdquo;
+              </p>
+            </div>
+            <div class="posse-author">
+              &mdash; Illustrative Scenario: Lost-Note Affidavit Audit
+            </div>
+          </div>
+
+          <!-- Scenario 2 -->
+          <div class="posse-card">
+            <div>
+              <span class="p-badge p-badge-teal" style="margin-bottom:0.75rem; display:inline-block;">LEGAL AID CLINIC &bull; HOUSING</span>
+              <p class="posse-quote">
+                &ldquo;A legal aid clinic intake team needed to assemble a 28-line UTCR pleading with 12 exhibits for an unrepresented tenant on a 48-hour deadline. PALADIN formatted the caption, generated the 28-line grid, stamped the exhibits, and caught an outdated citation before filing.&rdquo;
+              </p>
+            </div>
+            <div class="posse-author">
+              &mdash; Illustrative Scenario: Rapid Pleading Assembly
+            </div>
+          </div>
+
+          <!-- Scenario 3 -->
+          <div class="posse-card">
+            <div>
+              <span class="p-badge p-badge-ink" style="margin-bottom:0.75rem; display:inline-block;">RECORD ANALYSIS &bull; TITLE &amp; SERVICING</span>
+              <p class="posse-quote">
+                &ldquo;A self-represented litigant facing judicial foreclosure organized 12 years of servicing records into a single date-sorted timeline. Every factual statement in the draft was linked to a specific exhibit page, allowing pro bono counsel to quickly evaluate the viable issues.&rdquo;
+              </p>
+            </div>
+            <div class="posse-author">
+              &mdash; Illustrative Scenario: Multi-Year Servicing Timeline
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Legal Aid & Nonprofit A2J Pledge -->
+    <section id="a2j-charter">
+      <div class="a2j-pledge">
+        <div class="a2j-grid">
+          <div>
+            <div style="font-family:var(--font-technical); font-size:0.78rem; font-weight:700; color:var(--paladin-terracotta); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">
+              06 &mdash; Public Benefit Charter
+            </div>
+            <h2 class="a2j-title">Built for access to justice</h2>
+            <p class="a2j-lead">
+              PALADIN is intended to reduce avoidable document friction for self-represented litigants, community advocates, and under-resourced legal-service organizations, helping ensure procedural defects do not prevent cases from being heard on the merits.
+            </p>
+            <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+              <span class="p-badge p-badge-teal" style="background:rgba(31,95,88,0.3); border-color:#2a8278; color:#7ddcd1;">BUILT FOR NONPROFIT &amp; LEGAL AID WORKFLOWS</span>
+              <span class="p-badge p-badge-terracotta" style="background:rgba(196,92,62,0.3); border-color:#e07759; color:#f6b19e;">INDEPENDENT OPEN WORKFLOW</span>
+              <span class="p-badge p-badge-ink" style="background:rgba(255,253,249,0.1); border-color:rgba(255,253,249,0.3); color:#FFFDF9;">PRO BONO &amp; CLINIC SUPPORT</span>
+            </div>
+          </div>
+
+          <div class="a2j-specs">
+            <h4 style="font-family:var(--font-display); font-size:1.1rem; color:#FFFDF9; margin-bottom:0.75rem;">Independent Development &amp; Legal-Aid Alignment</h4>
+            <p style="margin-bottom:0.75rem;">
+              <strong>Legal Services Corporation (LSC) Alignment:</strong> PALADIN is independently developed and is not affiliated with, funded by, or endorsed by the Legal Services Corporation, the Oregon Law Foundation, the Oregon Judicial Department, or any court unless expressly stated. Prospective legal-aid partners evaluating LSC Technology Initiative Grants (TIG) should note that LSC eligibility rules generally require applications to come from current LSC Basic Field grantees, with non-LSC entities participating as project partners or technical contractors.
+            </p>
+            <p style="margin-bottom:0.75rem;">
+              <strong>Oregon Law Foundation (OLF):</strong> Designed to align with Category B Access to Justice project grant objectives, supporting legal aid clinics, housing coalitions, and civil pro se assistance.
+            </p>
+            <p>
+              <strong>Pro Bono Clinic Multi-Tenancy:</strong> Permits legal aid staff attorneys and clinical supervisors to oversee self-represented filers without administrative document assembly overhead.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+            <img src="paladin-knight-mark.svg" alt="Paladin Mark" style="width:28px; height:28px; border-radius:4px;">
+            <div class="footer-brand">P.A.L.A.D.I.N.</div>
+          </div>
+          <p style="line-height:1.6; margin-bottom:1rem; font-size:0.85rem;">
+            A record-first legal-information workflow for self-represented litigants, legal-aid teams, and community advocates.
+          </p>
+          <div style="font-family:var(--font-technical); font-size:0.75rem; color:var(--paladin-teal); margin-bottom:0.75rem;">
+            JUDGESMOKE JURIDICAL SUB-THEME &bull; EXECUTIVE FUNCTION OS
+          </div>
+          <div style="font-family:var(--font-technical); font-size:0.72rem; color:rgba(255,253,249,0.65); line-height:1.5;">
+            <strong>The PALADIN Method:</strong> (1) Start with the record, (2) Identify controlling procedure, (3) Link assertions to sources, (4) Separate evidence from inference, (5) Investigate missing records, (6) Seek qualified counsel.
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">The Suite</div>
+          <ul class="footer-list">
+            <li><a href="#the-suite">Pleading and document assembly</a></li>
+            <li><a href="#the-suite">Citation audit</a></li>
+            <li><a href="#the-suite">Exhibit packaging</a></li>
+            <li><a href="#the-suite">Record workspace</a></li>
+            <li><a href="#the-suite">Document retrieval</a></li>
+            <li><a href="#the-suite">Procedural organization</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Principles</div>
+          <ul class="footer-list">
+            <li><a href="why-paladin.html">Why PALADIN exists (Manifesto)</a></li>
+            <li><a href="timeline.html">Multi-Track Timeline (162 records)</a></li>
+            <li><a href="#proving-ground">The Proving Ground (Dogfood Mode)</a></li>
+            <li><a href="#method">The six rules</a></li>
+            <li><a href="#evidence-gate">Record-first analysis</a></li>
+            <li><a href="#a2j-charter">Public-benefit charter</a></li>
+            <li><a href="#rescue">Document rescue</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Ecosystem</div>
+          <ul class="footer-list">
+            <li><a href="index.html">EFOS Hub</a></li>
+            <li><a href="store.html">UI Kit Store</a></li>
+            <li><a href="lab.html">Telemetry Studio</a></li>
+            <li><a href="buttons.html">Kinetic Buttons (24)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Precedent Systems &bull; Access to Justice Initiative. All rights reserved.</div>
+        <div style="display:flex; gap:1.25rem;">
+          <a href="#top" style="color:var(--paladin-teal); text-decoration:none;">&uarr; Back to Top</a>
+        </div>
+      </div>
+
+      <p style="margin-top:1.5rem; font-size:0.82rem; color:rgba(255,253,249,0.7); text-align:center; font-family:var(--font-technical); letter-spacing:0.02em; max-width:780px; margin-left:auto; margin-right:auto; line-height:1.5;">
+        PALADIN is not a machine for manufacturing foreclosure defenses; it is a record-first system for helping people identify, organize, test, and present the questions their actual documents may support.
+      </p>
+      <p style="margin-top:0.5rem; font-size:0.78rem; color:rgba(255,253,249,0.5); text-align:center; font-family:var(--font-technical); letter-spacing:0.02em; max-width:780px; margin-left:auto; margin-right:auto; line-height:1.4;">
+        Important notice: PALADIN provides educational information and document-organization tools. It is not a law firm, does not provide legal advice, does not create an attorney-client relationship, and does not guarantee court acceptance or any case outcome. Users remain responsible for deadlines, filing requirements, current law, and the accuracy of all submitted materials.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

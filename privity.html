@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Privity Paradox — Case No. 17CV38591</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="navigation.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: clamp(12px, 3vw, 24px);
+      background: #0D1117;
+      color: #E8E0D0;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cite-tag {
+      display: inline-block;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: #D4B89614;
+      border: 1px solid #D4B89640;
+      color: #D4B896;
+      cursor: pointer;
+      margin-left: 4px;
+      letter-spacing: 0.3px;
+      vertical-align: middle;
+      white-space: nowrap;
+      transition: all 0.15s;
+      touch-action: manipulation;
+    }
+    .cite-tag.active {
+      background: #D4B89633;
+      border-color: #D4B896;
+      color: #F0D8A8;
+    }
+    .cite-tag:hover {
+      background: #D4B89644;
+    }
+    .phase-card {
+      border-radius: 6px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      touch-action: manipulation;
+    }
+    .phase-card:hover {
+      filter: brightness(1.15);
+    }
+    .pillar-card {
+      flex: 1;
+      border-radius: 6px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      touch-action: manipulation;
+    }
+    .pillar-card:hover {
+      filter: brightness(1.1);
+    }
+    .trap-card {
+      border-radius: 6px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      touch-action: manipulation;
+    }
+    .trap-card:hover {
+      filter: brightness(1.1);
+    }
+
+    /* Responsive Layout Classes */
+    .identity-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .identity-box {
+      border-radius: 6px;
+      padding: 10px 16px;
+      max-width: 280px;
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .phases-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .pillars-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .traps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .floating-cite {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      background: #1A1208;
+      border: 1px solid #D4B896;
+      border-left: 4px solid #D4B896;
+      border-radius: 8px;
+      padding: 14px 16px;
+      max-width: 320px;
+      box-shadow: 0 4px 24px #00000099;
+    }
+
+    @media (max-width: 840px) {
+      .phases-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+      .pillars-row {
+        flex-direction: column;
+      }
+      .traps-grid {
+        grid-template-columns: 1fr;
+      }
+      .floating-cite {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .phases-grid {
+        grid-template-columns: 1fr;
+      }
+      .identity-box {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Contextual Breadcrumb & Interrelation Sub-Bar -->
+  <div class="lg-breadcrumb-strip" style="margin: -1.5rem -1.5rem 1.5rem -1.5rem;">
+    <div class="lg-breadcrumbs">
+      <a href="index.html">EFOS Hub</a>
+      <span class="lg-crumb-sep">&rsaquo;</span>
+      <a href="paladin.html">PALADIN (A2J)</a>
+      <span class="lg-crumb-sep">&rsaquo;</span>
+      <span class="lg-crumb-current">The Privity Paradox (Case 17CV38591)</span>
+    </div>
+    <div class="lg-interrelations-strip">
+      <span class="lg-interrelation-label">Interrelated Nodes:</span>
+      <a href="retrospective-justice-foreclosure-forensics.html" class="lg-node-pill" style="border-color:#D97706; color:#D97706; font-weight:700;">⚖ Baron Portfolio &amp; Foreclosure Aftermath</a>
+      <a href="dlcd-division47-rulemaking.html" class="lg-node-pill">🏛 DLCD Div. 47 Archive</a>
+      <a href="oregon-city-accountability-research.html" class="lg-node-pill">📊 OC Accountability Study</a>
+
+      <a href="paladin.html" class="lg-node-pill">⚖ PALADIN Pleading Suite</a>
+      <a href="timeline.html" class="lg-node-pill">📜 Master Timeline (162)</a>
+      <a href="library.html" class="lg-node-pill">📚 Evidence Library (3,295)</a>
+      <a href="oregon-city-accountability-research.html#ws3" class="lg-node-pill">🛰 Forensic Microclimate</a>
+      <a href="why-paladin.html" class="lg-node-pill">🏛 Why PALADIN</a>
+      <a href="index.html#interrelations" class="lg-node-pill" style="border-color:var(--color-white-rabbit-gold); color:var(--color-white-rabbit-gold);">🧭 System Atlas &rarr;</a>
+    </div>
+  </div>
+
+  <div id="app"></div>
+
+  <script>
+
+const authorities = {
+  jasper: { cite: "Wells Fargo Bank, N.A. v. Jasper", ref: "289 Or App 617, 618", note: "ORCP 71 B(1)(d) relief is mandatory for void judgments — no excusable neglect, meritorious defense, or diligence required" },
+  portland: { cite: "Portland Gen. Elec. Co. v. Ebasco Servs., Inc.", ref: "353 Or 856", note: "Judgment is void — not voidable — when court lacked personal jurisdiction, plaintiff lacked statutory authority, or judgment was procured by fraud; has no legal force whatever and may be attacked at any time" },
+  citizens: { cite: "Citizens Sav. & Loan Ass'n v. McDonald", ref: "191 Or App 45, 80 P3d 532 (2003)", note: "No time limitation applies to attack on void judgment" },
+  heritage: { cite: "Heritage Props., LLC v. Wells Fargo Bank, N.A.", ref: "318 Or App 480", note: "Attorney's undisclosed disqualifying conflict of interest constitutes extrinsic fraud under ORCP 71 C" },
+  harmon: { cite: "Harmon v. Meyer", ref: "146 Or App 295, 299, 933 P2d 361 (1997)", note: "Oregon courts do not permit misidentification — substitution of an entirely different legal entity — to be cured retroactively; distinguished from misnomer (variance in form of correct name)" },
+  haley: { cite: "Haley v. Haley", ref: "215 Or App 36, 168 P3d 305 (2007)", note: "Subject matter jurisdiction concerns the court's power over the general kind of dispute; circuit courts have that power unless some law removes it" },
+  hinkle: { cite: "Nationstar Mortgage, LLC v. Hinkle", ref: "321 Or App 300, 516 P3d 718 (2022)", note: "Judicial foreclosure is an action to recover debt secured by real property; the real party in interest is the person entitled to enforce the note; plaintiff-status defects are real-party-in-interest questions, not subject matter jurisdiction" },
+  niday: { cite: "Niday v. GMAC Mortgage, LLC", ref: "251 Or App 278, 284 P3d 1157 (2012)", note: "Recording compliance defects block nonjudicial foreclosure without depriving circuit court of subject matter jurisdiction over judicial foreclosure" },
+  utsey: { cite: "Utsey v. Coos County", ref: "176 Or App 524, 32 P3d 933 (2001)", note: "Oregon justiciability can be jurisdictional in some contexts — narrower than general standing or party-status arguments" },
+  couey: { cite: "Couey v. Atkins", ref: "357 Or 460, 355 P3d 866 (2015)", note: "Supports distinction between ordinary party-status issues and true justiciability limits on judicial power" },
+  duvall: { cite: "Duvall v. McLeod", ref: "331 Or 675, 680, 20 P3d 125 (2001)", note: "ORCP 71 B(1) requires a motion for relief from default judgment to be accompanied by a responsive pleading — but that textual requirement is expressly confined to grounds (a), (b), and (c). It does not apply to a motion brought under ground (d), void judgment." },
+  ors88: { cite: "ORS 88.010", ref: "Oregon Revised Statutes", note: "Authorizes judicial foreclosure; conditions the remedy on the plaintiff being the holder of the lien being foreclosed — the statutory predicate for the court's foreclosure power" },
+  orcp71b: { cite: "ORCP 71 B(1)(d)", ref: "Oregon Rules of Civil Procedure", note: "Court shall relieve a party from a void judgment — mandatory, not discretionary; no time limit; no excusable neglect showing required. The accompanying-pleading requirement of ORCP 71 B(1) applies only to grounds (a), (b), and (c) — not to ground (d)." },
+  orcp71c: { cite: "ORCP 71 C", ref: "Oregon Rules of Civil Procedure", note: "Preserves court's inherent power to set aside judgment procured by fraud on the court; no time limitation" },
+  orcp9: { cite: "ORCP 9 / ORS 9.390", ref: "Oregon Rules of Civil Procedure", note: "Affirmative duty to serve unrepresented party directly; cannot serve through withdrawn counsel" },
+};
+const phases = [
+  {
+    id: 1, label: "Phase 1", dates: "2017 – Jul 10, 2018",
+    title: "Active Litigation", subtitle: "Filing through Glascock withdrawal",
+    color: "#4A7C9E",
+    events: ["Foreclosure complaint filed in OC10's name", "TLH files Answer & Counterclaims (Feb 12, 2018)", "Myers appears as Plaintiff's counsel — conflict undisclosed", "2012 MERS Assignment to OC11 exists in public record"],
+    successor: {
+      active: true, label: "TLH SUCCESSOR ▶ ACTIVE", cites: ["heritage", "orcp71c"],
+      text: "The Successor Grantee inherits TLH's preserved affirmative defenses. TLH litigated — but Myers's undisclosed conflict structurally suppressed the OC10/OC11 and lien-holder defenses. No voluntary waiver occurred because the mechanism of concealment was already operating."
+    },
+    thirdParty: {
+      active: false, label: "INDEPENDENT THIRD PARTY ▶ NOT YET IMPLICATED", cites: [],
+      text: "The subsequent grantee had no legal existence in this proceeding. No notice, no counsel, no role."
+    },
+    jurisdiction: {
+      cites: ["ors88", "hinkle", "haley", "orcp71c"],
+      text: "CRITICAL REFRAME: Under Hinkle, the OC10/OC11 defect is better characterized as a real-party-in-interest / entitlement-to-enforce defect — not pure subject matter jurisdiction. The circuit court had power to hear a judicial foreclosure, but OC10 was never entitled to exercise that power. Deploy OC10/OC11 as: (1) evidence Myers's conflict suppressed a dispositive merits defense, and (2) the anchor for judicial estoppel against reformation — not as a standalone void-judgment hook."
+    },
+    reformation: {
+      cites: ["hinkle", "harmon"],
+      text: "Substituting OC11 now cannot retroactively establish that OC10 was the proper party at filing. Plaintiff's own conduct in every related proceeding — the Garboden bankruptcy, the Shellpoint proof of claim, counsel's OC11 admission in 24CV21417 — judicially estops that argument. Under Harmon, misidentification of an entirely different entity cannot be retroactively cured."
+    },
+    judicialBar: {
+      cites: ["heritage", "orcp71c", "portland"],
+      text: "Myers's undisclosed conflict bars any claim that TLH waived the OC10/OC11 defect during this phase. A party cannot waive what was actively concealed by opposing counsel's fraud. The undisclosed conflict constitutes extrinsic fraud under ORCP 71 C, for which Portland Gen. Elec. holds no time limitation applies."
+    },
+  },
+  {
+    id: 2, label: "Phase 2", dates: "Jul 10, 2018 – Jul 30, 2019",
+    title: "Deliberate Exclusion", subtitle: "Withdrawal through judgment",
+    color: "#9E4A4A",
+    events: ["Glascock withdraws; TLH unrepresented (Jul 10, 2018)", "Return — Mail entry: service failing (Jan 23, 2019)", "MSJ mailed to withdrawn counsel (Feb 20, 2019)", "Myers names Baron at hearing — then ignores her", "Feb 27: 'now known as FITE' misrepresentation to Court", "FITE dissolved Oct 11, 2018 — 4 months prior", "Judgment entered Jul 30, 2019"],
+    successor: {
+      active: true, label: "TLH SUCCESSOR ▶ DEFECT INHERITED, NOT WAIVER", cites: ["jasper", "orcp9"],
+      text: "TLH's 'inaction' was involuntary — produced by Plaintiff's deliberate circumvention of service. Waiver requires knowing and voluntary relinquishment. A successor inherits title claims; they cannot inherit a manufactured waiver caused by the opposing party's own fraud."
+    },
+    thirdParty: {
+      active: true, label: "INDEPENDENT THIRD PARTY ▶ COMPLETE IMMUNITY", cites: ["portland", "orcp71b"],
+      text: "The subsequent grantee had zero role in these proceedings and received no notice of the MSJ, the hearing, or the judgment. No action or inaction by an absent non-party can constitute a waiver of rights."
+    },
+    jurisdiction: {
+      cites: ["portland", "orcp71b", "jasper", "orcp9"],
+      text: "The court entered judgment without personal jurisdiction over TLH. Service was deliberately routed to withdrawn counsel while Myers identified Baron by name at the hearing itself. A judgment entered without personal jurisdiction is void — not voidable — under Portland Gen. Elec. and must be set aside under ORCP 71 B(1)(d). This is the strongest void-judgment hook: entirely separate from the OC10/OC11 merits question and not subject to the Hinkle real-party-in-interest reframe."
+    },
+    reformation: {
+      cites: ["harmon", "orcp71c"],
+      text: "The 'nka FITE' misrepresentation is the heart of the fraud. Plaintiff's own counsel correctly captioned TLH as a standalone defendant in Case 18CV51697 three months later — this is misidentification of an entirely different legal entity, not a correctable misnomer under Harmon. Retroactive reformation cannot cure a proceeding infected by false sworn declarations and oral misrepresentations to the court."
+    },
+    judicialBar: {
+      cites: ["orcp71c", "heritage", "harmon"],
+      text: "Judicial estoppel: Plaintiff cannot claim mistake in 17CV38591 while demonstrating actual knowledge of correct identity in 18CV51697 filed three months after the Feb 27 hearing. The false Harrington and Carter declarations constitute fraud on the court. ORCP 71 C preserves the court's inherent power to set aside such judgments with no time limitation; Heritage Props. confirms undisclosed conflicts qualify as extrinsic fraud."
+    },
+  },
+  {
+    id: 3, label: "Phase 3", dates: "Jul 30, 2019 – Dec 20, 2021",
+    title: "Gap Period", subtitle: "Judgment through Successor Grantee Acquisition",
+    color: "#7A6E3A",
+    events: ["Void judgment on record", "No recorded sheriff's sale deed conveying title", "CWALT remittance data: no liquidation event (27+ months)", "TLH remains legally active Oregon LLC", "Shellpoint/NewRez servicing continues — contradictory documents"],
+    successor: {
+      active: true, label: "TLH SUCCESSOR ▶ VOID JUDGMENT CANNOT RIPEN", cites: ["orcp71b", "citizens", "portland"],
+      text: "TLH theoretically could have moved to vacate during this window. ORCP 71 B(1)(d) contains no time limit for void judgments. Citizens Sav. & Loan expressly holds no time limitation applies. A void judgment cannot ripen into a valid one through the passage of time or the inaction of any party."
+    },
+    thirdParty: {
+      active: false, label: "INDEPENDENT THIRD PARTY ▶ NOT YET ACQUIRED", cites: [],
+      text: "The subsequent grantee did not yet hold title and had no duty to investigate a proceeding with which it had no connection."
+    },
+    jurisdiction: {
+      cites: ["portland", "citizens", "orcp71b"],
+      text: "The absence of a recorded sheriff's sale deed during this entire period corroborates that no valid foreclosure was completed. The CWALT remittance data showing no liquidation event recorded 27+ months post-purported-sale is direct evidence the court's foreclosure order produced no legal effect. Portland Gen. Elec. holds a void judgment has no legal force whatever and cannot transfer title."
+    },
+    reformation: {
+      cites: ["portland", "citizens", "orcp71b"],
+      text: "The gap between judgment and acquisition is not evidence of ratification. A void judgment cannot be ratified by the passage of time — by any party, including TLH. Laches does not run against a void judgment. The opponent's ratification argument asks the court to allow a void judgment to become valid by estoppel — which the void/voidable distinction categorically prohibits."
+    },
+    judicialBar: {
+      cites: ["citizens", "orcp71b", "portland"],
+      text: "Laches cannot run against a void judgment. ORCP 71 B(1)(d) codifies this rule — relief is mandatory with no time limit stated. Citizens Sav. & Loan expressly holds no time limitation applies. Portland Gen. Elec. confirms such judgments may be attacked at any time, in any place, directly or collaterally."
+    },
+  },
+  {
+    id: 4, label: "Phase 4", dates: "Dec 20, 2021 – Present",
+    title: "Successor Grantee Independent Rights", subtitle: "Acquisition forward",
+    color: "#3A7A4A",
+    events: ["Bargain and Sale Deed from TLH recorded Dec 20, 2021", "WFG title search: assignment runs to OC11, not OC10", "Shellpoint Proof of Claim (Sep 2022): names OC11", "Tracey Baron email (Sep 2023): confirms no judgment against TLH", "Chapter 13: OC11 named in Shellpoint proof of claim", "Case 24CV21417: Plaintiff's own counsel confirms OC11"],
+    successor: {
+      active: true, label: "TLH SUCCESSOR ▶ FULL SUBSTANTIVE DEFENSES", cites: ["portland", "orcp71b", "heritage"],
+      text: "As TLH's grantee, the successor holds all of TLH's preserved title claims and substantive defenses to the lien's validity. The OC10/OC11 defect, the undisclosed counsel conflict, and TLH's unadjudicated counterclaims flow through the chain of title."
+    },
+    thirdParty: {
+      active: true, label: "INDEPENDENT THIRD PARTY ▶ INDEPENDENT ORCP 71 MOVANT", cites: ["orcp71b", "jasper"],
+      text: "A successor occupant/grantee holds an independent right under ORCP 71 as a person whose property rights are directly threatened by a void judgment entered in proceedings from which the grantee was entirely absent, having conducted a WFG title search showing no completed transfer in the public record. Jasper confirms relief is mandatory — no excusable neglect or diligence showing required."
+    },
+    jurisdiction: {
+      cites: ["ors88", "hinkle", "orcp71b", "portland"],
+      text: "Post-acquisition evidence — Shellpoint's proof of claim naming OC11, the CWALT remittance data, Plaintiff's own counsel's OC11 admission — confirms OC10 was never the entity entitled to enforce the lien under ORS 88.010. Under Hinkle, this is the entitlement-to-enforce defect that, combined with the personal jurisdiction void from Phase 2, makes the judgment unenforceable on multiple independent grounds."
+    },
+    reformation: {
+      cites: ["harmon", "hinkle", "portland", "orcp71b"],
+      text: "Plaintiff's post-judgment conduct judicially estops retroactive reformation. Having filed a federal bankruptcy proof of claim as OC11, Plaintiff cannot maintain OC10 was the proper foreclosing party. Harmon bars retroactive cure of misidentification. The void nature of the judgment means there is nothing to reform — a nullity cannot be amended into a valid judgment."
+    },
+    judicialBar: {
+      cites: ["orcp71b", "jasper", "portland"],
+      text: "Any reliance by Plaintiff on its own fraudulently obtained void judgment is not cognizable equitable reliance. Plaintiff's adequate legal remedy — malpractice or E&O claims against ZBS — negates any equity argument. Equity will not act where an adequate legal remedy exists. ORCP 71 B(1)(d) requires no showing of excusable neglect; Jasper confirms this requirement applies only to subsections (a)–(c)."
+    },
+  },
+];
+const traps = [
+  { attack: "Res judicata / claim preclusion", arg: "Successor is in privity with TLH; TLH litigated and lost", phase: 2, cites: ["portland", "orcp71b", "orcp9"],
+    defense: "Privity-based preclusion requires the predecessor had a full and fair opportunity to litigate. TLH was denied that opportunity by fraud and deliberate circumvention of service in Phase 2. No full and fair opportunity → no preclusion." },
+  { attack: "Issue preclusion / collateral estoppel", arg: "OC10/OC11 could have been raised by TLH", phase: 1, cites: ["portland", "heritage", "orcp71c"],
+    defense: "A void judgment has no preclusive effect on any issue. You cannot use a null proceeding to bar challenges to its own validity. Additionally, Myers's undisclosed conflict suppressed this defense in Phase 1 — Heritage Props. holds such conduct constitutes extrinsic fraud." },
+  { attack: "Waiver of jurisdictional defect", arg: "TLH appeared without raising OC10/OC11", phase: 1, cites: ["orcp71b", "portland", "jasper"],
+    defense: "Subject matter jurisdiction cannot be waived. Portland Gen. Elec. holds void judgments may be attacked at any time. The personal jurisdiction void (Phase 2) requires no waiver analysis — TLH never received the dispositive motion. Jasper: relief is mandatory." },
+  { attack: "Laches / untimeliness", arg: "Too much time has passed; rights were slept on", phase: 3, cites: ["orcp71b", "citizens", "portland"],
+    defense: "ORCP 71 B(1)(d) contains no time limit for void judgments — the rule is categorical and mandatory. Citizens Sav. & Loan expressly holds no time limitation applies. Laches cannot run against a void judgment. Portland Gen. Elec. confirms attack is available at any time." },
+  { attack: "BFP / third-party reliance", arg: "Plaintiff or its successors relied on the judgment", phase: 4, cites: ["portland", "orcp71b", "jasper"],
+    defense: "Reliance on one's own fraudulently obtained void judgment is not cognizable equitable reliance. Plaintiff's adequate legal remedy (ZBS malpractice/E&O) negates any equity argument. The successor grantee is the innocent third-party purchaser. WFG title search confirmed no completed transfer in the public record." },
+  { attack: "Diligence / excusable neglect", arg: "Failure to investigate before acquiring", phase: 4, cites: ["orcp71b", "jasper"],
+    defense: "ORCP 71 B(1)(d) requires no showing of excusable neglect — that requirement applies only to subsections (a)–(c). Jasper confirms relief from a void judgment is mandatory regardless of diligence. WFG title search was conducted; no completed transfer appeared in the public record." },
+  { attack: "Ratification", arg: "Successor accepted TLH's position and ratified the proceedings", phase: 3, cites: ["portland", "orcp71b", "citizens"],
+    defense: "Void judgments cannot be ratified by any party. Portland Gen. Elec. holds the void judgment 'has no legal force or effect whatever' — there is nothing to ratify. A nullity cannot become valid by acceptance, passage of time, or subsequent conduct." },
+  { attack: "Retroactive reformation / OC11 substitution", arg: "Substituting OC11 now cures the entity defect", phase: 4, cites: ["harmon", "hinkle", "portland", "orcp71b"],
+    defense: "Harmon bars retroactive cure of misidentification vs. mere misnomer. A court cannot retroactively acquire jurisdiction it never possessed. Hinkle establishes OC10 was never the party entitled to enforce — not a correctable caption error. Judicial estoppel (Shellpoint POC + counsel's own OC11 admission) independently bars this." },
+  { attack: "Accompanying-pleading defect", arg: "The ORCP 71 motion lacks a mandatory accompanying pleading", phase: 4, cites: ["orcp71b", "duvall"],
+    defense: "The accompanying-pleading requirement construed in Duvall v. McLeod is textually confined to ORCP 71 B(1) grounds (a), (b), and (c). This motion is brought under ground (d) — void judgment — which carries no such requirement. Any Complaint in Intervention tendered alongside the concurrent ORCP 33 B motion is a voluntary, prudential submission, not a Duvall-mandated one, and its status does not condition the validity of this motion." },
+];
+const pillars = [
+  { key: "jurisdiction", label: "Court Jurisdiction", icon: "⚖", color: "#4A7C9E" },
+  { key: "reformation", label: "Anti-Reformation", icon: " ", color: "#9E4A4A" },
+  { key: "judicialBar", label: "Judicial / Estoppel Bars", icon: " ", color: "#7A6E3A" },
+];
+
+
+    const state = {
+      activePhase: null,
+      activePillar: "jurisdiction",
+      activeTrap: null,
+      activeCite: null,
+      showAuthorities: false
+    };
+
+    function shortName(id) {
+      const a = authorities[id];
+      if (!a) return id;
+      if (id.startsWith("orcp") || id.startsWith("ors")) return a.cite;
+      const parts = a.cite.split(" v. ");
+      return parts.length > 1 ? parts[1].split(",")[0].split(" ")[0] : a.cite.split(",")[0];
+    }
+
+    function renderCiteTag(id) {
+      const isActive = state.activeCite === id;
+      return `<span class="cite-tag ${isActive ? 'active' : ''}" onclick="event.stopPropagation(); toggleCite('${id}')">${shortName(id)}</span>`;
+    }
+
+    function toggleCite(id) {
+      state.activeCite = state.activeCite === id ? null : id;
+      render();
+    }
+
+    function togglePhase(id) {
+      state.activePhase = state.activePhase === id ? null : id;
+      render();
+    }
+
+    function setPillar(key) {
+      state.activePillar = key;
+      render();
+    }
+
+    function toggleTrap(idx) {
+      state.activeTrap = state.activeTrap === idx ? null : idx;
+      render();
+    }
+
+    function toggleShowAuthorities() {
+      state.showAuthorities = !state.showAuthorities;
+      render();
+    }
+
+    function render() {
+      const phase = phases.find(p => p.id === state.activePhase);
+      let html = '';
+
+      // Floating cite panel
+      if (state.activeCite && authorities[state.activeCite]) {
+        const auth = authorities[state.activeCite];
+        html += `
+          <div class="floating-cite">
+            <div style="font-size: 10px; letter-spacing: 2px; color: #8A7A6A; margin-bottom: 4px;">AUTHORITY</div>
+            <div style="font-size: 13px; color: #D4B896; font-weight: bold; margin-bottom: 2px;">${auth.cite}</div>
+            <div style="font-size: 10px; color: #8A7A6A; margin-bottom: 8px;">${auth.ref}</div>
+            <div style="font-size: 12px; color: #C0B8A8; line-height: 1.55;">${auth.note}</div>
+            <div onclick="toggleCite('${state.activeCite}')" style="margin-top: 10px; font-size: 10px; color: #6A6050; cursor: pointer; text-align: right;">✕ dismiss</div>
+          </div>
+        `;
+      }
+
+      // Header
+      html += `
+        <div style="text-align: center; margin-bottom: 28px;">
+          <div style="font-size: 11px; letter-spacing: 4px; color: #8A7A6A; text-transform: uppercase; margin-bottom: 8px;">Case No. 17CV38591 · ORCP 71 B(1)(d) & 71 C</div>
+          <h1 style="font-size: 26px; font-weight: normal; color: #D4B896; margin: 0 0 6px; letter-spacing: 1px;">The Privity Paradox</h1>
+          <div style="font-size: 13px; color: #8A7A6A; font-style: italic; margin-bottom: 8px;">Dual legal identity · Phase-by-phase jurisdiction map · Preclusion immunity grid</div>
+          <div style="font-size: 11px; color: #554A40;">
+            Click <span class="cite-tag">citation tags</span> anywhere to view authority · Click phases and traps to expand
+          </div>
+        </div>
+      `;
+
+      // Identity Key
+      html += `
+        <div class="identity-row">
+          <div class="identity-box" style="border: 1px solid #4A7C9E55; border-left: 3px solid #4A7C9E; background: #4A7C9E11;">
+            <div style="font-size: 12px; font-weight: bold; color: #4A7C9E; letter-spacing: 0.5px;">TLH Successor in Interest</div>
+            <div style="font-size: 11px; color: #8A7A6A; margin-top: 3px;">Inherits preserved defenses — not manufactured waivers</div>
+          </div>
+          <div class="identity-box" style="border: 1px solid #3A7A4A55; border-left: 3px solid #3A7A4A; background: #3A7A4A11;">
+            <div style="font-size: 12px; font-weight: bold; color: #3A7A4A; letter-spacing: 0.5px;">Independent Third Party</div>
+            <div style="font-size: 11px; color: #8A7A6A; margin-top: 3px;">Never a party — complete immunity from preclusion</div>
+          </div>
+        </div>
+      `;
+
+      // Phase Timeline
+      html += `
+        <div style="margin-bottom: 20px;">
+          <div style="font-size: 10px; letter-spacing: 3px; color: #6A6050; text-transform: uppercase; margin-bottom: 10px;">▸ Click a phase to explore</div>
+          <div class="phases-grid">
+      `;
+
+      phases.forEach(p => {
+        const isAct = state.activePhase === p.id;
+        html += `
+          <div class="phase-card" onclick="togglePhase(${p.id})" style="
+            border: 1px solid ${isAct ? p.color : p.color + '44'};
+            border-top: 3px solid ${p.color};
+            background: ${isAct ? p.color + '22' : p.color + '08'};
+          ">
+            <div style="font-size: 10px; letter-spacing: 2px; color: ${p.color}; margin-bottom: 4px;">${p.label}</div>
+            <div style="font-size: 13px; color: #E8E0D0; font-weight: bold; margin-bottom: 3px;">${p.title}</div>
+            <div style="font-size: 10px; color: #8A7A6A; margin-bottom: 5px;">${p.dates}</div>
+            <div style="font-size: 10px; color: #8A7A6A; font-style: italic; margin-bottom: 10px;">${p.subtitle}</div>
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <div style="font-size: 9px; padding: 2px 6px; border-radius: 3px; background: ${p.successor.active ? '#4A7C9E33' : '#ffffff0A'}; color: ${p.successor.active ? '#6AA8CE' : '#554A40'}; letter-spacing: 0.5px;">
+                ${p.successor.active ? '●' : '○'} TLH SUCCESSOR
+              </div>
+              <div style="font-size: 9px; padding: 2px 6px; border-radius: 3px; background: ${p.thirdParty.active ? '#3A7A4A33' : '#ffffff0A'}; color: ${p.thirdParty.active ? '#6ACA7A' : '#554A40'}; letter-spacing: 0.5px;">
+                ${p.thirdParty.active ? '●' : '○'} INDEPENDENT PARTY
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div></div>`;
+
+      // Phase Detail
+      if (phase) {
+        html += `
+          <div style="border: 1px solid ${phase.color}55; border-left: 4px solid ${phase.color}; background: #141A22; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 14px;">
+              <div style="font-size: 18px; color: ${phase.color}; font-weight: bold;">${phase.title}</div>
+              <div style="font-size: 11px; color: #8A7A6A; font-style: italic;">${phase.dates}</div>
+            </div>
+            <div style="margin-bottom: 14px;">
+              <div style="font-size: 10px; letter-spacing: 2px; color: #6A6050; margin-bottom: 7px;">KEY EVENTS</div>
+              <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                ${phase.events.map(e => `<div style="font-size: 11px; background: ${phase.color}18; border: 1px solid ${phase.color}33; border-radius: 4px; padding: 3px 8px; color: #C8C0B0;">${e}</div>`).join('')}
+              </div>
+            </div>
+            <div class="detail-grid">
+              <div style="background: ${phase.successor.active ? '#4A7C9E15' : '#1A1A1A'}; border: 1px solid ${phase.successor.active ? '#4A7C9E44' : '#2A2520'}; border-radius: 6px; padding: 12px; opacity: ${phase.successor.active ? 1 : 0.4};">
+                <div style="font-size: 10px; color: ${phase.successor.active ? '#4A7C9E' : '#555'}; letter-spacing: 0.5px; margin-bottom: 6px; font-weight: bold;">${phase.successor.label}</div>
+                <div style="font-size: 12px; color: #B0A898; line-height: 1.55; margin-bottom: 8px;">${phase.successor.text}</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                  ${phase.successor.cites.map(renderCiteTag).join('')}
+                </div>
+              </div>
+              <div style="background: ${phase.thirdParty.active ? '#3A7A4A15' : '#1A1A1A'}; border: 1px solid ${phase.thirdParty.active ? '#3A7A4A44' : '#2A2520'}; border-radius: 6px; padding: 12px; opacity: ${phase.thirdParty.active ? 1 : 0.4};">
+                <div style="font-size: 10px; color: ${phase.thirdParty.active ? '#3A7A4A' : '#555'}; letter-spacing: 0.5px; margin-bottom: 6px; font-weight: bold;">${phase.thirdParty.label}</div>
+                <div style="font-size: 12px; color: #B0A898; line-height: 1.55; margin-bottom: 8px;">${phase.thirdParty.text}</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                  ${phase.thirdParty.cites.map(renderCiteTag).join('')}
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 10px; letter-spacing: 2px; color: #6A6050; margin-bottom: 8px;">STRATEGIC APPLICATION — click pillar to select</div>
+              <div class="pillars-row">
+                ${pillars.map(pillar => `
+                  <div class="pillar-card" onclick="setPillar('${pillar.key}')" style="
+                    background: ${state.activePillar === pillar.key ? pillar.color + '22' : '#1A1A1A'};
+                    border: 1px solid ${state.activePillar === pillar.key ? pillar.color + '77' : '#2A2520'};
+                  ">
+                    <div style="font-size: 11px; color: ${pillar.color}; margin-bottom: 6px; font-weight: bold;">${pillar.icon} ${pillar.label}</div>
+                    <div style="font-size: 11px; color: #A0988A; line-height: 1.55; margin-bottom: 8px;">${phase[pillar.key].text}</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                      ${phase[pillar.key].cites.map(renderCiteTag).join('')}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Preclusion Traps Grid
+      html += `
+        <div style="margin-bottom: 24px;">
+          <div style="font-size: 10px; letter-spacing: 3px; color: #6A6050; text-transform: uppercase; margin-bottom: 10px;">▸ Preclusion Trap Immunity Grid</div>
+          <div class="traps-grid">
+      `;
+
+      traps.forEach((trap, i) => {
+        const p = phases.find(ph => ph.id === trap.phase);
+        const isAct = state.activeTrap === i;
+        html += `
+          <div class="trap-card" onclick="toggleTrap(${i})" style="
+            border: 1px solid ${isAct ? p.color + '88' : '#2A2520'};
+            border-left: 3px solid ${p.color};
+            background: ${isAct ? p.color + '15' : '#111820'};
+          ">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="flex: 1;">
+                <div style="font-size: 12px; color: #D4B896; font-weight: bold; margin-bottom: 3px;">${trap.attack}</div>
+                <div style="font-size: 11px; color: #8A7A6A; font-style: italic;">Opposing argument: ${trap.arg}</div>
+              </div>
+              <div style="font-size: 9px; color: ${p.color}; letter-spacing: 1px; margin-left: 8px; white-space: nowrap;">PH.${trap.phase}</div>
+            </div>
+            ${isAct ? `
+              <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid ${p.color}33;">
+                <div style="font-size: 12px; color: #B0A898; line-height: 1.6; margin-bottom: 8px;">
+                  <span style="color: #6ACA7A; font-weight: bold;">▶ DEFENSE: </span>${trap.defense}
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                  ${trap.cites.map(renderCiteTag).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      });
+
+      html += `</div></div>`;
+
+      // Table of Authorities
+      html += `
+        <div style="margin-bottom: 24px;">
+          <div onclick="toggleShowAuthorities()" style="font-size: 10px; letter-spacing: 3px; color: #6A6050; text-transform: uppercase; margin-bottom: 10px; cursor: pointer;">
+            ${state.showAuthorities ? '▾' : '▸'} Table of Authorities (${Object.keys(authorities).length} sources)
+          </div>
+      `;
+
+      if (state.showAuthorities) {
+        html += `<div style="display: grid; gap: 5px;">`;
+        Object.entries(authorities).forEach(([key, a]) => {
+          const isAct = state.activeCite === key;
+          html += `
+            <div onclick="toggleCite('${key}')" style="
+              background: ${isAct ? '#1A1208' : '#111820'};
+              border: 1px solid ${isAct ? '#D4B89666' : '#2A2520'};
+              border-left: 2px solid ${isAct ? '#D4B896' : '#3A3028'};
+              border-radius: 4px; padding: 8px 12px; cursor: pointer; transition: all 0.15s;
+            ">
+              <span style="font-size: 12px; color: #D4B896;">${a.cite}</span>
+              <span style="font-size: 11px; color: #6A6050; margin-left: 10px;">${a.ref}</span>
+              ${isAct ? `<div style="font-size: 11px; color: #A0988A; margin-top: 5px; line-height: 1.5;">${a.note}</div>` : ''}
+            </div>
+          `;
+        });
+        html += `</div>`;
+      }
+
+      html += `</div>`;
+
+      // Anchor Language
+      html += `
+        <div style="border: 1px solid #D4B89633; border-left: 4px solid #D4B896; background: #141008; border-radius: 6px; padding: 16px 20px;">
+          <div style="font-size: 10px; letter-spacing: 2px; color: #6A6050; margin-bottom: 8px;">ANCHOR LANGUAGE FOR MOTION</div>
+          <div style="font-size: 13px; color: #D4B896; line-height: 1.7;">
+            Movant asserts these grounds both as TLH's successor in interest to the title acquired in December 2021, and independently as a non-party whose property rights are directly threatened by a judgment entered in proceedings from which she was entirely absent. The former position gives her TLH's preserved substantive defenses; the latter position gives her complete immunity from any waiver, forfeiture, or preclusion argument grounded in the conduct — or absence — of any party to the underlying proceeding.
+          </div>
+          <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px;">
+            ${["orcp71b", "orcp71c", "jasper", "portland", "citizens", "heritage"].map(renderCiteTag).join('')}
+          </div>
+        </div>
+
+        <div style="border: 1px solid #6A605033; border-left: 4px solid #6A6050; background: #10141A; border-radius: 6px; padding: 16px 20px; margin-top: 16px;">
+          <div style="font-size: 10px; letter-spacing: 2px; color: #6A6050; margin-bottom: 8px;">PROCEDURAL NOTE — ACCOMPANYING PLEADING</div>
+          <div style="font-size: 13px; color: #D4B896; line-height: 1.7;">
+            Although ORCP 71 B(1) requires an accompanying pleading for motions under grounds (a), (b), and (c), that requirement does not extend to ground (d), under which this motion is brought. Movant has nonetheless tendered a proposed Complaint in Intervention with her concurrent ORCP 33 B motion, out of an abundance of caution — not because intervention is a prerequisite to tendering that pleading, but to ensure the Court has a complete picture of Movant's claims should intervention be deemed necessary.
+          </div>
+          <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px;">
+            ${["orcp71b", "duvall"].map(renderCiteTag).join('')}
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 10px; color: #3A3028; letter-spacing: 2px;">
+          17CV38591 · Click any citation tag to view authority
+        </div>
+      `;
+
+      document.getElementById('app').innerHTML = html;
+    }
+
+    render();
+  </script>
+</body>
+</html>

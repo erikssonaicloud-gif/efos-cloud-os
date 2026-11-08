@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PALADIN Jurisprudential &amp; Evidence Repository &bull; Executive Function OS</title>
+  <link rel="icon" href="favicon-paladin.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="navigation.css">
+  <link rel="stylesheet" href="kinetic_clarity_buttons.css">
+  <style>
+    :root {
+      --paladin-ink: #1C1710;
+      --paladin-ink-muted: #5C5245;
+      --paladin-paper: #FDFCF7;
+      --paladin-paper-subtle: #F7F5EE;
+      --paladin-rule: #DDD7C9;
+      --paladin-rule-light: #ECE7DA;
+      --paladin-terracotta: #C85A32;
+      --paladin-gold: #D4A346;
+      --paladin-teal: #1F5F58;
+      --paladin-teal-light: #2D7A71;
+      --paladin-teal-subtle: #E8F2F0;
+      --font-display: "Cinzel", Georgia, serif;
+      --font-body: "EB Garamond", Garamond, Georgia, serif;
+      --font-technical: "JetBrains Mono", SF Mono, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--paladin-paper);
+      color: var(--paladin-ink);
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Utility Banner */
+    .top-banner {
+      background: var(--paladin-ink);
+      color: #FFFDF9;
+      font-family: var(--font-technical);
+      font-size: 0.76rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--paladin-gold);
+    }
+
+    .top-banner a {
+      color: var(--paladin-gold);
+      text-decoration: none;
+    }
+
+    /* Primary Navigation */
+    header {
+      background: #FFFDF9;
+      border-bottom: 1px solid var(--paladin-rule);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(28, 23, 16, 0.04);
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: var(--paladin-ink);
+    }
+
+    .brand-logo-img {
+      width: 38px;
+      height: 38px;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      color: var(--paladin-ink);
+    }
+
+    .brand-sub {
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      color: var(--paladin-terracotta);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      font-family: var(--font-technical);
+      font-size: 0.82rem;
+    }
+
+    .nav-links a {
+      color: var(--paladin-ink);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--paladin-terracotta);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* Hero / Header Area */
+    .repo-hero {
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    .repo-eyebrow {
+      font-family: var(--font-technical);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--paladin-teal);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .repo-title {
+      font-family: var(--font-display);
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--paladin-ink);
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+
+    .repo-lead {
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 1.15rem;
+      color: var(--paladin-ink-muted);
+      line-height: 1.55;
+    }
+
+    /* Search & Filter Control Deck */
+    .search-deck {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      border-top: 4px solid var(--paladin-teal);
+      padding: 1.75rem 2rem;
+      box-shadow: 0 4px 16px rgba(28, 23, 16, 0.04);
+      margin-bottom: 2.5rem;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      margin-bottom: 1.25rem;
+    }
+
+    .search-input {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      padding: 0.85rem 3rem 0.85rem 1.25rem;
+      border: 2px solid var(--paladin-rule);
+      background: #FFF;
+      color: var(--paladin-ink);
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--paladin-teal);
+      box-shadow: 0 0 0 3px rgba(31, 95, 88, 0.15);
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: var(--paladin-ink-muted);
+      cursor: pointer;
+      display: none;
+    }
+
+    .search-clear-btn.active {
+      display: block;
+    }
+
+    /* Category Filter Chips */
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .filter-chip {
+      background: var(--paladin-paper-subtle);
+      border: 1px solid var(--paladin-rule);
+      padding: 0.35rem 0.85rem;
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      color: var(--paladin-ink-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .filter-chip:hover {
+      background: #FFF;
+      color: var(--paladin-ink);
+      border-color: var(--paladin-teal);
+    }
+
+    .filter-chip.active {
+      background: var(--paladin-teal);
+      color: #FFF;
+      border-color: var(--paladin-teal);
+      font-weight: 600;
+    }
+
+    /* Meta & Sorting Bar */
+    .deck-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-top: 1px solid var(--paladin-rule-light);
+      padding-top: 1rem;
+      font-family: var(--font-technical);
+      font-size: 0.82rem;
+      color: var(--paladin-ink-muted);
+    }
+
+    .sort-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sort-select {
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--paladin-rule);
+      background: #FFF;
+      color: var(--paladin-ink);
+      outline: none;
+    }
+
+    /* Results Grid */
+    .results-count-banner {
+      margin-bottom: 1.25rem;
+      font-family: var(--font-technical);
+      font-size: 0.88rem;
+      color: var(--paladin-ink-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Document Card */
+    .doc-card {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
+    }
+
+    .doc-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(28, 23, 16, 0.06);
+      border-color: var(--paladin-teal);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 0.5rem;
+    }
+
+    .cat-badge {
+      font-family: var(--font-technical);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .cat-bankruptcy { background: #FEE2E2; color: #991B1B; }
+    .cat-scholarship { background: #FEF3C7; color: #92400E; }
+    .cat-caselaw { background: #E0E7FF; color: #3730A3; }
+    .cat-forensic { background: #DCFCE7; color: #166534; }
+    .cat-securitization { background: #FFEDD5; color: #9A3412; }
+    .cat-deeds { background: #F1F5F9; color: #334155; }
+    .cat-misc { background: var(--paladin-paper-subtle); color: var(--paladin-ink-muted); }
+
+    .page-pill {
+      font-family: var(--font-technical);
+      font-size: 0.7rem;
+      color: var(--paladin-ink-muted);
+      background: var(--paladin-paper-subtle);
+      border: 1px solid var(--paladin-rule-light);
+      padding: 0.15rem 0.4rem;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--paladin-ink);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-docket {
+      font-family: var(--font-technical);
+      font-size: 0.78rem;
+      color: var(--paladin-terracotta);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-snippet {
+      font-size: 0.92rem;
+      color: var(--paladin-ink-muted);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--paladin-rule-light);
+      padding-top: 0.75rem;
+      font-family: var(--font-technical);
+      font-size: 0.72rem;
+      color: var(--paladin-ink-muted);
+    }
+
+    .highlight {
+      background-color: #FEF08A;
+      font-weight: 600;
+      padding: 0 0.15rem;
+      border-radius: 1px;
+    }
+
+    /* Modal / Detail Drawer */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-panel {
+      background: #FFFDF9;
+      border: 1px solid var(--paladin-rule);
+      border-top: 5px solid var(--paladin-terracotta);
+      max-width: 720px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--paladin-ink-muted);
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--paladin-ink);
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem 1.5rem;
+      background: var(--paladin-paper-subtle);
+      border: 1px solid var(--paladin-rule);
+      padding: 1.25rem;
+      margin: 1.25rem 0;
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+    }
+
+    .modal-meta-item strong {
+      display: block;
+      color: var(--paladin-ink-muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      margin-bottom: 0.15rem;
+    }
+
+    .modal-snippet-box {
+      background: #FFF;
+      border: 1px solid var(--paladin-rule);
+      padding: 1.25rem;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin: 1.25rem 0;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    /* Pagination / Loading */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: #FFFDF9;
+      border: 1px dashed var(--paladin-rule);
+      grid-column: 1 / -1;
+    }
+
+    .pagination-bar {
+      margin-top: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-technical);
+      font-size: 0.85rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--paladin-ink);
+      color: #FFFDF9;
+      padding: 3rem 1.5rem 2rem;
+      border-top: 3px solid var(--paladin-gold);
+      margin-top: 5rem;
+    }
+
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-family: var(--font-technical);
+      font-size: 0.8rem;
+      color: #A8A29E;
+    }
+
+    @media (max-width: 768px) {
+      .repo-title { font-size: 2.1rem; }
+      .results-grid { grid-template-columns: 1fr; }
+      .modal-meta-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Utility Banner -->
+  <div class="top-banner">
+    <div>EXECUTIVE FUNCTION OS &bull; JURIDICAL DEFENSE PROFILE</div>
+    <div>
+      <a href="paladin.html">&larr; Return to PALADIN Suite</a> &bull;
+      <a href="index.html">System Hub</a>
+    </div>
+  </div>
+
+  <!-- Primary Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="paladin.html" class="brand-link" title="Return to PALADIN">
+        <img src="paladin-knight-mark.svg" alt="Paladin Mark" class="brand-logo-img">
+        <div>
+          <div class="brand-title">PALADIN REPOSITORY</div>
+          <div class="brand-sub">The Jurisprudential &amp; Evidence Archive</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" style="color:var(--paladin-teal); font-weight:700;">EFOS Hub</a>
+        <a href="why-paladin.html">Why PALADIN</a>
+        <a href="paladin.html">PALADIN Suite</a>
+        <a href="paladin.html#rates">Rates</a>
+        <a href="paladin.html#legal-tools">Legal Tools</a>
+        <a href="library.html" style="color:var(--paladin-terracotta); font-weight:700;">Research Archive (3,295)</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contextual Breadcrumb & Interrelation Sub-Bar -->
+  <div class="lg-breadcrumb-strip">
+    <div class="lg-breadcrumbs">
+      <a href="index.html">EFOS Hub</a>
+      <span class="lg-crumb-sep">&rsaquo;</span>
+      <a href="paladin.html">PALADIN (A2J)</a>
+      <span class="lg-crumb-sep">&rsaquo;</span>
+      <span class="lg-crumb-current">Evidence Source Library (3,295 Records)</span>
+    </div>
+    <div class="lg-interrelations-strip">
+      <span class="lg-interrelation-label">Interrelated Nodes:</span>
+      <a href="retrospective-justice-foreclosure-forensics.html" class="lg-node-pill" style="border-color:#D97706; color:#D97706; font-weight:700;">⚖ Baron Portfolio &amp; Foreclosure Aftermath</a>
+      <a href="dlcd-division47-rulemaking.html" class="lg-node-pill">🏛 DLCD Div. 47 Archive</a>
+      <a href="oregon-city-accountability-research.html" class="lg-node-pill">📊 OC Accountability Study</a>
+
+      <a href="paladin.html" class="lg-node-pill">⚖ PALADIN Pleading Suite</a>
+      <a href="timeline.html" class="lg-node-pill">📜 Master Timeline (162)</a>
+      <a href="privity.html" class="lg-node-pill">🔍 Privity Paradox</a>
+      <a href="forensic-microclimate.html" class="lg-node-pill">🛰 Forensic Microclimate</a>
+      <a href="why-paladin.html" class="lg-node-pill">🏛 Why PALADIN</a>
+      <a href="index.html#interrelations" class="lg-node-pill" style="border-color:var(--color-white-rabbit-gold); color:var(--color-white-rabbit-gold);">🧭 System Atlas &rarr;</a>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- Hero Area -->
+    <div class="repo-hero">
+      <div class="repo-eyebrow">Public Legal Research &bull; Docket Forensics &bull; Scholarship</div>
+      <h1 class="repo-title">The PALADIN Evidence Archive</h1>
+      <p class="repo-lead">
+        A searchable public repository of 3,295 curated public-record and research entries.
+      </p>
+      <div style="font-family:var(--font-technical); font-size:0.78rem; color:var(--paladin-ink-muted); margin-top:0.4rem;">
+        Count updated September 2026 &bull; Comprises appellate opinions, law review scholarship, PACER bankruptcy records, and mortgage securitization forensics.
+      </div>
+    </div>
+
+    <!-- Search & Filter Deck -->
+    <div class="search-deck">
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by case name, citation, author, docket, or forensic keyword (e.g. Iniquity, Dudley, McDonnell, ResCap)..." autofocus>
+        <button id="clearSearchBtn" class="search-clear-btn" title="Clear search">&times;</button>
+      </div>
+
+      <!-- Filter Chips -->
+      <div class="filter-chips" id="filterChips">
+        <div class="filter-chip active" data-category="ALL">All Documents (1,609)</div>
+        <div class="filter-chip" data-category="Bankruptcy / PACER Filings">Bankruptcy &amp; PACER (226)</div>
+        <div class="filter-chip" data-category="Law Reviews & Academic Scholarship">Law Reviews &amp; Scholarship (206)</div>
+        <div class="filter-chip" data-category="Case Law & Judicial Opinions">Case Law &amp; Precedents (130)</div>
+        <div class="filter-chip" data-category="Forensic Audits & Expert Affidavits">Forensic Audits &amp; Affidavits (37)</div>
+        <div class="filter-chip" data-category="Securitization & Servicing Records">Securitization &amp; Servicing (270)</div>
+        <div class="filter-chip" data-category="Deeds & Real Property Instruments">Deeds &amp; Land Records (55)</div>
+        <div class="filter-chip" data-category="Property Valuations & BPOs">Valuations &amp; BPOs (47)</div>
+      </div>
+
+      <!-- Meta / Sort Bar -->
+      <div class="deck-meta-bar">
+        <div id="deckStatusText">Loading cryptographic repository...</div>
+        <div class="sort-group">
+          <label for="sortSelect">Sort By:</label>
+          <select id="sortSelect" class="sort-select">
+            <option value="relevance">Relevance</option>
+            <option value="pages-desc">Page Count (High to Low)</option>
+            <option value="title-asc">Title (A &rarr; Z)</option>
+            <option value="date-desc">Newest First</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Header -->
+    <div class="results-count-banner">
+      <span id="resultsCount">Showing 0 matching records</span>
+      <button id="shareLinkBtn" class="sc-btn sc-outline-bracket sc-btn--sm" title="Copy sharable search link">
+        Share Search Link &sect;
+      </button>
+    </div>
+
+    <!-- Results Grid -->
+    <div class="results-grid" id="resultsGrid">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-bar" id="paginationBar">
+      <button id="prevPageBtn" class="sc-btn sc-outline-bracket sc-btn--sm" disabled>&larr; Previous</button>
+      <span id="pageInfo">Page 1 of 1</span>
+      <button id="nextPageBtn" class="sc-btn sc-outline-bracket sc-btn--sm">Next &rarr;</button>
+    </div>
+
+  </main>
+
+  <!-- Document Detail Modal -->
+  <div class="modal-backdrop" id="docModal">
+    <div class="modal-panel">
+      <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+      <span class="cat-badge" id="modalBadge">Category</span>
+      <h3 class="modal-title" id="modalTitle">Document Title</h3>
+      
+      <div class="modal-meta-grid">
+        <div class="modal-meta-item">
+          <strong>Citation / Docket</strong>
+          <span id="modalCitation">&mdash;</span>
+        </div>
+        <div class="modal-meta-item">
+          <strong>Court / Issuing Entity</strong>
+          <span id="modalIssuer">&mdash;</span>
+        </div>
+        <div class="modal-meta-item">
+          <strong>Page Count &bull; File Size</strong>
+          <span id="modalPages">&mdash;</span>
+        </div>
+        <div class="modal-meta-item">
+          <strong>Document Date</strong>
+          <span id="modalDate">&mdash;</span>
+        </div>
+        <div class="modal-meta-item" style="grid-column: 1 / -1;">
+          <strong>Original Archive Filename</strong>
+          <span id="modalFilename" style="font-size:0.75rem; word-break:break-all;">&mdash;</span>
+        </div>
+        <div class="modal-meta-item" style="grid-column: 1 / -1;">
+          <strong>SHA-256 Cryptographic Hash</strong>
+          <span id="modalSha" style="font-size:0.7rem; color:var(--paladin-terracotta); word-break:break-all;">&mdash;</span>
+        </div>
+      </div>
+
+      <div style="font-family:var(--font-technical); font-size:0.75rem; text-transform:uppercase; color:var(--paladin-ink-muted);">
+        Extracted Document Text Preview:
+      </div>
+      <div class="modal-snippet-box" id="modalSnippet">
+        <!-- Snippet text -->
+      </div>
+
+      <div class="modal-actions">
+        <button id="modalCopyBtn" class="sc-btn sc-btn-active">Copy Citation</button>
+        <a id="modalPublicLink" href="#" target="_blank" rel="noopener noreferrer" class="sc-btn sc-btn-default" style="display:none;">
+          View Public Law Review / Docket &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div>
+        <strong style="color:#FFF;">PALADIN Jurisprudential Archive</strong> &bull; Executive Function OS Juridical Profile
+      </div>
+      <div>
+        Nonprofit Access to Justice Initiative &bull; Cryptographically Verified Records
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script>
+    let allDocuments = [];
+    let filteredDocuments = [];
+    let currentPage = 1;
+    const pageSize = 24;
+    let activeCategory = 'ALL';
+
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const filterChips = document.getElementById('filterChips');
+    const sortSelect = document.getElementById('sortSelect');
+    const resultsGrid = document.getElementById('resultsGrid');
+    const resultsCount = document.getElementById('resultsCount');
+    const deckStatusText = document.getElementById('deckStatusText');
+    const paginationBar = document.getElementById('paginationBar');
+    const prevPageBtn = document.getElementById('prevPageBtn');
+    const nextPageBtn = document.getElementById('nextPageBtn');
+    const pageInfo = document.getElementById('pageInfo');
+    const shareLinkBtn = document.getElementById('shareLinkBtn');
+
+    // Modal elements
+    const docModal = document.getElementById('docModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBadge = document.getElementById('modalBadge');
+    const modalCitation = document.getElementById('modalCitation');
+    const modalIssuer = document.getElementById('modalIssuer');
+    const modalPages = document.getElementById('modalPages');
+    const modalDate = document.getElementById('modalDate');
+    const modalFilename = document.getElementById('modalFilename');
+    const modalSha = document.getElementById('modalSha');
+    const modalSnippet = document.getElementById('modalSnippet');
+    const modalCopyBtn = document.getElementById('modalCopyBtn');
+    const modalPublicLink = document.getElementById('modalPublicLink');
+
+    // Load data from library_data.json
+    async function initLibrary() {
+      try {
+        deckStatusText.textContent = "Loading cryptographic records...";
+        const resp = await fetch('library_data.json');
+        if (!resp.ok) throw new Error("Could not load library data.");
+        allDocuments = await resp.json();
+        
+        deckStatusText.textContent = `Repository ready &bull; ${allDocuments.length.toLocaleString()} verified documents loaded`;
+        
+        // Update hero lead text dynamically
+        const heroLead = document.querySelector('.repo-lead');
+        if (heroLead) {
+          heroLead.textContent = `A searchable public repository of ${allDocuments.length.toLocaleString()} curated legal authorities, appellate opinions, law review scholarship, PACER bankruptcy dockets, county deeds, and mortgage securitization forensics.`;
+        }
+
+        // Parse URL query parameters if present
+        const urlParams = new URLSearchParams(window.location.search);
+        const qParam = urlParams.get('q');
+        const catParam = urlParams.get('cat');
+        
+        if (qParam) {
+          searchInput.value = qParam;
+          clearSearchBtn.classList.add('active');
+        }
+        if (catParam) {
+          activeCategory = catParam;
+        }
+
+        // Build dynamic category counts and populate filter chips
+        buildDynamicFilterChips();
+
+        applyFilters();
+      } catch (err) {
+        deckStatusText.textContent = "Error loading repository: " + err.message;
+        resultsGrid.innerHTML = `<div class="empty-state"><h3>Failed to load document catalog</h3><p>${err.message}</p></div>`;
+      }
+    }
+
+    // Build dynamic filter chips based on all loaded documents
+    function buildDynamicFilterChips() {
+      const counts = { 'ALL': allDocuments.length };
+      allDocuments.forEach(doc => {
+        const cat = doc.category || 'Archive Document';
+        counts[cat] = (counts[cat] || 0) + 1;
+      });
+
+      const sortedCats = Object.keys(counts).filter(c => c !== 'ALL').sort((a, b) => counts[b] - counts[a]);
+
+      let html = `<div class="filter-chip ${activeCategory === 'ALL' ? 'active' : ''}" data-category="ALL">All Documents (${counts['ALL'].toLocaleString()})</div>`;
+      sortedCats.forEach(cat => {
+        const isAct = activeCategory === cat ? 'active' : '';
+        html += `<div class="filter-chip ${isAct}" data-category="${cat}">${cat} (${counts[cat].toLocaleString()})</div>`;
+      });
+
+      filterChips.innerHTML = html;
+    }
+
+    // Category styling helper
+    function getCategoryClass(cat) {
+      if (!cat) return 'cat-misc';
+      const c = cat.toLowerCase();
+      if (c.includes('bankruptcy') || c.includes('pacer')) return 'cat-bankruptcy';
+      if (c.includes('scholarship') || c.includes('law review') || c.includes('treatise')) return 'cat-scholarship';
+      if (c.includes('case law') || c.includes('opinion')) return 'cat-caselaw';
+      if (c.includes('court') || c.includes('pleading') || c.includes('motion')) return 'cat-caselaw';
+      if (c.includes('forensic') || c.includes('affidavit') || c.includes('audit')) return 'cat-forensic';
+      if (c.includes('discovery') || c.includes('evidence')) return 'cat-forensic';
+      if (c.includes('securitization') || c.includes('servicing')) return 'cat-securitization';
+      if (c.includes('deeds') || c.includes('real property') || c.includes('title')) return 'cat-deeds';
+      if (c.includes('correspondence') || c.includes('notice')) return 'cat-forensic';
+      if (c.includes('financial') || c.includes('accounting')) return 'cat-securitization';
+      return 'cat-misc';
+    }
+
+    // Highlight text helper
+    function highlightQuery(text, query) {
+      if (!query || !text) return text || '';
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`(${escaped})`, 'gi');
+      return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    // Filter & Sort
+    function applyFilters() {
+      const q = searchInput.value.trim().toLowerCase();
+      
+      filteredDocuments = allDocuments.filter(doc => {
+        // Category check
+        if (activeCategory !== 'ALL' && doc.category !== activeCategory) {
+          return false;
+        }
+
+        // Query check
+        if (!q) return true;
+
+        const inTitle = (doc.title || '').toLowerCase().includes(q);
+        const inCite = (doc.citation || '').toLowerCase().includes(q);
+        const inIssuer = (doc.issuer || '').toLowerCase().includes(q);
+        const inFname = (doc.filename || '').toLowerCase().includes(q);
+        const inSnip = (doc.snippet || '').toLowerCase().includes(q);
+
+        return inTitle || inCite || inIssuer || inFname || inSnip;
+      });
+
+      // Sort
+      const sortBy = sortSelect.value;
+      if (sortBy === 'pages-desc') {
+        filteredDocuments.sort((a, b) => (b.pages || 0) - (a.pages || 0));
+      } else if (sortBy === 'title-asc') {
+        filteredDocuments.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+      } else if (sortBy === 'date-desc') {
+        filteredDocuments.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+      }
+
+      currentPage = 1;
+      updateUrlState();
+      renderResults();
+    }
+
+    // Update URL query parameters for sharable deep-links
+    function updateUrlState() {
+      const url = new URL(window.location);
+      const q = searchInput.value.trim();
+      if (q) url.searchParams.set('q', q);
+      else url.searchParams.delete('q');
+
+      if (activeCategory !== 'ALL') url.searchParams.set('cat', activeCategory);
+      else url.searchParams.delete('cat');
+
+      window.history.replaceState({}, '', url);
+    }
+
+    // Render cards
+    function renderResults() {
+      const query = searchInput.value.trim();
+      resultsCount.textContent = `Showing ${filteredDocuments.length.toLocaleString()} matching record${filteredDocuments.length === 1 ? '' : 's'}`;
+
+      if (filteredDocuments.length === 0) {
+        resultsGrid.innerHTML = `
+          <div class="empty-state">
+            <h3 style="font-family:var(--font-display); font-size:1.4rem; margin-bottom:0.5rem;">No documents matched your search</h3>
+            <p style="color:var(--paladin-ink-muted);">Try adjusting your keywords or clearing the category filter.</p>
+          </div>
+        `;
+        paginationBar.style.display = 'none';
+        return;
+      }
+
+      paginationBar.style.display = 'flex';
+      const totalPages = Math.ceil(filteredDocuments.length / pageSize);
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+      prevPageBtn.disabled = currentPage === 1;
+      nextPageBtn.disabled = currentPage === totalPages;
+
+      const startIndex = (currentPage - 1) * pageSize;
+      const pageDocs = filteredDocuments.slice(startIndex, startIndex + pageSize);
+
+      resultsGrid.innerHTML = pageDocs.map(doc => {
+        const catClass = getCategoryClass(doc.category);
+        const highlightedTitle = highlightQuery(doc.title || doc.filename, query);
+        const highlightedSnippet = highlightQuery(doc.snippet || 'No document text preview available.', query);
+
+        return `
+          <div class="doc-card" onclick="openDocModal(${doc.id})">
+            <div class="card-top">
+              <span class="cat-badge ${catClass}">${doc.category || 'Archive'}</span>
+              <span class="page-pill">${doc.pages || 1} ${doc.pages === 1 ? 'page' : 'pages'}</span>
+            </div>
+            <div class="card-title">${highlightedTitle}</div>
+            ${doc.citation ? `<div class="card-docket">&sect; ${doc.citation}</div>` : ''}
+            <div class="card-snippet">${highlightedSnippet}</div>
+            <div class="card-footer">
+              <span>${doc.issuer ? doc.issuer.slice(0, 32) : 'Record ID: #' + doc.id}</span>
+              <span style="color:var(--paladin-terracotta); font-weight:600;">Inspect &rarr;</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Open detail modal
+    window.openDocModal = function(id) {
+      const doc = allDocuments.find(d => d.id === id);
+      if (!doc) return;
+
+      modalTitle.textContent = doc.title || doc.filename;
+      modalBadge.textContent = doc.category || 'Archive';
+      modalBadge.className = 'cat-badge ' + getCategoryClass(doc.category);
+      modalCitation.textContent = doc.citation || 'Not explicitly cited in header';
+      modalIssuer.textContent = doc.issuer || 'Local Jurisprudential Archive';
+      modalPages.textContent = `${doc.pages || 1} pages (${doc.size_kb} KB)`;
+      modalDate.textContent = doc.date || 'Unspecified';
+      modalFilename.textContent = doc.filename;
+      modalSha.textContent = doc.sha256;
+      modalSnippet.textContent = doc.snippet || 'No text snippet available.';
+
+      if (doc.public_url) {
+        modalPublicLink.href = doc.public_url;
+        modalPublicLink.style.display = 'inline-flex';
+      } else {
+        modalPublicLink.style.display = 'none';
+      }
+
+      modalCopyBtn.onclick = function() {
+        const citeText = doc.citation ? `${doc.title} (${doc.citation})` : `${doc.title} [SHA256: ${doc.sha256}]`;
+        navigator.clipboard.writeText(citeText).then(() => {
+          modalCopyBtn.textContent = 'Copied to Clipboard!';
+          setTimeout(() => { modalCopyBtn.textContent = 'Copy Citation'; }, 2000);
+        });
+      };
+
+      docModal.classList.add('active');
+    };
+
+    // Close modal
+    modalCloseBtn.onclick = () => docModal.classList.remove('active');
+    docModal.onclick = (e) => {
+      if (e.target === docModal) docModal.classList.remove('active');
+    };
+
+    // Event listeners
+    searchInput.addEventListener('input', () => {
+      if (searchInput.value.trim().length > 0) {
+        clearSearchBtn.classList.add('active');
+      } else {
+        clearSearchBtn.classList.remove('active');
+      }
+      applyFilters();
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      clearSearchBtn.classList.remove('active');
+      searchInput.focus();
+      applyFilters();
+    });
+
+    filterChips.addEventListener('click', (e) => {
+      if (e.target.classList.contains('filter-chip')) {
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        e.target.classList.add('active');
+        activeCategory = e.target.getAttribute('data-category');
+        applyFilters();
+      }
+    });
+
+    sortSelect.addEventListener('change', applyFilters);
+
+    prevPageBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderResults();
+        window.scrollTo({ top: 350, behavior: 'smooth' });
+      }
+    });
+
+    nextPageBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredDocuments.length / pageSize);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderResults();
+        window.scrollTo({ top: 350, behavior: 'smooth' });
+      }
+    });
+
+    // Share search link button
+    shareLinkBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        shareLinkBtn.textContent = 'Sharable Link Copied!';
+        setTimeout(() => { shareLinkBtn.textContent = 'Share Search Link §'; }, 2000);
+      });
+    });
+
+    // Initialize on page load
+    initLibrary();
+  </script>
+</body>
+</html>
