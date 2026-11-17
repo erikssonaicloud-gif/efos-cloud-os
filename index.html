@@ -922,13 +922,38 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      scrollbar-width: auto;
+      scrollbar-color: #475569 rgba(15, 23, 42, 0.6);
       padding: 16px;
       gap: 14px;
     }
 
+    .inspector-column::-webkit-scrollbar {
+      width: 10px;
+    }
+    .inspector-column::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    .inspector-column::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 5px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+    .inspector-column::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+      background-clip: content-box;
+    }
+
+    .inspector-column > * {
+      flex-shrink: 0;
+    }
+
     .inspector-preview-card {
       width: 100%;
-      height: 220px;
+      height: 260px;
+      min-height: 260px;
+      flex-shrink: 0;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 10px;
@@ -941,10 +966,12 @@
     }
 
     .inspector-preview-card iframe {
+      display: block;
       width: 100%;
       height: 100%;
       border: none;
       background: #FFFFFF;
+      overflow: auto;
     }
 
     .inspector-meta-title {
@@ -2444,6 +2471,10 @@ Type commands or click quick suggestions below.
       return state.staticVfs;
     }
 
+    function encodeLocalFsPath(p) {
+      return p.split("/").map(seg => encodeURIComponent(seg)).join("/");
+    }
+
     function resolveFileUrl(itemOrPath) {
       const p = typeof itemOrPath === "string" ? itemOrPath : itemOrPath.path;
       if (typeof itemOrPath === "object" && itemOrPath.static_url) {
@@ -2454,6 +2485,9 @@ Type commands or click quick suggestions below.
       }
       if (!isLocalHomeLan() && p && p.includes("Chapin_Microclimate_and_AQI_Audit/")) {
         return p.split("Chapin_Microclimate_and_AQI_Audit/")[1];
+      }
+      if (isLocalHomeLan() && p && p.startsWith("/")) {
+        return `${API_BASE}/fs${encodeLocalFsPath(p)}`;
       }
       return `${API_BASE}/api/raw?path=${encodeURIComponent(p)}`;
     }
@@ -2863,7 +2897,7 @@ Type commands or click quick suggestions below.
       if (isPDF) {
         previewCardHtml = `<iframe src="${rawUrl}" title="PDF preview"></iframe>`;
       } else if (isHTML) {
-        previewCardHtml = `<iframe src="${rawUrl}" sandbox="allow-scripts" title="HTML deck preview"></iframe>`;
+        previewCardHtml = `<iframe src="${rawUrl}" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox" title="HTML deck preview"></iframe>`;
       } else if (isImg) {
         previewCardHtml = `<img src="${rawUrl}" style="max-width:100%; max-height:100%; object-fit:contain;" alt="Preview" />`;
       } else {
@@ -2892,6 +2926,7 @@ Type commands or click quick suggestions below.
           <button class="tb-btn tb-btn-primary" onclick="triggerQuickLookModal()" style="justify-content:center;">
             <span>👁️ Full Quick Look (Space)</span>
           </button>
+          ${(isHTML || isPDF) ? `<a class="tb-btn" href="${rawUrl}" target="_blank" rel="noopener" style="justify-content:center; text-decoration:none;"><span>↗ Open in Browser Tab</span></a>` : ""}
           <button class="tb-btn" onclick="sendSelectedToAntigravity()" style="justify-content:center;">
             <span>🤖 Pass to Terminal Companion</span>
           </button>
@@ -3152,7 +3187,7 @@ Type commands or click quick suggestions below.
       const rawUrl = resolveFileUrl(itemOrPath);
       const filePath = typeof itemOrPath === "string" ? itemOrPath : itemOrPath.path;
       if (state.qlMode === "live") {
-        contentEl.innerHTML = `<iframe src="${rawUrl}" sandbox="allow-scripts" title="Live HTML Deck"></iframe>`;
+        contentEl.innerHTML = `<iframe src="${rawUrl}" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox" title="Live HTML Deck"></iframe>`;
       } else {
         if (!isLocalHomeLan() && rawUrl && !rawUrl.includes("/api/raw")) {
           fetch(rawUrl).then(r => r.text()).then(t => {
