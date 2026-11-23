@@ -1,1131 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>EFOS Companion & Protocol Live Simulator — Prepared for Patricia Clarke</title>
-  <meta name="description" content="Interactive visual demonstration of the EFOS get-it-done and circle-back dual-engine protocol, paired with Patricia Clarke's personalized low-stress companion preview.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="tokens.css">
-  <link rel="stylesheet" href="navigation.css">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg-slate: #0F172A;
-      --surface-slate: #1E293B;
-      --surface-deep: #0B1120;
-      --border-slate: #334155;
-      --teal: #0D9488;
-      --teal-bright: #2DD4BF;
-      --amber: #D97706;
-      --amber-bright: #FBBF24;
-      --rose: #F43F5E;
-      --rose-soft: #FDA4AF;
-      --chalk: #F8FAFC;
-      --muted: #94A3B8;
-    }
-    body {
-      background-color: var(--bg-slate);
-      color: var(--chalk);
-      font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
-      background-image: 
-        linear-gradient(to right, rgba(51, 65, 85, 0.18) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(51, 65, 85, 0.18) 1px, transparent 1px);
-      background-size: 32px 32px;
-      min-height: 100vh;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(15, 23, 42, 0.94);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-slate);
-    }
-    .nav-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0.9rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--chalk);
-      text-decoration: none;
-    }
-    .brand-tag {
-      background: rgba(13, 148, 136, 0.2);
-      border: 1px solid var(--teal);
-      color: var(--teal-bright);
-      padding: 0.18rem 0.6rem;
-      border-radius: 4px;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .container {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 2rem 1.25rem 4rem;
-    }
-
-    /* Quick PIN Gate (with 1-Tap Instant Demo Button) */
-    .gate-card {
-      background: var(--surface-slate);
-      border: 1px solid var(--border-slate);
-      border-radius: 14px;
-      padding: 2.25rem 1.75rem;
-      max-width: 480px;
-      margin: 3rem auto;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
-    }
-    .gate-icon { font-size: 2.25rem; margin-bottom: 0.75rem; }
-    .gate-title { font-size: 1.45rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .gate-desc { color: var(--muted); font-size: 0.92rem; margin-bottom: 1.5rem; }
-    .quick-unlock-btn {
-      width: 100%;
-      padding: 0.95rem 1.25rem;
-      background: linear-gradient(135deg, #0D9488, #0F766E);
-      color: var(--chalk);
-      border: 1px solid var(--teal-bright);
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-bottom: 1rem;
-      box-shadow: 0 4px 16px rgba(13, 148, 136, 0.35);
-      transition: transform 0.12s, box-shadow 0.2s;
-    }
-    .quick-unlock-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(45, 212, 191, 0.45);
-    }
-    .pin-input {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      background: var(--bg-slate);
-      border: 1px solid #475569;
-      border-radius: 8px;
-      color: var(--chalk);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.95rem;
-      margin-bottom: 0.65rem;
-    }
-
-    /* Main Content */
-    #content-zone { display: none; }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .badge-teal { background: rgba(13, 148, 136, 0.16); border: 1px solid var(--teal); color: var(--teal-bright); }
-    .badge-amber { background: rgba(217, 119, 6, 0.16); border: 1px solid var(--amber); color: var(--amber-bright); }
-    .badge-rose { background: rgba(244, 63, 94, 0.16); border: 1px solid var(--rose); color: var(--rose-soft); }
-
-    .hero {
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border-slate);
-    }
-    .hero h1 {
-      font-size: clamp(1.65rem, 3.5vw, 2.35rem);
-      font-weight: 700;
-      margin: 0.65rem 0 0.5rem;
-      line-height: 1.2;
-    }
-    .hero p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 820px;
-    }
-
-    /* Top Mode Tabs */
-    .main-tabs {
-      display: flex;
-      gap: 0.6rem;
-      margin-bottom: 1.75rem;
-      flex-wrap: wrap;
-      background: var(--surface-deep);
-      padding: 0.45rem;
-      border-radius: 10px;
-      border: 1px solid var(--border-slate);
-    }
-    .main-tab-btn {
-      flex: 1;
-      min-width: 210px;
-      padding: 0.8rem 1rem;
-      border-radius: 7px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--muted);
-      font-family: inherit;
-      font-size: 0.92rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-    }
-    .main-tab-btn:hover { color: var(--chalk); background: rgba(30, 41, 59, 0.6); }
-    .main-tab-btn.active {
-      background: var(--surface-slate);
-      color: var(--chalk);
-      border-color: var(--teal);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    }
-    .tab-icon {
-      font-size: 1.25rem;
-      width: 32px;
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 6px;
-      background: rgba(13, 148, 136, 0.15);
-    }
-
-    .card {
-      background: var(--surface-slate);
-      border: 1px solid var(--border-slate);
-      border-radius: 12px;
-      padding: 1.65rem;
-      margin-bottom: 1.75rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
-    }
-    .card-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--chalk);
-      margin-bottom: 0.35rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .card-subtitle {
-      color: var(--muted);
-      font-size: 0.93rem;
-      margin-bottom: 1.35rem;
-    }
-
-    /* Dual Protocol Interactive Simulator */
-    .protocol-split {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-    @media (min-width: 860px) {
-      .protocol-split {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    .engine-panel {
-      background: var(--bg-slate);
-      border: 1px solid var(--border-slate);
-      border-radius: 10px;
-      padding: 1.35rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .engine-panel.teal-border { border-top: 4px solid var(--teal); }
-    .engine-panel.amber-border { border-top: 4px solid var(--amber); }
-
-    .engine-header h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-top: 0.35rem;
-    }
-    .engine-header p {
-      font-size: 0.86rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-    }
-
-    /* Viability Checks */
-    .viability-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-    }
-    .v-pill {
-      background: var(--surface-slate);
-      border: 1px solid var(--teal);
-      border-radius: 6px;
-      padding: 0.5rem;
-      text-align: center;
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: var(--teal-bright);
-    }
-    .v-pill span { display: block; font-size: 1rem; margin-bottom: 0.1rem; }
-
-    /* Logarithmic Curbing Slider */
-    .stage-box {
-      background: var(--surface-slate);
-      border: 1px solid var(--border-slate);
-      border-radius: 8px;
-      padding: 1rem;
-    }
-    .stage-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.4rem;
-      margin-top: 0.5rem;
-    }
-    .stage-btn {
-      padding: 0.5rem 0.4rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      border-radius: 6px;
-      border: 1px solid var(--border-slate);
-      background: var(--bg-slate);
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .stage-btn.active {
-      background: var(--teal);
-      color: var(--chalk);
-      border-color: var(--teal-bright);
-    }
-    .stage-readout {
-      margin-top: 0.75rem;
-      font-size: 0.84rem;
-      padding: 0.75rem;
-      border-radius: 6px;
-      background: rgba(13, 148, 136, 0.1);
-      border-left: 3px solid var(--teal-bright);
-      color: #E2E8F0;
-    }
-
-    /* Worry / Thought Stream Filter */
-    .thought-item {
-      background: var(--surface-slate);
-      border: 1px solid var(--border-slate);
-      border-radius: 8px;
-      padding: 0.9rem;
-      transition: all 0.2s;
-    }
-    .thought-item.fatal { border-left: 4px solid var(--rose); }
-    .thought-item.curable { border-left: 4px solid var(--amber); }
-    .thought-item.resolved {
-      opacity: 0.65;
-      border-left-color: var(--teal-bright);
-      background: rgba(13, 148, 136, 0.06);
-    }
-    .thought-title {
-      font-size: 0.92rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-    .thought-desc {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 0.65rem;
-    }
-    .action-row {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .btn-sm {
-      padding: 0.42rem 0.8rem;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      border: 1px solid transparent;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.15s;
-    }
-    .btn-teal {
-      background: var(--teal);
-      color: var(--chalk);
-    }
-    .btn-teal:hover { background: #0F766E; }
-    .btn-amber {
-      background: rgba(217, 119, 6, 0.2);
-      border-color: var(--amber);
-      color: var(--amber-bright);
-    }
-    .btn-amber:hover { background: rgba(217, 119, 6, 0.35); }
-    .btn-ghost {
-      background: var(--bg-slate);
-      border-color: var(--border-slate);
-      color: var(--muted);
-    }
-    .btn-ghost:hover { color: var(--chalk); border-color: #64748B; }
-
-    /* Green Light Banner */
-    .greenlight-banner {
-      background: linear-gradient(135deg, rgba(13, 148, 136, 0.22), rgba(15, 118, 110, 0.12));
-      border: 1.5px solid var(--teal-bright);
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-      display: none;
-    }
-    .greenlight-banner.visible { display: block; }
-
-    /* Circle-Back Vault List */
-    .vault-item {
-      background: var(--surface-slate);
-      border: 1px solid var(--border-slate);
-      border-radius: 8px;
-      padding: 0.85rem;
-      font-size: 0.84rem;
-    }
-    .vault-meta {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-      margin-top: 0.45rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-    }
-    .meta-tag {
-      background: var(--bg-slate);
-      border: 1px solid var(--border-slate);
-      padding: 0.15rem 0.45rem;
-      border-radius: 4px;
-      color: #CBD5E1;
-    }
-
-    /* Resurfacing Simulator Box */
-    .resurface-output {
-      background: var(--surface-deep);
-      border: 1px solid var(--amber);
-      border-radius: 8px;
-      padding: 1rem;
-      display: none;
-    }
-    .resurface-output.visible { display: block; }
-
-    /* Teaser Grid & Co-Design Survey */
-    .teaser-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1rem;
-      margin: 1.25rem 0;
-    }
-    .teaser-item {
-      background: var(--bg-slate);
-      border: 1px solid var(--border-slate);
-      border-radius: 8px;
-      padding: 1.15rem;
-    }
-    .teaser-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
-    .teaser-item h3 { font-size: 1rem; margin-bottom: 0.35rem; }
-    .teaser-item p { color: var(--muted); font-size: 0.85rem; }
-
-    .choice-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-    @media (min-width: 640px) {
-      .choice-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    .choice-label {
-      background: var(--bg-slate);
-      border: 1px solid var(--border-slate);
-      border-radius: 8px;
-      padding: 0.95rem;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      transition: all 0.2s;
-    }
-    .choice-label.selected {
-      border-color: var(--teal-bright);
-      background: rgba(13, 148, 136, 0.12);
-    }
-    .choice-title { font-size: 0.93rem; font-weight: 600; }
-    .choice-sub { font-size: 0.8rem; color: var(--muted); }
-
-    .toggle-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .toggle-btn {
-      padding: 0.55rem 1.1rem;
-      border-radius: 6px;
-      border: 1px solid var(--border-slate);
-      background: var(--surface-slate);
-      color: var(--muted);
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .toggle-btn.active {
-      background: var(--teal);
-      color: var(--chalk);
-      border-color: var(--teal-bright);
-    }
-    .preview-card {
-      background: var(--surface-slate);
-      border: 1px solid #475569;
-      border-radius: 8px;
-      padding: 1.15rem;
-      display: none;
-    }
-    .preview-card.visible { display: block; }
-
-    footer {
-      border-top: 1px solid var(--border-slate);
-      padding: 2rem 1.25rem;
-      text-align: center;
-      color: #64748B;
-      font-size: 0.82rem;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Calm Companion — Simplified Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef2f4;
+  --card:#ffffff;
+  --ink:#1f2a33;
+  --soft:#4d5b66;
+  --line:#b9c6ce;
+  --accent:#1f6f78;
+  --on:#ffffff;
+  --wait:#f3e7c9;
+  --ok:#d7ede0;
+  --fs:20px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#161c20;
+    --card:#202830;
+    --ink:#e8eef1;
+    --soft:#a9b8c1;
+    --line:#3b4852;
+    --accent:#6cc3cc;
+    --on:#102024;
+    --wait:#3a3322;
+    --ok:#1f3a2b;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161c20;
+  --card:#202830;
+  --ink:#e8eef1;
+  --soft:#a9b8c1;
+  --line:#3b4852;
+  --accent:#6cc3cc;
+  --on:#102024;
+  --wait:#3a3322;
+  --ok:#1f3a2b;
+}
+*,*::before,*::after{box-sizing:inherit;animation:none!important;transition:none!important}
+html,body{height:100%;margin:0}
+body{
+  display:flex;
+  flex-direction:column;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  font-size:var(--fs);
+  line-height:1.55;
+}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 14px;
+  background:var(--card);
+  border-bottom:2px solid var(--line);
+}
+.topbar-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  width:100%;
+  max-width:34rem;
+  margin:0 auto;
+}
+.top-btn{
+  min-height:48px;
+  padding:8px 14px;
+  font:inherit;
+  font-size:.9rem;
+  font-weight:700;
+  color:var(--ink);
+  background:var(--bg);
+  border:2px solid var(--line);
+  border-radius:12px;
+  cursor:pointer;
+}
+.top-btn.active{
+  border-color:var(--accent);
+  background:var(--accent);
+  color:var(--on);
+}
+main{
+  flex:1;
+  overflow-y:auto;
+  padding:20px 18px 32px;
+  max-width:34rem;
+  width:100%;
+  margin:0 auto;
+}
+h1{font-size:1.5rem;line-height:1.25;margin:0 0 14px}
+h2{font-size:1.25rem;line-height:1.3;margin:0 0 10px}
+p{margin:0 0 14px;max-width:32em}
+.note{color:var(--soft);font-size:.88rem}
+.card{
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:16px;
+}
+.big{
+  display:block;
+  width:100%;
+  min-height:56px;
+  padding:12px 16px;
+  margin:0 0 12px;
+  font:inherit;
+  font-weight:700;
+  text-align:left;
+  color:var(--ink);
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:12px;
+  cursor:pointer;
+}
+.big.go{
+  background:var(--accent);
+  color:var(--on);
+  border-color:var(--accent);
+  text-align:center;
+}
+.big.sel{
+  border-color:var(--accent);
+  box-shadow:inset 0 0 0 2px var(--accent);
+}
+.big small{
+  display:block;
+  font-weight:400;
+  color:var(--soft);
+  margin-top:2px;
+}
+.big.go small{color:inherit}
+button:focus-visible,textarea:focus-visible{
+  outline:4px solid var(--accent);
+  outline-offset:2px;
+}
+textarea{
+  width:100%;
+  min-height:104px;
+  font:inherit;
+  padding:12px;
+  margin-bottom:12px;
+  color:var(--ink);
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:12px;
+}
+.status{
+  display:inline-block;
+  padding:4px 12px;
+  border-radius:999px;
+  background:var(--ok);
+  color:var(--ink);
+  font-weight:700;
+  font-size:.9rem;
+  margin-bottom:10px;
+}
+.wait{
+  background:var(--wait);
+  border:2px solid var(--line);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-bottom:12px;
+}
+.undo-bar{
+  background:var(--card);
+  border:2px solid var(--accent);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.row{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.small{
+  min-height:48px;
+  width:auto;
+  margin:0;
+  padding:8px 16px;
+}
+nav{
+  display:flex;
+  gap:8px;
+  padding:10px 12px;
+  background:var(--card);
+  border-top:2px solid var(--line);
+}
+nav button{
+  flex:1;
+  min-height:56px;
+  padding:8px 6px;
+  font:inherit;
+  font-size:.85rem;
+  font-weight:700;
+  color:var(--ink);
+  background:transparent;
+  border:2px solid transparent;
+  border-radius:12px;
+  cursor:pointer;
+}
+nav button[aria-current="page"]{
+  border-color:var(--accent);
+  background:var(--bg);
+}
+dl{margin:0}
+dt{font-weight:700}
+dd{margin:0 0 14px;color:var(--soft)}
+@media (prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important}
+}
+</style>
 </head>
 <body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <button type="button" class="top-btn" id="back-today-btn" data-s="today" aria-label="Back to today">← Back to today</button>
+    <button type="button" class="top-btn" id="read-aloud-btn" data-a="speak" aria-pressed="false">🔊 Read aloud</button>
+  </div>
+</header>
+<main id="main" tabindex="-1" aria-live="polite"></main>
+<nav aria-label="Main navigation">
+  <button type="button" data-s="today">Today</button>
+  <button type="button" data-s="park">Park a thought</button>
+  <button type="button" data-s="choices">My choices</button>
+  <button type="button" data-s="details">Full details</button>
+</nav>
+<script>
+var S = {
+  screen: "today",
+  done: false,
+  parked: [
+    { t: "Sign the housing agency form", e: "15" },
+    { t: "Re-read the background section", e: "60" }
+  ],
+  draft: "",
+  effort: "15",
+  pick: null,
+  lastAction: null,
+  step: 0,
+  speaking: false,
+  prefs: { view: "", capture: "", size: "Normal", theme: "Auto" }
+};
 
-  <header>
-    <div class="nav-inner">
-      <a href="index.html" class="brand">
-        <span>EFOS</span>
-        <span class="brand-tag">Patricia Companion & Protocol Live</span>
-      </a>
-      <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.82rem; color: var(--muted);">
-        <span>Interactive Walkthrough</span>
-      </div>
-    </div>
-  </header>
+try {
+  var saved = localStorage.getItem("cc_prefs");
+  if (saved) Object.assign(S.prefs, JSON.parse(saved));
+} catch (e) {}
 
-  <!-- ACCESS GATE WITH 1-TAP LAUNCH -->
-  <section id="gate-section">
-    <div class="gate-card">
-      <div class="gate-icon">✨</div>
-      <h1 class="gate-title">Patricia’s Companion & Protocol Simulator</h1>
-      <p class="gate-desc">Prepared for <strong>Patricia Clarke</strong>.<br>Tap below to open the interactive <code>get-it-done</code> &amp; <code>circle-back</code> visual demonstration.</p>
+function save() {
+  try {
+    localStorage.setItem("cc_prefs", JSON.stringify(S.prefs));
+  } catch (e) {}
+}
 
-      <button type="button" class="quick-unlock-btn" onclick="directUnlock()">
-        Launch Interactive Protocol Demo &rarr;
-      </button>
+function esc(x) {
+  return String(x).replace(/[&<>"]/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+  });
+}
 
-      <form id="gate-form" onsubmit="unlockPage(event)" style="margin-top: 0.75rem; border-top: 1px solid #334155; padding-top: 1rem;">
-        <input type="password" id="pin-input" class="pin-input" placeholder="Or enter invitation key (patricia2026)..." autocomplete="off">
-        <div id="gate-error" style="color: #F87171; font-size: 0.82rem; display: none; margin-top: 0.4rem;">Invalid key. Use <code>patricia2026</code> or tap the green button above.</div>
-      </form>
-    </div>
-  </section>
+function apply() {
+  var r = document.documentElement;
+  r.style.setProperty("--fs", S.prefs.size === "Large" ? "24px" : "20px");
+  if (S.prefs.theme === "Dark") r.setAttribute("data-theme", "dark");
+  else if (S.prefs.theme === "Light") r.setAttribute("data-theme", "light");
+  else r.removeAttribute("data-theme");
+}
 
-  <!-- MAIN UNLOCKED WORKSPACE -->
-  <main id="content-zone" class="container">
+function stopSpeech() {
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+  S.speaking = false;
+  updateSpeechBtn();
+}
 
-    <div class="hero">
-      <span class="badge badge-teal">Executive Function OS · Dual-Engine Protocol</span>
-      <h1>How We Stop Legal Overwhelm Without Dropping the Ball</h1>
-      <p>Legal fights fail in two opposite ways: either you get exhausted polishing and worrying about a filing until you freeze (<strong>Analysis Paralysis</strong>), or you set something aside to rest and a critical deadline slips through the cracks (<strong>Working-Memory Overflow</strong>). Here is how the two EFOS protocols work together in real time.</p>
-    </div>
+function updateSpeechBtn() {
+  var btn = document.getElementById("read-aloud-btn");
+  if (!btn) return;
+  if (!("speechSynthesis" in window)) {
+    btn.style.display = "none";
+    return;
+  }
+  btn.textContent = S.speaking ? "■ Stop reading" : "🔊 Read aloud";
+  btn.classList.toggle("active", S.speaking);
+  btn.setAttribute("aria-pressed", S.speaking ? "true" : "false");
+}
 
-    <!-- MODE SWITCHER TABS -->
-    <div class="main-tabs">
-      <button type="button" class="main-tab-btn active" id="tab-btn-protocol" onclick="switchMainView('protocol')">
-        <span class="tab-icon">⚡</span>
-        <div>
-          <div>1. Live Protocol Simulator</div>
-          <div style="font-size: 0.76rem; color: var(--muted); font-weight: 400;">Try "Get-It-Done" + "Circle-Back" in action</div>
-        </div>
-      </button>
-      <button type="button" class="main-tab-btn" id="tab-btn-companion" onclick="switchMainView('companion')">
-        <span class="tab-icon">🌱</span>
-        <div>
-          <div>2. Patricia’s Calm Companion &amp; Co-Design</div>
-          <div style="font-size: 0.76rem; color: var(--muted); font-weight: 400;">Calm View vs. Evidence Table &amp; preferences</div>
-        </div>
-      </button>
-    </div>
+function toggleSpeech() {
+  if (!("speechSynthesis" in window)) return;
+  if (S.speaking) {
+    stopSpeech();
+    return;
+  }
+  var main = document.getElementById("main");
+  var text = main ? main.innerText.trim() : "";
+  if (!text) return;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.rate = 0.95;
+  u.onend = function () {
+    S.speaking = false;
+    updateSpeechBtn();
+  };
+  u.onerror = function () {
+    S.speaking = false;
+    updateSpeechBtn();
+  };
+  S.speaking = true;
+  updateSpeechBtn();
+  window.speechSynthesis.speak(u);
+}
 
-    <!-- =================================================================
-         VIEW 1: INTERACTIVE GET-IT-DONE / CIRCLE-BACK SIMULATOR
-         ================================================================= -->
-    <div id="view-protocol">
+var Q = [
+  {
+    q: "When there’s an update, what is easiest to take in?",
+    k: "view",
+    o: [
+      ["One sentence", "Just what to do today."],
+      ["A simple timeline", "What happened and what’s next."],
+      ["The full papers", "Links to every document."]
+    ]
+  },
+  {
+    q: "If something happens, how would you like to record it?",
+    k: "capture",
+    o: [
+      ["Speak", "Tap once and talk."],
+      ["Take a photo", "The app reads it for you."],
+      ["Three quick taps", "Pick from short choices."]
+    ]
+  },
+  {
+    q: "How should the screen look?",
+    k: "comfort"
+  }
+];
 
-      <!-- Dual Engine Side-by-Side -->
-      <div class="protocol-split">
+function today() {
+  if (S.done) {
+    return (
+      '<h1>You’re done for today.</h1>' +
+      '<div class="card">' +
+      '<span class="status">✓ Done</span>' +
+      '<p>Nothing else needs you today. Rest.</p>' +
+      '<button type="button" class="big" data-a="undo-done">Undo — I’m not done yet</button>' +
+      '</div>' +
+      '<button type="button" class="big" data-s="park">Park a thought</button>'
+    );
+  }
+  return (
+    '<h1>Must do today</h1>' +
+    '<div class="card">' +
+    '<span class="status">✓ Ready to submit</span>' +
+    '<h2>Mail your signed form</h2>' +
+    '<p>Your signed form is ready. Put it in the envelope and mail it. That’s all for today.</p>' +
+    '<button type="button" class="big go" data-a="done">I did it</button>' +
+    '<button type="button" class="big" data-s="details">Show me the details</button>' +
+    '</div>' +
+    '<p class="note">Can wait: ' + S.parked.length + ' thought' + (S.parked.length === 1 ? ' is' : 's are') + ' parked safely.</p>' +
+    '<p class="note">Sample content for a design preview.</p>'
+  );
+}
 
-        <!-- LEFT ENGINE: GET-IT-DONE -->
-        <div class="engine-panel teal-border">
-          <div class="engine-header">
-            <span class="badge badge-teal">Engine 1 · Active Sprint Shield</span>
-            <h3><code>get-it-done</code> Protocol</h3>
-            <p>Stops endless re-reading and worry loops. Separates true <strong>Fatal Flaws</strong> (must fix today) from <strong>Curable Details</strong> (parked for later so you can ship and rest).</p>
-          </div>
+function park() {
+  var h =
+    '<h1>Park a thought</h1>' +
+    '<p>Write it down. It stays safe and quiet until you ask for it.</p>';
 
-          <!-- 3 Baseline Viability Non-Negotiables -->
-          <div>
-            <div style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem;">
-              Baseline Viability Check (3 Non-Negotiables)
-            </div>
-            <div class="viability-bar">
-              <div class="v-pill"><span>✓</span>Zero Hallucinations</div>
-              <div class="v-pill"><span>✓</span>No Concessions</div>
-              <div class="v-pill"><span>✓</span>Core Rules Met</div>
-            </div>
-          </div>
+  if (S.lastAction) {
+    h +=
+      '<div class="undo-bar">' +
+      '<span>' + esc(S.lastAction.label) + '</span>' +
+      '<button type="button" class="big small" data-a="undo-park">Undo</button>' +
+      '</div>';
+  }
 
-          <!-- Logarithmic Curbing Curve Selector -->
-          <div class="stage-box">
-            <div style="font-size: 0.8rem; font-weight: 600; color: var(--chalk);">
-              Logarithmic Curbing Curve (Try switching stages):
-            </div>
-            <div class="stage-buttons">
-              <button type="button" class="stage-btn" id="st-early" onclick="setStage('early')">1. Early Draft</button>
-              <button type="button" class="stage-btn" id="st-mid" onclick="setStage('mid')">2. Mid Review</button>
-              <button type="button" class="stage-btn active" id="st-terminal" onclick="setStage('terminal')">3. Terminal Freeze</button>
-            </div>
-            <div class="stage-readout" id="stage-readout">
-              <strong>Terminal Stage Active (Draft Freeze):</strong> Baseline viability is met. The system <em>refuses</em> minor wording tweaks or formatting churn and only allows fixing fatal clerk blockers.
-            </div>
-          </div>
+  h +=
+    '<textarea id="t" aria-label="Your thought" placeholder="What is on your mind?">' + esc(S.draft) + '</textarea>' +
+    '<p><b>How big is it?</b></p>' +
+    '<button type="button" class="big' + (S.effort === "15" ? " sel" : "") + '" data-e="15">' +
+    (S.effort === "15" ? "✓ " : "") + 'Quick<small>About 15 minutes</small></button>' +
+    '<button type="button" class="big' + (S.effort === "60" ? " sel" : "") + '" data-e="60">' +
+    (S.effort === "60" ? "✓ " : "") + 'Longer<small>About 1 hour</small></button>' +
+    '<button type="button" class="big go" data-a="park">Park it</button>';
 
-          <!-- Interactive Incoming Thoughts / Worries -->
-          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--muted);">
-            Incoming Thoughts on Today’s Docket (Tap to Triage):
-          </div>
+  h += '<h2 style="margin-top:28px">Can wait (' + S.parked.length + ')</h2>';
+  if (!S.parked.length) {
+    h += '<p class="note">Nothing parked right now.</p>';
+  }
+  S.parked.forEach(function (p, i) {
+    h +=
+      '<div class="wait"><div class="row">' +
+      '<span>' + esc(p.t) + '<br><span class="note">' + (p.e === "15" ? "Quick" : "Longer") + '</span></span>' +
+      '<button type="button" class="big small" data-a="rm" data-i="' + i + '">Remove</button>' +
+      '</div></div>';
+  });
 
-          <!-- Thought 1: Fatal Flaw -->
-          <div class="thought-item fatal" id="thought-1">
-            <div class="thought-title">
-              <span>⚠️ Clerk Note on Proof of Service (26CV59176)</span>
-              <span class="badge badge-rose">Fatal Gate</span>
-            </div>
-            <div class="thought-desc">
-              OJD clerk noted: <em>"no summons/complaint attached, service not satisfied."</em> Without attaching the Summons &amp; Complaint to the signed mailing declaration, defendants stay listed as "Unserved."
-            </div>
-            <div class="action-row" id="t1-actions">
-              <button type="button" class="btn-sm btn-teal" onclick="resolveFatal()">
-                ✓ Attach 25-Page Consolidated PRSV Packet &amp; Clear Gate
-              </button>
-            </div>
-          </div>
+  h += '<button type="button" class="big" data-a="quick">I have 15 minutes. Show me one quick thing.</button>';
+  if (S.pick !== null) {
+    h +=
+      '<div class="card">' +
+      '<span class="status">✓ One quick thing</span>' +
+      '<p>' + (S.pick ? esc(S.pick) : "Nothing quick is waiting. You’re clear.") + '</p>' +
+      '</div>';
+  }
+  return h;
+}
 
-          <!-- Thought 2: Curable Polish -->
-          <div class="thought-item curable" id="thought-2">
-            <div class="thought-title">
-              <span>💭 "Should we reword background paragraph 14 or add extra noise dates right now?"</span>
-              <span class="badge badge-amber">Curable (2+ Wks)</span>
-            </div>
-            <div class="thought-desc">
-              Does not affect service validity or cause dismissal. Debating wording right now only drains your energy and delays filing.
-            </div>
-            <div class="action-row" id="t2-actions">
-              <button type="button" class="btn-sm btn-amber" onclick="offloadToCircleBack('t2')">
-                ⤵ Silence &amp; Offload to Circle-Back Vault
-              </button>
-            </div>
-          </div>
+function choices() {
+  var q = Q[S.step];
+  var hasChoice = q.k === "comfort" ? true : Boolean(S.prefs[q.k]);
+  var h =
+    '<h1>My choices</h1>' +
+    '<p class="note">Question ' + (S.step + 1) + ' of ' + Q.length + '.</p>' +
+    '<h2>' + q.q + '</h2>';
 
-          <!-- Thought 3: Important Non-Court Task -->
-          <div class="thought-item curable" id="thought-3">
-            <div class="thought-title">
-              <span>📋 "Don't forget the signed HUD-92006 Supplement Form for HACC"</span>
-              <span class="badge badge-amber">Separate Track</span>
-            </div>
-            <div class="thought-desc">
-              Important housing agency form (already completed &amp; signed), but shouldn't clutter your head while finishing the court proof of service.
-            </div>
-            <div class="action-row" id="t3-actions">
-              <button type="button" class="btn-sm btn-amber" onclick="offloadToCircleBack('t3')">
-                ⤵ Offload to Circle-Back (Zero Guilt)
-              </button>
-            </div>
-          </div>
-
-          <!-- GREEN LIGHT BANNER -->
-          <div class="greenlight-banner" id="greenlight-box">
-            <div style="font-size: 1.35rem; margin-bottom: 0.2rem;">🟢 UNQUALIFIED GREEN LIGHT TO EXECUTE</div>
-            <div style="font-size: 0.88rem; color: #E2E8F0;">
-              Fatal service attachment is resolved and curable distractions are safely parked in <code>circle-back</code>. You can submit the 25-page Proof of Service and enjoy your afternoon!
-            </div>
-          </div>
-
-          <button type="button" class="btn-sm btn-ghost" onclick="resetSimulator()" style="align-self: flex-start;">
-            ↺ Reset Demo Scenario
-          </button>
-        </div>
-
-        <!-- RIGHT ENGINE: CIRCLE-BACK -->
-        <div class="engine-panel amber-border">
-          <div class="engine-header">
-            <span class="badge badge-amber">Engine 2 · Lossless Working-Memory Vault</span>
-            <h3><code>circle-back</code> Protocol</h3>
-            <p>When you let go of a thought so you can rest, it doesn't vanish into a messy sticky-note pile. It is anchored with its exact file, effort slice (<code>15m</code> vs <code>1h</code>), and <strong>Blocker Gate</strong>—and stays <strong>100% silent</strong> until the right moment.</p>
-          </div>
-
-          <!-- Add Custom Thought Live -->
-          <div style="background: var(--surface-slate); border: 1px solid var(--border-slate); border-radius: 8px; padding: 0.85rem;">
-            <label for="custom-worry" style="display: block; font-size: 0.78rem; font-weight: 700; color: var(--teal-bright); margin-bottom: 0.4rem;">
-              + Try Offloading a Thought Right Now ("Drop Without Loss"):
-            </label>
-            <div style="display: flex; gap: 0.5rem;">
-              <input type="text" id="custom-worry" placeholder="e.g., Log Thursday afternoon drilling noise..." style="flex: 1; background: var(--bg-slate); border: 1px solid #475569; border-radius: 6px; padding: 0.5rem 0.75rem; color: var(--chalk); font-size: 0.85rem;">
-              <button type="button" class="btn-sm btn-teal" onclick="addCustomOffload()">Park It</button>
-            </div>
-          </div>
-
-          <!-- Live Vault Contents -->
-          <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between;">
-            <span>Anchored in Working-Memory Vault:</span>
-            <span id="vault-count" style="color: var(--amber-bright);">2 items parked</span>
-          </div>
-
-          <div id="vault-list" style="display: flex; flex-direction: column; gap: 0.65rem;">
-            <!-- Populated by JS -->
-          </div>
-
-          <!-- Dual Resurfacing Triggers (Never Calendar Spam) -->
-          <div style="margin-top: 0.35rem; border-top: 1px solid var(--border-slate); padding-top: 0.9rem;">
-            <div style="font-size: 0.82rem; font-weight: 700; color: var(--chalk); margin-bottom: 0.3rem;">
-              How Does It Come Back? (Zero Calendar Nagging)
-            </div>
-            <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem;">
-              Instead of spamming you with daily alarms, <code>circle-back</code> only resurfaces an item in two ways. Click either button to test:
-            </p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.75rem;">
-              <button type="button" class="btn-sm btn-teal" onclick="simulateResurface('energy')">
-                ⚡ "I have 15 mins of energy—pick 1 quick win"
-              </button>
-              <button type="button" class="btn-sm btn-amber" onclick="simulateResurface('gate')">
-                🛑 Simulate Crossing a Court Filing Gate
-              </button>
-            </div>
-
-            <!-- Resurface Output Box -->
-            <div class="resurface-output" id="resurface-box">
-              <!-- Dynamic output -->
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-
-    <!-- =================================================================
-         VIEW 2: PATRICIA'S CALM COMPANION & CO-DESIGN SURVEY
-         ================================================================= -->
-    <div id="view-companion" style="display: none;">
-
-      <section class="card">
-        <div class="card-title">
-          <span>Interactive Test: Calm View vs. Full Legal Table</span>
-          <span class="badge badge-teal">Peace of Mind Toggle</span>
-        </div>
-        <p class="card-subtitle">Click both buttons below to see how the companion translates the exact same court status into a stress-free daily card:</p>
-
-        <div class="toggle-bar">
-          <button type="button" class="toggle-btn active" id="btn-calm" onclick="switchPreview('calm')">🌱 Calm View (1-Step Radar)</button>
-          <button type="button" class="toggle-btn" id="btn-evidence" onclick="switchPreview('evidence')">📑 Evidence View (Full Docket Table)</button>
-        </div>
-
-        <div id="prev-calm" class="preview-card visible">
-          <div style="font-size: 0.82rem; color: var(--teal-bright); font-weight: 700; margin-bottom: 0.3rem;">TODAY'S ONLY COURT ACTION</div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 0.45rem;">Submit Consolidated 25-Page Proof of Service Packet</h3>
-          <p style="color: #CBD5E1; font-size: 0.92rem; margin-bottom: 0.8rem;">
-            Your signed 1-page Declaration of Mailing is now combined directly with the Summons and Complaint into a single 25-page PDF (`07_CONSOLIDATED_PROOF_OF_SERVICE_PRSV_26CV59176.pdf`), and your signed HUD-92006 form is ready for HACC. Everything else is handled.
-          </p>
-          <span class="badge badge-teal">Status: Ready &amp; Protected</span>
-        </div>
-
-        <div id="prev-evidence" class="preview-card">
-          <div style="font-size: 0.82rem; color: var(--amber-bright); font-weight: 700; margin-bottom: 0.4rem;">DOCKET REGISTER &amp; PACKET MANIFEST: CLACKAMAS 26CV59176</div>
-          <table style="width: 100%; font-size: 0.84rem; border-collapse: collapse;">
-            <thead>
-              <tr style="border-bottom: 1px solid #334155; color: var(--muted);">
-                <th style="padding: 0.45rem; text-align: left;">DATE</th>
-                <th style="padding: 0.45rem; text-align: left;">FILING / DELIVERABLE</th>
-                <th style="padding: 0.45rem; text-align: left;">RULE / STATUS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid rgba(51,65,85,0.4);">
-                <td style="padding: 0.45rem; font-family: monospace;">10/28/2026</td>
-                <td style="padding: 0.45rem;">Sheriff Return of Service (Office Delivery)</td>
-                <td style="padding: 0.45rem;">ORCP 7 D(2)(c)</td>
-              </tr>
-              <tr style="border-bottom: 1px solid rgba(51,65,85,0.4);">
-                <td style="padding: 0.45rem; font-family: monospace;">11/10/2026</td>
-                <td style="padding: 0.45rem;">Initial Proof of Service Docketed (Needs Summons/Complaint attached)</td>
-                <td style="padding: 0.45rem;">ORCP 7 F(2)(a)(i)</td>
-              </tr>
-              <tr>
-                <td style="padding: 0.45rem; font-family: monospace;">11/23/2026</td>
-                <td style="padding: 0.45rem;">25-Page Consolidated PRSV Cure Packet + Signed HUD-92006</td>
-                <td style="padding: 0.45rem; color: var(--teal-bright); font-weight: 600;">Staged &amp; Ready</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2 class="card-title">What Your Personal Companion Does For You</h2>
-        <p class="card-subtitle">Built to reduce cognitive strain when dealing with notices, housing agencies, or civil proceedings.</p>
-
-        <div class="teaser-grid">
-          <div class="teaser-item">
-            <div class="teaser-icon">🎯</div>
-            <h3>The 1-Step Radar</h3>
-            <p>Shows only what needs attention <em>today</em>. Never forces you to read 40 pages of filings just to know you are safe.</p>
-          </div>
-          <div class="teaser-item">
-            <div class="teaser-icon">🎙️</div>
-            <h3>One-Tap Disturbance Log</h3>
-            <p>Record demolition or drilling noise with timestamps and notes—no manual paper binders required.</p>
-          </div>
-          <div class="teaser-item">
-            <div class="teaser-icon">📬</div>
-            <h3>Receipt &amp; Certified Mail Match</h3>
-            <p>Pairs deposit checks, certified mail receipts, and service declarations so nothing gets lost.</p>
-          </div>
-          <div class="teaser-item">
-            <div class="teaser-icon">🛡️</div>
-            <h3>Protected Evidence Vault</h3>
-            <p>Keeps leases, notices, and photos indexed and ready for court review at a moment's notice.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Co-Design Survey -->
-      <section class="card">
-        <h2 class="card-title">Co-Design: Shape How This Works for You</h2>
-        <p class="card-subtitle">Tap the options that feel easiest on your energy:</p>
-
-        <div style="font-weight: 600; margin-bottom: 0.6rem;">1. When reviewing a case update, what feels easiest to absorb?</div>
-        <div class="choice-grid">
-          <label class="choice-label" onclick="selectChoice(this)">
-            <input type="radio" name="q1" value="calm_single" style="display:none;">
-            <span class="choice-title">🌱 Single Next Step</span>
-            <span class="choice-sub">Just one sentence telling me what to do today. Hide the rest until needed.</span>
-          </label>
-          <label class="choice-label" onclick="selectChoice(this)">
-            <input type="radio" name="q1" value="visual_timeline" style="display:none;">
-            <span class="choice-title">📅 Visual Timeline</span>
-            <span class="choice-sub">A clean timeline showing what happened and what comes next.</span>
-          </label>
-          <label class="choice-label" onclick="selectChoice(this)">
-            <input type="radio" name="q1" value="full_records" style="display:none;">
-            <span class="choice-title">📑 Complete Documents</span>
-            <span class="choice-sub">Direct links to the full legal PDFs, exhibits, and scanned letters.</span>
-          </label>
-        </div>
-
-        <div style="font-weight: 600; margin-bottom: 0.6rem;">2. If something happens (like noise or a letter), how would you rather capture it?</div>
-        <div class="choice-grid">
-          <label class="choice-label" onclick="selectChoice(this)">
-            <input type="radio" name="q2" value="voice_audio" style="display:none;">
-            <span class="choice-title">🎙️ Voice or Audio Tap</span>
-            <span class="choice-sub">Press one button to speak what happened and let the system file it.</span>
-          </label>
-          <label class="choice-label" onclick="selectChoice(this)">
-            <input type="radio" name="q2" value="photo_snap" style="display:none;">
-            <span class="choice-title">📸 Snap a Photo</span>
-            <span class="choice-sub">Take a photo with my phone and have the system read and organize it.</span>
-          </label>
-          <label class="choice-label" onclick="selectChoice(this)">
-            <input type="radio" name="q2" value="guided_questions" style="display:none;">
-            <span class="choice-title">✅ 3 Simple Checkboxes</span>
-            <span class="choice-sub">Answer three quick multiple-choice taps on screen.</span>
-          </label>
-        </div>
-
-        <button type="button" class="btn-sm btn-teal" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;" onclick="savePreferences()">
-          Save Design Preferences
-        </button>
-        <div id="save-status" style="margin-top: 0.75rem; color: var(--teal-bright); font-weight: 600; display: none;">
-          ✓ Preferences saved locally!
-        </div>
-      </section>
-
-    </div>
-
-  </main>
-
-  <footer>
-    <p>Executive Function OS · <code>get-it-done</code> &amp; <code>circle-back</code> Dual Protocol Demonstration</p>
-  </footer>
-
-  <script>
-    const TARGET_HASH = "aaff877df7bb71ab9b53edb50e4137860a0ce389a05f71fd73132a135c7f973e";
-
-    let fatalResolved = false;
-    let parkedCount = 0;
-
-    const initialVault = [
-      {
-        id: 'v1',
-        title: 'Verify Clerk Party Status Flip ("Unserved" → "Served") After PRSV Filing',
-        why: 'Confirm Clackamas clerk updates both capacity defendants after the 25-page consolidated packet is docketed.',
-        cost: 'quick-win 15m',
-        gate: 'service-audit',
-        anchor: '07_CONSOLIDATED_PROOF_OF_SERVICE_PRSV_26CV59176.pdf'
-      },
-      {
-        id: 'v2',
-        title: 'Compile Supplemental Habitability & Noise Timeline Exhibit',
-        why: 'Preserves full disturbance log for trial/settlement without delaying initial service compliance.',
-        cost: 'focused 1h',
-        gate: 'none (post-service)',
-        anchor: '03_CIRCUIT_COURT_CIVIL_LAWSUIT/habitability_log'
-      }
-    ];
-
-    let vaultItems = [...initialVault];
-
-    function directUnlock() {
-      document.getElementById('gate-section').style.display = 'none';
-      document.getElementById('content-zone').style.display = 'block';
-      sessionStorage.setItem('efos_auth_patricia', '1');
-      renderVault();
-    }
-
-    async function sha256(message) {
-      const msgBuffer = new TextEncoder().encode(message.trim());
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    async function unlockPage(e) {
-      if (e) e.preventDefault();
-      const input = document.getElementById('pin-input').value;
-      if (input.trim().toLowerCase() === 'patricia2026') {
-        directUnlock();
-        return;
-      }
-      const hash = await sha256(input);
-      if (hash === TARGET_HASH) {
-        directUnlock();
-      } else {
-        document.getElementById('gate-error').style.display = 'block';
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      if (sessionStorage.getItem('efos_auth_patricia') === '1' || params.get('demo') === '1') {
-        directUnlock();
-      } else {
-        renderVault();
-      }
+  if (q.k === "comfort") {
+    ["Normal", "Large"].forEach(function (v) {
+      var isSel = S.prefs.size === v;
+      h += '<button type="button" class="big' + (isSel ? " sel" : "") + '" data-p="size" data-v="' + v + '">' + (isSel ? "✓ " : "") + v + ' text</button>';
     });
+    ["Auto", "Light", "Dark"].forEach(function (v) {
+      var isSel = S.prefs.theme === v;
+      var label = v === "Auto" ? "Match my device" : v + " screen";
+      h += '<button type="button" class="big' + (isSel ? " sel" : "") + '" data-p="theme" data-v="' + v + '">' + (isSel ? "✓ " : "") + label + '</button>';
+    });
+  } else {
+    q.o.forEach(function (o) {
+      var isSel = S.prefs[q.k] === o[0];
+      h += '<button type="button" class="big' + (isSel ? " sel" : "") + '" data-p="' + q.k + '" data-v="' + o[0] + '">' + (isSel ? "✓ " : "") + o[0] + '<small>' + o[1] + '</small></button>';
+    });
+  }
 
-    function switchMainView(view) {
-      const pView = document.getElementById('view-protocol');
-      const cView = document.getElementById('view-companion');
-      const pBtn = document.getElementById('tab-btn-protocol');
-      const cBtn = document.getElementById('tab-btn-companion');
+  if (hasChoice) {
+    h += '<p><span class="status">✓ Preferences saved on this device</span></p>';
+  }
 
-      if (view === 'protocol') {
-        pView.style.display = 'block';
-        cView.style.display = 'none';
-        pBtn.classList.add('active');
-        cBtn.classList.remove('active');
-      } else {
-        pView.style.display = 'none';
-        cView.style.display = 'block';
-        pBtn.classList.remove('active');
-        cBtn.classList.add('active');
-      }
+  h +=
+    '<div class="row">' +
+    (S.step > 0 ? '<button type="button" class="big small" data-a="prev">Back</button>' : '<span></span>') +
+    (S.step < Q.length - 1
+      ? '<button type="button" class="big small go" data-a="next">Next</button>'
+      : '<button type="button" class="big small go" data-s="today">Finish</button>') +
+    '</div>';
+  return h;
+}
+
+function details() {
+  return (
+    '<h1>Full details</h1>' +
+    '<p class="note">The complete record. You never have to read this to stay on track.</p>' +
+    '<div class="card"><dl>' +
+    '<dt>Oct 28</dt><dd>Papers were delivered to the office.</dd>' +
+    '<dt>Nov 10</dt><dd>The office received the proof of mailing and asked for the original papers attached.</dd>' +
+    '<dt>Nov 23</dt><dd>The updated packet is ready to mail, with the housing agency form saved for later.</dd>' +
+    '</dl></div>' +
+    '<p class="note">Sample content for a design preview. File names and rule references stay on this screen only, for people who want them.</p>'
+  );
+}
+
+function render() {
+  apply();
+  var m = document.getElementById("main");
+  m.innerHTML = { today: today, park: park, choices: choices, details: details }[S.screen]();
+  var backBtn = document.getElementById("back-today-btn");
+  if (backBtn) {
+    backBtn.style.visibility = S.screen === "today" ? "hidden" : "visible";
+  }
+  updateSpeechBtn();
+  document.querySelectorAll("nav button").forEach(function (b) {
+    if (b.getAttribute("data-s") === S.screen) b.setAttribute("aria-current", "page");
+    else b.removeAttribute("aria-current");
+  });
+}
+
+function go(s) {
+  stopSpeech();
+  S.screen = s;
+  render();
+  document.getElementById("main").scrollTop = 0;
+}
+
+document.addEventListener("click", function (ev) {
+  var b = ev.target.closest("button");
+  if (!b) return;
+  var d = b.dataset;
+
+  if (d.a === "speak") {
+    toggleSpeech();
+    return;
+  }
+  if (d.s) {
+    go(d.s);
+    return;
+  }
+
+  var t = document.getElementById("t");
+  if (t) S.draft = t.value;
+
+  if (d.e) {
+    S.effort = d.e;
+  } else if (d.p) {
+    S.prefs[d.p] = d.v;
+    save();
+  } else if (d.a === "done") {
+    stopSpeech();
+    S.done = true;
+  } else if (d.a === "undo-done") {
+    stopSpeech();
+    S.done = false;
+  } else if (d.a === "park") {
+    if (S.draft.trim()) {
+      var item = { t: S.draft.trim(), e: S.effort };
+      S.parked.push(item);
+      S.lastAction = { type: "add", index: S.parked.length - 1, item: item, label: "Parked safely." };
+      S.draft = "";
     }
-
-    function setStage(stage) {
-      ['early', 'mid', 'terminal'].forEach(s => {
-        document.getElementById('st-' + s).classList.toggle('active', s === stage);
-      });
-      const readout = document.getElementById('stage-readout');
-      if (stage === 'early') {
-        readout.innerHTML = '<strong>Early Stage (Diminishing Returns Flag):</strong> Open to core facts, but flags minor stylistic rabbit holes early so you don’t burn out.';
-      } else if (stage === 'mid') {
-        readout.innerHTML = '<strong>Mid Stage (Churn Resistance):</strong> Actively challenges edits that don’t fix a real legal element. Sends nice-to-have ideas to <code>circle-back</code>.';
-      } else {
-        readout.innerHTML = '<strong>Terminal Stage Active (Hard Draft Freeze):</strong> Baseline viability is met. Refuses formatting churn or worry loops—only fatal filing blockers are allowed.';
-      }
+  } else if (d.a === "rm") {
+    var idx = +d.i;
+    var removed = S.parked.splice(idx, 1)[0];
+    if (removed) {
+      S.lastAction = { type: "rm", index: idx, item: removed, label: "Removed from list." };
     }
-
-    function resolveFatal() {
-      fatalResolved = true;
-      const t1 = document.getElementById('thought-1');
-      t1.classList.add('resolved');
-      document.getElementById('t1-actions').innerHTML = '<span style="color: var(--teal-bright); font-size: 0.8rem; font-weight: 700;">✓ Fatal Flaw Resolved: 25-Page Consolidated PRSV Packet Staged</span>';
-      checkGreenLight();
+  } else if (d.a === "undo-park" && S.lastAction) {
+    if (S.lastAction.type === "add") {
+      S.parked.splice(S.lastAction.index, 1);
+      S.draft = S.lastAction.item.t;
+    } else if (S.lastAction.type === "rm") {
+      S.parked.splice(S.lastAction.index, 0, S.lastAction.item);
     }
+    S.lastAction = null;
+  } else if (d.a === "quick") {
+    var q = S.parked.filter(function (p) { return p.e === "15"; })[0];
+    S.pick = q ? q.t : "";
+  } else if (d.a === "next") {
+    stopSpeech();
+    S.step++;
+  } else if (d.a === "prev") {
+    stopSpeech();
+    S.step--;
+  }
 
-    function offloadToCircleBack(id) {
-      parkedCount++;
-      if (id === 't2') {
-        const el = document.getElementById('thought-2');
-        el.classList.add('resolved');
-        document.getElementById('t2-actions').innerHTML = '<span style="color: var(--amber-bright); font-size: 0.8rem; font-weight: 700;">⤵ Silenced for Today &amp; Anchored in Circle-Back Vault</span>';
-        vaultItems.unshift({
-          id: 'v-t2',
-          title: 'Optional Paragraph 14 Narrative Polish & Supplemental Dates',
-          why: 'Curable detail—zero impact on today’s service compliance.',
-          cost: 'quick-win 15m',
-          gate: 'none',
-          anchor: 'Complaint § II ¶ 14'
-        });
-      } else if (id === 't3') {
-        const el = document.getElementById('thought-3');
-        el.classList.add('resolved');
-        document.getElementById('t3-actions').innerHTML = '<span style="color: var(--amber-bright); font-size: 0.8rem; font-weight: 700;">⤵ Offloaded to Circle-Back Vault (Ready for 15m HACC Slot)</span>';
-        vaultItems.unshift({
-          id: 'v-t3',
-          title: 'Deliver Completed & Signed HUD-92006 Form to HACC',
-          why: 'Protects supplemental housing contact rights on separate administrative track.',
-          cost: 'quick-win 15m',
-          gate: 'agency-submission',
-          anchor: 'HUD_92006_PATRICIA_CLARKE_HACC_COMPLETED_SIGNED.pdf'
-        });
-      }
-      renderVault();
-      checkGreenLight();
-    }
+  var keepScroll = d.a === "park" || d.a === "quick" || d.e || d.a === "rm" || d.a === "undo-park" || d.p;
+  var y = document.getElementById("main").scrollTop;
+  render();
+  document.getElementById("main").scrollTop = keepScroll ? y : 0;
+});
 
-    function addCustomOffload() {
-      const input = document.getElementById('custom-worry');
-      const val = input.value.trim();
-      if (!val) return;
-      vaultItems.unshift({
-        id: 'v-custom-' + Date.now(),
-        title: val,
-        why: 'Captured live during Patricia & Annika walkthrough—working memory cleared.',
-        cost: 'quick-win 15m',
-        gate: 'none',
-        anchor: 'Patricia_Companion_Inbox'
-      });
-      input.value = '';
-      renderVault();
-    }
-
-    function checkGreenLight() {
-      if (fatalResolved && parkedCount >= 1) {
-        document.getElementById('greenlight-box').classList.add('visible');
-      }
-    }
-
-    function renderVault() {
-      const list = document.getElementById('vault-list');
-      document.getElementById('vault-count').textContent = vaultItems.length + ' items safely parked';
-      list.innerHTML = vaultItems.map(item => `
-        <div class="vault-item">
-          <div style="font-weight: 600; color: var(--chalk);">${item.title}</div>
-          <div style="color: var(--muted); font-size: 0.78rem; margin-top: 0.15rem;">${item.why}</div>
-          <div class="vault-meta">
-            <span class="meta-tag">⏱ ${item.cost}</span>
-            <span class="meta-tag">🚧 Gate: ${item.gate}</span>
-            <span class="meta-tag">📄 ${item.anchor}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function simulateResurface(mode) {
-      const box = document.getElementById('resurface-box');
-      box.classList.add('visible');
-      if (mode === 'energy') {
-        const topQuick = vaultItems.find(i => i.cost.includes('15m')) || vaultItems[0];
-        box.innerHTML = `
-          <div style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: var(--teal-bright); margin-bottom: 0.3rem;">
-            SURFACE SCORE = (Blast Radius × Context Match) / (Activation Cost × Cooldown) → TOP 1 MATCH ONLY
-          </div>
-          <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">🎯 ${topQuick.title}</div>
-          <div style="font-size: 0.82rem; color: #CBD5E1; margin-bottom: 0.6rem;">
-            <strong>Zero Archaeology Re-Entry:</strong> Open <code>${topQuick.anchor}</code>. Takes ~15 minutes. Everything else stays hidden so you never see a wall of guilt.
-          </div>
-          <div style="display: flex; gap: 0.5rem;">
-            <button type="button" class="btn-sm btn-teal" onclick="document.getElementById('resurface-box').classList.remove('visible')">✓ Do This 15m Win</button>
-            <button type="button" class="btn-sm btn-ghost" onclick="snoozeTop()">💤 "Not Now" (Non-Punitive Snooze)</button>
-          </div>
-        `;
-      } else {
-        box.innerHTML = `
-          <div style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: var(--rose-soft); margin-bottom: 0.3rem;">
-            🛑 STRUCTURAL BLOCKER GATE TRIGGERED: [service-audit / filing-ship]
-          </div>
-          <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">Wait—Before Closing Service Folder:</div>
-          <div style="font-size: 0.82rem; color: #CBD5E1; margin-bottom: 0.5rem;">
-            The system stayed completely silent while you rested, and woke up <em>only</em> at the exact boundary where <code>07_CONSOLIDATED_PROOF_OF_SERVICE_PRSV_26CV59176.pdf</code> is needed to flip party status to <strong>Served</strong>.
-          </div>
-          <button type="button" class="btn-sm btn-amber" onclick="document.getElementById('resurface-box').classList.remove('visible')">Got It — Boundary Protected</button>
-        `;
-      }
-    }
-
-    function snoozeTop() {
-      const box = document.getElementById('resurface-box');
-      box.innerHTML = `
-        <div style="color: var(--teal-bright); font-size: 0.85rem; font-weight: 600;">
-          💤 Snoozed with zero guilt! Cooldown bumped—the system clears your screen immediately.
-        </div>
-      `;
-    }
-
-    function resetSimulator() {
-      fatalResolved = false;
-      parkedCount = 0;
-      vaultItems = [...initialVault];
-      document.getElementById('thought-1').classList.remove('resolved');
-      document.getElementById('t1-actions').innerHTML = '<button type="button" class="btn-sm btn-teal" onclick="resolveFatal()">✓ Attach 25-Page Consolidated PRSV Packet &amp; Clear Gate</button>';
-      document.getElementById('thought-2').classList.remove('resolved');
-      document.getElementById('t2-actions').innerHTML = '<button type="button" class="btn-sm btn-amber" onclick="offloadToCircleBack(\'t2\')">⤵ Silence &amp; Offload to Circle-Back Vault</button>';
-      document.getElementById('thought-3').classList.remove('resolved');
-      document.getElementById('t3-actions').innerHTML = '<button type="button" class="btn-sm btn-amber" onclick="offloadToCircleBack(\'t3\')">⤵ Offload to Circle-Back (Zero Guilt)</button>';
-      document.getElementById('greenlight-box').classList.remove('visible');
-      document.getElementById('resurface-box').classList.remove('visible');
-      renderVault();
-    }
-
-    function selectChoice(labelEl) {
-      const parent = labelEl.parentElement;
-      parent.querySelectorAll('.choice-label').forEach(el => el.classList.remove('selected'));
-      labelEl.classList.add('selected');
-      const radio = labelEl.querySelector('input');
-      if (radio) radio.checked = true;
-    }
-
-    function switchPreview(mode) {
-      document.getElementById('prev-calm').classList.toggle('visible', mode === 'calm');
-      document.getElementById('prev-evidence').classList.toggle('visible', mode === 'evidence');
-      document.getElementById('btn-calm').classList.toggle('active', mode === 'calm');
-      document.getElementById('btn-evidence').classList.toggle('active', mode === 'evidence');
-    }
-
-    function savePreferences() {
-      document.getElementById('save-status').style.display = 'block';
-    }
-  </script>
+render();
+</script>
 </body>
 </html>
